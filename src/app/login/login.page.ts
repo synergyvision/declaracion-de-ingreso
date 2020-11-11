@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { MenuController } from "@ionic/angular";
 
 import { TranslateService } from "@ngx-translate/core";
+import { SharedService } from "../shared/shared.service";
 import { take } from "rxjs/operators";
 
 @Component({
@@ -18,26 +19,26 @@ export class LoginPage {
 		email: [
 			{
 				type: "required",
-				message: this.translateText("validation.REQUIRED", {
+				message: this.shared.translateText("validation.REQUIRED", {
 					text: "Email",
 				}),
 			},
 			{
 				type: "pattern",
-				message: this.translateText("validation.email.PATTERN"),
+				message: this.shared.translateText("validation.email.PATTERN"),
 			},
 		],
 		password: [
 			{
 				type: "required",
-				message: this.translateText("validation.REQUIRED", {
-					text: this.translateText("PW"),
+				message: this.shared.translateText("validation.REQUIRED", {
+					text: this.shared.translateText("PW"),
 				}),
 			},
 			{
 				type: "minlength",
-				message: this.translateText("validation.MIN_LEN", {
-					text: this.translateText("PW"),
+				message: this.shared.translateText("validation.MIN_LEN", {
+					text: this.shared.translateText("PW"),
 					value: "5",
 				}),
 			},
@@ -47,7 +48,8 @@ export class LoginPage {
 	constructor(
 		public router: Router,
 		public translate: TranslateService,
-		public menu: MenuController
+		public menu: MenuController,
+		private shared: SharedService
 	) {
 		this.loginForm = new FormGroup({
 			email: new FormControl(
@@ -77,17 +79,6 @@ export class LoginPage {
 	// Restore to default when leaving this page
 	ionViewDidLeave(): void {
 		this.menu.enable(true);
-	}
-
-	translateText(text: string, param?: { [key: string]: string }): string {
-		let translatedText: string;
-		this.translate
-			.get(text, param)
-			.pipe(take(1))
-			.subscribe((value) => {
-				translatedText = value;
-			});
-		return translatedText;
 	}
 
 	doLogin(): void {
