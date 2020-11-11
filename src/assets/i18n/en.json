@@ -1,19 +1,31 @@
 {
 	"PW": "Password",
-	"login": {
-		"LOG_IN": "Log In",
-		"WELCOME_1": "Welcome!",
-		"WELCOME_2": "",
-		"PASSWORD": "Password",
-		"FORGOT_PW": "Forgot password?",
-		"SIGN_UP": "Sign Up!"
-	},
+	"AND": "and",
 	"validation": {
 		"REQUIRED": "{{ text }} is required.",
 		"MIN_LEN": "{{ text }} must be at least {{ value }} characters long.",
 		"email": {
 			"PATTERN": "Enter a valid email."
+		},
+		"password": {
+			"NOT_EQUAL": "Passwords do not match."
 		}
+	},
+	"login": {
+		"LOG_IN": "Log In",
+		"WELCOME_1": "Welcome!",
+		"WELCOME_2": "",
+		"FORGOT_PW": "Forgot password?",
+		"SIGN_UP": "Sign Up!"
+	},
+	"signUp": {
+		"SIGN_UP": "Sign Up",
+		"ACC_CREATE": "Create an account",
+		"CONFIRM_PW": "Confirm Password",
+		"ALREADY_ACC": "Already have an account?",
+		"LEGAL_1": "By creating an account you agree to our",
+		"LEGAL_2": "Privacy policy",
+		"LEGAL_3": "Terms of use"
 	},
 	"FOLLOW": "Follow",
 	"MESSAGE": "Message",

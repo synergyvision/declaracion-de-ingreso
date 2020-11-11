@@ -1,19 +1,31 @@
 {
 	"PW": "Contraseña",
-	"login": {
-		"LOG_IN": "Iniciar Sesión",
-		"WELCOME_1": "¡Bienvenido!",
-		"WELCOME_2": "",
-		"PASSWORD": "Contraseña",
-		"FORGOT_PW": "¿Olvidó su contraseña?",
-		"SIGN_UP": "¡Regístrese!"
-	},
+	"AND": "y",
 	"validation": {
 		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
 		"MIN_LEN": "El campo \"{{ text }}\" debe ser de al menos {{ value }} caracteres.",
 		"email": {
 			"PATTERN": "Ingrese un email valido."
+		},
+		"password": {
+			"NOT_EQUAL": "Las contraseñas no son iguales."
 		}
+	},
+	"login": {
+		"LOG_IN": "Iniciar Sesión",
+		"WELCOME_1": "¡Bienvenido!",
+		"WELCOME_2": "",
+		"FORGOT_PW": "¿Olvidó su contraseña?",
+		"SIGN_UP": "¡Regístrese!"
+	},
+	"signUp": {
+		"SIGN_UP": "Registrar",
+		"ACC_CREATE": "Cree su cuenta",
+		"CONFIRM_PW": "Confirme la contraseña",
+		"ALREADY_ACC": "¿Ya tiene cuenta?",
+		"LEGAL_1": "Al crear una cuenta usted esta de acuerdo con nuestras",
+		"LEGAL_2": "Políticas de privacidad",
+		"LEGAL_3": "Términos de servicio"
 	},
 	"FOLLOW": "Seguir",
 	"MESSAGE": "Mensaje",
