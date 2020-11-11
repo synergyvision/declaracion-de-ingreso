@@ -1,7 +1,7 @@
 {
-  "name": "Ionic5FullApp",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+	"name": "DeclaracionDeIngreso",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "angular"
 }
