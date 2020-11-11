@@ -1,14 +1,30 @@
 {
-  "FOLLOW": "Seguir",
-  "MESSAGE": "Mensaje",
-  "LIKES" : "Me gusta",
-  "FOLLOWERS" : "Seguidores",
-  "FOLLOWING": "Siguiendo",
-  "ABOUT": "Descripción",
-  "FRIENDS": "Amigos",
-  "PHOTOS": "Fotos",
-  "SEE_ALL": "Ver mas",
-  "OK": "OK",
-  "CANCEL": "Cancelar",
-  "SELECT_LANGUAGE": "Selecciona tu idioma"
+	"PW": "Contraseña",
+	"login": {
+		"LOG_IN": "Iniciar Sesión",
+		"WELCOME_1": "¡Bienvenido!",
+		"WELCOME_2": "",
+		"PASSWORD": "Contraseña",
+		"FORGOT_PW": "¿Olvidó su contraseña?",
+		"SIGN_UP": "¡Regístrese!"
+	},
+	"validation": {
+		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
+		"MIN_LEN": "El campo \"{{ text }}\" debe ser de al menos {{ value }} caracteres.",
+		"email": {
+			"PATTERN": "Ingrese un email valido."
+		}
+	},
+	"FOLLOW": "Seguir",
+	"MESSAGE": "Mensaje",
+	"LIKES": "Me gusta",
+	"FOLLOWERS": "Seguidores",
+	"FOLLOWING": "Siguiendo",
+	"ABOUT": "Descripción",
+	"FRIENDS": "Amigos",
+	"PHOTOS": "Fotos",
+	"SEE_ALL": "Ver mas",
+	"OK": "OK",
+	"CANCEL": "Cancelar",
+	"SELECT_LANGUAGE": "Selecciona tu idioma"
 }

@@ -1,14 +1,30 @@
 {
-  "FOLLOW": "Follow",
-  "MESSAGE": "Message",
-  "LIKES" : "Likes",
-  "FOLLOWERS" : "Followers",
-  "FOLLOWING": "Following",
-  "ABOUT": "About",
-  "FRIENDS": "Friends",
-  "PHOTOS": "Photos",
-  "SEE_ALL": "See all",
-  "OK": "OK",
-  "CANCEL": "Cancel",
-  "SELECT_LANGUAGE": "Select your language"
+	"PW": "Password",
+	"login": {
+		"LOG_IN": "Log In",
+		"WELCOME_1": "Welcome!",
+		"WELCOME_2": "",
+		"PASSWORD": "Password",
+		"FORGOT_PW": "Forgot password?",
+		"SIGN_UP": "Sign Up!"
+	},
+	"validation": {
+		"REQUIRED": "{{ text }} is required.",
+		"MIN_LEN": "{{ text }} must be at least {{ value }} characters long.",
+		"email": {
+			"PATTERN": "Enter a valid email."
+		}
+	},
+	"FOLLOW": "Follow",
+	"MESSAGE": "Message",
+	"LIKES": "Likes",
+	"FOLLOWERS": "Followers",
+	"FOLLOWING": "Following",
+	"ABOUT": "About",
+	"FRIENDS": "Friends",
+	"PHOTOS": "Photos",
+	"SEE_ALL": "See all",
+	"OK": "OK",
+	"CANCEL": "Cancel",
+	"SELECT_LANGUAGE": "Select your language"
 }
