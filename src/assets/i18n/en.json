@@ -27,6 +27,11 @@
 		"LEGAL_2": "Privacy policy",
 		"LEGAL_3": "Terms of use"
 	},
+	"forgotPw": {
+		"RECOVER": "Recover your password",
+		"MSG": "Please enter your email address and we'll send you an email to reset your password.",
+		"RESET": "Reset password"
+	},
 	"FOLLOW": "Follow",
 	"MESSAGE": "Message",
 	"LIKES": "Likes",

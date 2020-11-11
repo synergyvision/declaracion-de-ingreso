@@ -1,19 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Routes, RouterModule } from "@angular/router";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
-import { ComponentsModule } from '../components/components.module';
+import { ComponentsModule } from "../components/components.module";
 
-import { ForgotPasswordPage } from './forgot-password.page';
+import { ForgotPasswordPage } from "./forgot-password.page";
+import { SharedModule } from "../shared/shared.module";
 
 const routes: Routes = [
   {
-    path: '',
-    component: ForgotPasswordPage
-  }
+    path: "",
+    component: ForgotPasswordPage,
+  },
 ];
 
 @NgModule({
@@ -21,10 +22,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
   ],
-  declarations: [ForgotPasswordPage]
+  declarations: [ForgotPasswordPage],
 })
 export class ForgotPasswordPageModule {}
