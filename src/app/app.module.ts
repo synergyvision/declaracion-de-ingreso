@@ -8,6 +8,7 @@ import { ComponentsModule } from "./components/components.module";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { environment } from "../environments/environment";
 import { ReactiveFormsModule } from "@angular/forms";
+import { AngularFireModule } from "@angular/fire";
 
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
@@ -28,6 +29,7 @@ export function createTranslateLoader(http: HttpClient) {
 		ServiceWorkerModule.register("/ngsw-worker.js", {
 			enabled: environment.production,
 		}),
+		AngularFireModule.initializeApp(environment.firebase),
 		HttpClientModule,
 		TranslateModule.forRoot({
 			loader: {

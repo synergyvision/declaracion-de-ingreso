@@ -1,5 +1,4 @@
 {
-	"PW": "Contraseña",
 	"AND": "y",
 	"validation": {
 		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
@@ -10,6 +9,21 @@
 		"password": {
 			"NOT_EQUAL": "Las contraseñas no son iguales."
 		}
+	},
+	"fields": {
+		"PW": "Contraseña",
+		"NAME": "Nombre",
+		"LAST_NAME": "Apellido",
+		"ID": "Cédula",
+		"PASSPORT": "Número de pasaporte",
+		"NATIONALITY": "Nacionalidad",
+		"ADDRESS": "Dirección venezolana",
+		"SEX": "Sexo",
+		"MALE": "Masculino",
+		"FEMALE": "Femenino",
+		"PROFESSION": "Profesión",
+		"COUNTRY_OF_ORIGIN": "Pais de origen",
+		"COUNTRY_OF_RESIDENCE": "Pais de residencia"
 	},
 	"login": {
 		"LOG_IN": "Iniciar sesión",
@@ -31,6 +45,10 @@
 		"RECOVER": "Recupere su contraseña",
 		"MSG": "Por favor introduzca su email y le enviaremos un correo para resetear su contraseña.",
 		"RESET": "Recuperar contraseña"
+	},
+	"profile": {
+		"CREATE": "Información personal",
+		"ALMOST": "Ya casi, sólo unas preguntas más..."
 	},
 	"FOLLOW": "Seguir",
 	"MESSAGE": "Mensaje",

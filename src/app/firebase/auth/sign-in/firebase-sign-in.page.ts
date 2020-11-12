@@ -1,19 +1,17 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Location } from '@angular/common';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MenuController, LoadingController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, NgZone } from "@angular/core";
+import { Location } from "@angular/common";
+import { Validators, FormGroup, FormControl } from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { MenuController, LoadingController } from "@ionic/angular";
+import { Subscription } from "rxjs";
 
-import { HistoryHelperService } from '../../../utils/history-helper.service';
-import { FirebaseAuthService } from '../firebase-auth.service';
+import { HistoryHelperService } from "../../../utils/history-helper.service";
+import { FirebaseAuthService } from "../firebase-auth.service";
 
 @Component({
-  selector: 'app-firebase-sign-in',
-  templateUrl: './firebase-sign-in.page.html',
-  styleUrls: [
-    './styles/firebase-sign-in.page.scss'
-  ]
+  selector: "app-firebase-sign-in",
+  templateUrl: "./firebase-sign-in.page.html",
+  styleUrls: ["./styles/firebase-sign-in.page.scss"],
 })
 export class FirebaseSignInPage implements OnInit {
   loginForm: FormGroup;
@@ -22,14 +20,17 @@ export class FirebaseSignInPage implements OnInit {
   authRedirectResult: Subscription;
 
   validation_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required.' },
-      { type: 'pattern', message: 'Enter a valid email.' }
+    email: [
+      { type: "required", message: "Email is required." },
+      { type: "pattern", message: "Enter a valid email." },
     ],
-    'password': [
-      { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Password must be at least 6 characters long.' }
-    ]
+    password: [
+      { type: "required", message: "Password is required." },
+      {
+        type: "minlength",
+        message: "Password must be at least 6 characters long.",
+      },
+    ],
   };
 
   constructor(
@@ -43,30 +44,34 @@ export class FirebaseSignInPage implements OnInit {
     public historyHelper: HistoryHelperService
   ) {
     this.loginForm = new FormGroup({
-      'email': new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])),
-      'password': new FormControl('', Validators.compose([
-        Validators.minLength(6),
-        Validators.required
-      ]))
+      email: new FormControl(
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
+        ])
+      ),
+      password: new FormControl(
+        "",
+        Validators.compose([Validators.minLength(6), Validators.required])
+      ),
     });
 
     // Get firebase authentication redirect result invoken when using signInWithRedirect()
     // signInWithRedirect() is only used when client is in web but not desktop
-    this.authRedirectResult = this.authService.getRedirectResult()
-    .subscribe(result => {
-      if (result.user) {
-        this.redirectLoggedUserToProfilePage();
-      } else if (result.error) {
-        this.manageAuthWithProvidersErrors(result.error);
-      }
-    });
+    this.authRedirectResult = this.authService
+      .getRedirectResult()
+      .subscribe((result) => {
+        if (result.user) {
+          this.redirectLoggedUserToProfilePage();
+        } else if (result.error) {
+          this.manageAuthWithProvidersErrors(result.error);
+        }
+      });
 
     // Check if url contains our custom 'auth-redirect' param, then show a loader while we receive the getRedirectResult notification
-    this.route.queryParams.subscribe(params => {
-      const authProvider = params['auth-redirect'];
+    this.route.queryParams.subscribe((params) => {
+      const authProvider = params["auth-redirect"];
       if (authProvider) {
         this.presentLoading(authProvider);
       }
@@ -88,7 +93,7 @@ export class FirebaseSignInPage implements OnInit {
       // Get previous URL from our custom History Helper
       // If there's no previous page, then redirect to profile
       // const previousUrl = this.historyHelper.previousUrl || 'firebase/auth/profile';
-      const previousUrl = 'firebase/auth/profile';
+      const previousUrl = "firebase/auth/profile";
 
       // No need to store in the navigation history the sign-in page with redirect params (it's justa a mandatory mid-step)
       // Navigate to profile and replace current url with profile
@@ -97,9 +102,12 @@ export class FirebaseSignInPage implements OnInit {
   }
 
   async presentLoading(authProvider?: string) {
-    const authProviderCapitalized = authProvider[0].toUpperCase() + authProvider.slice(1);
+    const authProviderCapitalized =
+      authProvider[0].toUpperCase() + authProvider.slice(1);
     this.redirectLoader = await this.loadingController.create({
-      message: authProvider ? 'Signing in with ' + authProviderCapitalized : 'Signin in ...'
+      message: authProvider
+        ? "Signing in with " + authProviderCapitalized
+        : "Signin in ...",
     });
     await this.redirectLoader.present();
   }
@@ -115,13 +123,17 @@ export class FirebaseSignInPage implements OnInit {
   prepareForAuthWithProvidersRedirection(authProvider: string) {
     this.presentLoading(authProvider);
 
-    this.location.replaceState(this.location.path(), 'auth-redirect=' + authProvider, this.location.getState());
+    this.location.replaceState(
+      this.location.path(),
+      "auth-redirect=" + authProvider,
+      this.location.getState()
+    );
   }
 
   manageAuthWithProvidersErrors(errorMessage: string) {
     this.submitError = errorMessage;
     // remove auth-redirect param from url
-    this.location.replaceState(this.router.url.split('?')[0], '');
+    this.location.replaceState(this.router.url.split("?")[0], "");
     this.dismissLoading();
   }
 
@@ -131,58 +143,69 @@ export class FirebaseSignInPage implements OnInit {
 
   signInWithEmail() {
     this.resetSubmitError();
-    this.authService.signInWithEmail(this.loginForm.value['email'], this.loginForm.value['password'])
-    .then(user => {
-      // navigate to user profile
-      this.redirectLoggedUserToProfilePage();
-    })
-    .catch(error => {
-      this.submitError = error.message;
-      this.dismissLoading();
-    });
+    this.authService
+      .signInWithEmail(
+        this.loginForm.value["email"],
+        this.loginForm.value["password"]
+      )
+      .then((user) => {
+        // navigate to user profile
+        console.log(user);
+        this.redirectLoggedUserToProfilePage();
+      })
+      .catch((error) => {
+        this.submitError = error.message;
+        this.dismissLoading();
+      });
   }
 
   doFacebookLogin(): void {
     this.resetSubmitError();
-    this.prepareForAuthWithProvidersRedirection('facebook');
+    this.prepareForAuthWithProvidersRedirection("facebook");
 
-    this.authService.signInWithFacebook()
-    .subscribe((result) => {
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      // const token = result.credential.accessToken;
-      this.redirectLoggedUserToProfilePage();
-    }, (error) => {
-      this.manageAuthWithProvidersErrors(error.message);
-    });
+    this.authService.signInWithFacebook().subscribe(
+      (result) => {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        // const token = result.credential.accessToken;
+        this.redirectLoggedUserToProfilePage();
+      },
+      (error) => {
+        this.manageAuthWithProvidersErrors(error.message);
+      }
+    );
   }
 
   doGoogleLogin(): void {
     this.resetSubmitError();
-    this.prepareForAuthWithProvidersRedirection('google');
+    this.prepareForAuthWithProvidersRedirection("google");
 
-    this.authService.signInWithGoogle()
-    .subscribe((result) => {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // var token = result.credential.accessToken;
-      this.redirectLoggedUserToProfilePage();
-    }, (error) => {
+    this.authService.signInWithGoogle().subscribe(
+      (result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        // var token = result.credential.accessToken;
+        this.redirectLoggedUserToProfilePage();
+      },
+      (error) => {
         console.log(error);
-      this.manageAuthWithProvidersErrors(error.message);
-    });
+        this.manageAuthWithProvidersErrors(error.message);
+      }
+    );
   }
 
   doTwitterLogin(): void {
     this.resetSubmitError();
-    this.prepareForAuthWithProvidersRedirection('twitter');
+    this.prepareForAuthWithProvidersRedirection("twitter");
 
-    this.authService.signInWithTwitter()
-    .subscribe((result) => {
-      // This gives you a Twitter Access Token. You can use it to access the Twitter API.
-      // var token = result.credential.accessToken;
-      this.redirectLoggedUserToProfilePage();
-    }, (error) => {
-      console.log(error);
-      this.manageAuthWithProvidersErrors(error.message);
-    });
+    this.authService.signInWithTwitter().subscribe(
+      (result) => {
+        // This gives you a Twitter Access Token. You can use it to access the Twitter API.
+        // var token = result.credential.accessToken;
+        this.redirectLoggedUserToProfilePage();
+      },
+      (error) => {
+        console.log(error);
+        this.manageAuthWithProvidersErrors(error.message);
+      }
+    );
   }
 }

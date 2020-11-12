@@ -1,5 +1,4 @@
 {
-	"PW": "Password",
 	"AND": "and",
 	"validation": {
 		"REQUIRED": "{{ text }} is required.",
@@ -10,6 +9,21 @@
 		"password": {
 			"NOT_EQUAL": "Passwords do not match."
 		}
+	},
+	"fields": {
+		"PW": "Password",
+		"NAME": "Name",
+		"LAST_NAME": "Last name",
+		"ID": "Venezuelan ID number",
+		"PASSPORT": "Passport number",
+		"NATIONALITY": "Nationality",
+		"ADDRESS": "Venezuelan address",
+		"SEX": "Sex",
+		"MALE": "Male",
+		"FEMALE": "Female",
+		"PROFESSION": "Profession",
+		"COUNTRY_OF_ORIGIN": "Country of origin",
+		"COUNTRY_OF_RESIDENCE": "Country of residence"
 	},
 	"login": {
 		"LOG_IN": "Log In",
@@ -31,6 +45,10 @@
 		"RECOVER": "Recover your password",
 		"MSG": "Please enter your email address and we'll send you an email to reset your password.",
 		"RESET": "Reset password"
+	},
+	"profile": {
+		"CREATE": "Personal information",
+		"ALMOST": "Almost there, just a few more questions..."
 	},
 	"FOLLOW": "Follow",
 	"MESSAGE": "Message",

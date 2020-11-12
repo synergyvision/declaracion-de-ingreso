@@ -9,7 +9,7 @@ export const environment = {
 		authDomain: "declaracion-de-ingreso.firebaseapp.com",
 		databaseURL: "https://declaracion-de-ingreso.firebaseio.com/",
 		projectId: "declaracion-de-ingreso",
-		storageBucket: "ion4fullpwa.appspot.com",
+		//storageBucket: "ion4fullpwa.appspot.com",
 	},
 };
 
