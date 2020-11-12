@@ -5,14 +5,14 @@
 		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
 		"MIN_LEN": "El campo \"{{ text }}\" debe ser de al menos {{ value }} caracteres.",
 		"email": {
-			"PATTERN": "Ingrese un email valido."
+			"PATTERN": "Ingrese un email válido."
 		},
 		"password": {
 			"NOT_EQUAL": "Las contraseñas no son iguales."
 		}
 	},
 	"login": {
-		"LOG_IN": "Iniciar Sesión",
+		"LOG_IN": "Iniciar sesión",
 		"WELCOME_1": "¡Bienvenido!",
 		"WELCOME_2": "",
 		"FORGOT_PW": "¿Olvidó su contraseña?",
