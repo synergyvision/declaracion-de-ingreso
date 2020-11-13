@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 import { SharedService } from "../../../../shared/shared.service";
+import { FirebaseAuthService } from "../../firebase-auth.service";
 
 @Component({
 	selector: "app-firebase-profile-create",
@@ -88,7 +89,10 @@ export class FirebaseProfileCreatePage implements OnInit {
 		],
 	};
 
-	constructor(private shared: SharedService) {}
+	constructor(
+		private shared: SharedService,
+		private fireAuth: FirebaseAuthService
+	) {}
 
 	ngOnInit() {
 		this.profileForm = new FormGroup({
@@ -134,6 +138,8 @@ export class FirebaseProfileCreatePage implements OnInit {
 
 	doCreateProfile() {
 		console.log(this.profileForm.value);
+		console.log(this.fireAuth.getLoggedInUser());
+		this.fireAuth.createProfile(this.profileForm.value);
 		return;
 	}
 }

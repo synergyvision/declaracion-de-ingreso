@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AuthGuard } from "./firebase/auth/auth.guard";
+import { ProfileGuard } from "./firebase/auth/profile.guard";
 
 const routes: Routes = [
 	{
@@ -39,6 +41,7 @@ const routes: Routes = [
 		path: "app",
 		loadChildren: () =>
 			import("./tabs/tabs.module").then((m) => m.TabsPageModule),
+		canActivate: [AuthGuard, ProfileGuard],
 	},
 	{
 		path: "contact-card",

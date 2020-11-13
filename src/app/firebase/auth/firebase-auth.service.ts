@@ -7,171 +7,147 @@ import { Platform } from "@ionic/angular";
 
 import { User, auth } from "firebase/app";
 import {
-  cfaSignIn,
-  cfaSignOut,
-  mapUserToUserInfo,
+	cfaSignIn,
+	cfaSignOut,
+	mapUserToUserInfo,
 } from "capacitor-firebase-auth";
+import { AngularFireDatabase } from "@angular/fire/database";
+import { take } from "rxjs/operators";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class FirebaseAuthService {
-  currentUser: User;
-  userProviderAdditionalInfo: any;
-  profileDataStore: DataStore<FirebaseProfileModel>;
-  redirectResult: Subject<any> = new Subject<any>();
+	currentUser: User;
+	profile: Observable<FirebaseProfileModel | null>;
+	userProviderAdditionalInfo: any;
+	profileDataStore: DataStore<FirebaseProfileModel>;
+	redirectResult: Subject<any> = new Subject<any>();
 
-  constructor(public angularFire: AngularFireAuth, public platform: Platform) {
-    this.angularFire.onAuthStateChanged((user) => {
-      if (user) {
-        // User is signed in.
-        this.currentUser = user;
-      } else {
-        // No user is signed in.
-        this.currentUser = null;
-      }
-    });
+	constructor(
+		public angularFire: AngularFireAuth,
+		public platform: Platform,
+		private db: AngularFireDatabase
+	) {
+		this.angularFire.onAuthStateChanged((user) => {
+			if (user) {
+				// User is signed in.
+				this.currentUser = user;
+				this.profile = db
+					.object<FirebaseProfileModel>("profile/" + user.uid)
+					.valueChanges();
+			} else {
+				// No user is signed in.
+				this.currentUser = null;
+			}
+		});
 
-    if (!this.platform.is("capacitor")) {
-      // when using signInWithRedirect, this listens for the redirect results
-      this.angularFire.getRedirectResult().then(
-        (result) => {
-          // result.credential.accessToken gives you the Provider Access Token. You can use it to access the Provider API.
-          if (result.user) {
-            this.userProviderAdditionalInfo = result.additionalUserInfo.profile;
-            this.redirectResult.next(result);
-          }
-        },
-        (error) => {
-          this.redirectResult.next({ error: error.code });
-        }
-      );
-    }
-  }
+		if (!this.platform.is("capacitor")) {
+			// when using signInWithRedirect, this listens for the redirect results
+			this.angularFire.getRedirectResult().then(
+				(result) => {
+					// result.credential.accessToken gives you the Provider Access Token. You can use it to access the Provider API.
+					if (result.user) {
+						this.userProviderAdditionalInfo =
+							result.additionalUserInfo.profile;
+						this.redirectResult.next(result);
+					}
+				},
+				(error) => {
+					this.redirectResult.next({ error: error.code });
+				}
+			);
+		}
+	}
 
-  getRedirectResult(): Observable<any> {
-    return this.redirectResult.asObservable();
-  }
+	getRedirectResult(): Observable<any> {
+		return this.redirectResult.asObservable();
+	}
 
-  public getProfileDataSource(): Observable<FirebaseProfileModel> {
-    const userModel = new FirebaseProfileModel();
-    const provierData = this.currentUser.providerData[0];
+	public getProfileDataSource(): Observable<FirebaseProfileModel> {
+		return this.profile;
+	}
 
-    // const userData = this.userProviderAdditionalInfo ? this.userProviderAdditionalInfo : provierData;
+	// Get the currently signed-in user
+	getLoggedInUser() {
+		return this.currentUser;
+	}
 
-    // // Default imgs are too small and our app needs a bigger image
-    // switch (provierData.providerId) {
-    //   case 'facebook.com':
-    //     userModel.image = provierData.photoURL + '?height=400';
-    //     break;
-    //   case 'password':
-    //     userModel.image = 'https://s3-us-west-2.amazonaws.com/ionicthemes/otros/avatar-placeholder.png';
-    //     break;
-    //   case 'twitter.com':
-    //     userModel.image = provierData.photoURL.replace('_normal', '_400x400');
-    //     break;
-    //   case 'google.com':
-    //     userModel.image = provierData.photoURL.split('=')[0];
-    //     break;
-    //   default:
-    //     userModel.image = provierData.photoURL;
-    // }
+	signOut(): Observable<any> {
+		if (this.platform.is("capacitor")) {
+			return cfaSignOut();
+		} else {
+			return from(this.angularFire.signOut());
+		}
+	}
 
-    const userData = {
-      name: "Leo",
-      displayName: "Leopoldo",
-      description: "Software engineer",
-      phoneNumber: "04141234567",
-      email: "wanna@test.com",
-    };
+	signInWithEmail(
+		email: string,
+		password: string
+	): Promise<auth.UserCredential> {
+		return this.angularFire.signInWithEmailAndPassword(email, password);
+	}
 
-    userModel.name =
-      userData.name || userData.displayName || "What's your name?";
-    userModel.role = "How would you describe yourself?";
-    userModel.description =
-      userData.description ||
-      "Anything else you would like to share with the world?";
-    userModel.phoneNumber =
-      userData.phoneNumber || "Is there a number where I can reach you?";
-    userModel.email = userData.email || "Where can I send you emails?";
-    userModel.provider =
-      provierData.providerId !== "password"
-        ? provierData.providerId
-        : "Credentials";
+	signUpWithEmail(
+		email: string,
+		password: string
+	): Promise<auth.UserCredential> {
+		return this.angularFire.createUserWithEmailAndPassword(email, password);
+	}
 
-    return of(userModel);
-  }
+	socialSignIn(
+		providerName: string,
+		scopes?: Array<string>
+	): Observable<any> {
+		if (this.platform.is("capacitor")) {
+			return cfaSignIn(providerName);
+		} else {
+			const provider = new auth.OAuthProvider(providerName);
 
-  // Get the currently signed-in user
-  getLoggedInUser() {
-    return this.currentUser;
-  }
+			if (scopes) {
+				scopes.forEach((scope) => {
+					provider.addScope(scope);
+				});
+			}
 
-  signOut(): Observable<any> {
-    if (this.platform.is("capacitor")) {
-      return cfaSignOut();
-    } else {
-      return from(this.angularFire.signOut());
-    }
-  }
+			if (this.platform.is("desktop")) {
+				return from(this.angularFire.signInWithPopup(provider));
+			} else {
+				// web but not desktop, for example mobile PWA
+				return from(this.angularFire.signInWithRedirect(provider));
+			}
+		}
+	}
 
-  signInWithEmail(
-    email: string,
-    password: string
-  ): Promise<auth.UserCredential> {
-    return this.angularFire.signInWithEmailAndPassword(email, password);
-  }
+	signInWithFacebook() {
+		const provider = new auth.FacebookAuthProvider();
+		return this.socialSignIn(provider.providerId);
+	}
 
-  signUpWithEmail(
-    email: string,
-    password: string
-  ): Promise<auth.UserCredential> {
-    return this.angularFire.createUserWithEmailAndPassword(email, password);
-  }
+	signInWithGoogle() {
+		const provider = new auth.GoogleAuthProvider();
+		const scopes = ["profile", "email"];
+		return this.socialSignIn(provider.providerId, scopes);
+	}
 
-  socialSignIn(providerName: string, scopes?: Array<string>): Observable<any> {
-    if (this.platform.is("capacitor")) {
-      return cfaSignIn(providerName);
-    } else {
-      const provider = new auth.OAuthProvider(providerName);
+	signInWithTwitter() {
+		const provider = new auth.TwitterAuthProvider();
+		return this.socialSignIn(provider.providerId);
+	}
 
-      if (scopes) {
-        scopes.forEach((scope) => {
-          provider.addScope(scope);
-        });
-      }
+	public getProfileStore(
+		dataSource: Observable<FirebaseProfileModel>
+	): DataStore<FirebaseProfileModel> {
+		// Initialize the model specifying that it is a shell model
+		const shellModel: FirebaseProfileModel = new FirebaseProfileModel();
+		this.profileDataStore = new DataStore(shellModel);
+		// Trigger the loading mechanism (with shell) in the dataStore
+		this.profileDataStore.load(dataSource);
+		return this.profileDataStore;
+	}
 
-      if (this.platform.is("desktop")) {
-        return from(this.angularFire.signInWithPopup(provider));
-      } else {
-        // web but not desktop, for example mobile PWA
-        return from(this.angularFire.signInWithRedirect(provider));
-      }
-    }
-  }
-
-  signInWithFacebook() {
-    const provider = new auth.FacebookAuthProvider();
-    return this.socialSignIn(provider.providerId);
-  }
-
-  signInWithGoogle() {
-    const provider = new auth.GoogleAuthProvider();
-    const scopes = ["profile", "email"];
-    return this.socialSignIn(provider.providerId, scopes);
-  }
-
-  signInWithTwitter() {
-    const provider = new auth.TwitterAuthProvider();
-    return this.socialSignIn(provider.providerId);
-  }
-
-  public getProfileStore(
-    dataSource: Observable<FirebaseProfileModel>
-  ): DataStore<FirebaseProfileModel> {
-    // Initialize the model specifying that it is a shell model
-    const shellModel: FirebaseProfileModel = new FirebaseProfileModel();
-    this.profileDataStore = new DataStore(shellModel);
-    // Trigger the loading mechanism (with shell) in the dataStore
-    this.profileDataStore.load(dataSource);
-    return this.profileDataStore;
-  }
+	createProfile(profile: FirebaseProfileModel) {
+		this.db.object("profile/" + this.currentUser.uid).set(profile);
+		this.profile.pipe(take(1)).subscribe((profile) => {
+			console.log(profile);
+		});
+	}
 }

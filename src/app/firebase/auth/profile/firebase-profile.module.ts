@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
 import { ComponentsModule } from "../../../components/components.module";
-import { FirebaseProfilePageGuard } from "./firebase-profile-can-activate.guard";
+import { AuthGuard } from "../auth.guard";
 import { FirebaseProfilePage } from "./firebase-profile.page";
 import { FirebaseProfileResolver } from "./firebase-profile.resolver";
 import { SharedModule } from "../../../shared/shared.module";
@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: "",
     component: FirebaseProfilePage,
-    canActivate: [FirebaseProfilePageGuard],
+    canActivate: [AuthGuard],
     resolve: {
       data: FirebaseProfileResolver,
     },
@@ -38,6 +38,6 @@ const routes: Routes = [
     ComponentsModule,
   ],
   declarations: [FirebaseProfilePage],
-  providers: [FirebaseProfilePageGuard, FirebaseProfileResolver],
+  providers: [AuthGuard, FirebaseProfileResolver],
 })
 export class FirebaseProfilePageModule {}
