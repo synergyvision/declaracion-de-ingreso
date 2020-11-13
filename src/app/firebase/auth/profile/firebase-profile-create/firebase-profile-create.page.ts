@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 import { SharedService } from "../../../../shared/shared.service";
 import { FirebaseAuthService } from "../../firebase-auth.service";
+import { Router } from "@angular/router";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
 	selector: "app-firebase-profile-create",
@@ -91,7 +93,9 @@ export class FirebaseProfileCreatePage implements OnInit {
 
 	constructor(
 		private shared: SharedService,
-		private fireAuth: FirebaseAuthService
+		private fireAuth: FirebaseAuthService,
+		private router: Router,
+		private loadCtrl: LoadingController
 	) {}
 
 	ngOnInit() {
@@ -137,9 +141,28 @@ export class FirebaseProfileCreatePage implements OnInit {
 	}
 
 	doCreateProfile() {
-		console.log(this.profileForm.value);
-		console.log(this.fireAuth.getLoggedInUser());
-		this.fireAuth.createProfile(this.profileForm.value);
-		return;
+		this.loadCtrl
+			.create({
+				keyboardClose: true,
+				message: this.shared.translateText("profile.CREATING"),
+			})
+			.then((loadEl) => {
+				loadEl.present();
+				this.fireAuth.createProfile(this.profileForm.value).subscribe({
+					next: null,
+					error: (err) => {
+						console.error(err, "Error!");
+						loadEl.dismiss();
+						this.shared.showAlert(
+							this.shared.translateText("error.ERROR"),
+							this.shared.translateText("error.UNEXPECTED")
+						);
+					},
+					complete: () => {
+						loadEl.dismiss();
+						this.router.navigate(["app/categories"]);
+					},
+				});
+			});
 	}
 }

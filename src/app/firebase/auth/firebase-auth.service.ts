@@ -11,13 +11,13 @@ import {
 	cfaSignOut,
 	mapUserToUserInfo,
 } from "capacitor-firebase-auth";
-import { AngularFireDatabase } from "@angular/fire/database";
+import { AngularFireDatabase, AngularFireObject } from "@angular/fire/database";
 import { take } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseAuthService {
 	currentUser: User;
-	profile: Observable<FirebaseProfileModel | null>;
+	profile: AngularFireObject<FirebaseProfileModel> | null = null;
 	userProviderAdditionalInfo: any;
 	profileDataStore: DataStore<FirebaseProfileModel>;
 	redirectResult: Subject<any> = new Subject<any>();
@@ -31,9 +31,9 @@ export class FirebaseAuthService {
 			if (user) {
 				// User is signed in.
 				this.currentUser = user;
-				this.profile = db
-					.object<FirebaseProfileModel>("profile/" + user.uid)
-					.valueChanges();
+				this.profile = db.object<FirebaseProfileModel>(
+					user.uid + "/profile"
+				);
 			} else {
 				// No user is signed in.
 				this.currentUser = null;
@@ -63,7 +63,11 @@ export class FirebaseAuthService {
 	}
 
 	public getProfileDataSource(): Observable<FirebaseProfileModel> {
-		return this.profile;
+		if (this.profile != null) {
+			return this.profile.valueChanges();
+		} else {
+			return of(null);
+		}
 	}
 
 	// Get the currently signed-in user
@@ -144,10 +148,7 @@ export class FirebaseAuthService {
 		return this.profileDataStore;
 	}
 
-	createProfile(profile: FirebaseProfileModel) {
-		this.db.object("profile/" + this.currentUser.uid).set(profile);
-		this.profile.pipe(take(1)).subscribe((profile) => {
-			console.log(profile);
-		});
+	createProfile(profile: FirebaseProfileModel): Observable<void> {
+		return from(this.profile.set(profile));
 	}
 }

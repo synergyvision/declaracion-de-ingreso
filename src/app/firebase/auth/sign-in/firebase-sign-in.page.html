@@ -1,22 +1,22 @@
-<ion-header class="ion-no-border">
-	<ion-toolbar>
-		<ion-buttons slot="start">
-			<ion-back-button defaultHref="app/categories"></ion-back-button>
-		</ion-buttons>
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>{{ 'signIn.SIGN_IN' | translate }}</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="login-content">
 	<h2 class="auth-title">
-		Sign In with Firebase
+		{{ 'signIn.WELCOME' | translate }}
 		<br />
 	</h2>
 	<form [formGroup]="loginForm" (ngSubmit)="signInWithEmail()">
 		<ion-list class="inputs-list" lines="full">
 			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.EMAIL' | translate }}</ion-label
+				>
 				<ion-input
 					type="email"
-					placeholder="Email"
 					formControlName="email"
 					clearInput
 					autocapitalize="off"
@@ -38,10 +38,12 @@
 			</div>
 
 			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.PW' | translate }}</ion-label
+				>
 				<app-show-hide-password>
 					<ion-input
 						type="password"
-						placeholder="Password"
 						formControlName="password"
 					></ion-input>
 				</app-show-hide-password>
@@ -66,7 +68,7 @@
 			type="submit"
 			expand="block"
 			[disabled]="!loginForm.valid"
-			>Log In</ion-button
+			>{{ 'signIn.SIGN_IN' | translate }}</ion-button
 		>
 		<div class="error-container" *ngIf="submitError">
 			<div class="error-message">
@@ -80,12 +82,19 @@
 				fill="clear"
 				[routerLink]="['/auth/signup']"
 			>
-				Sign Up!
+				{{ 'signIn.SIGN_UP' | translate }}
+			</ion-button>
+			<ion-button
+				class="forgot-btn"
+				fill="clear"
+				[routerLink]="['/auth/forgot-password']"
+			>
+				{{ 'signIn.FORGOT_PW' | translate}}
 			</ion-button>
 		</ion-row>
 	</form>
 
-	<div class="social-auth-options">
+	<!-- <div class="social-auth-options">
 		<p class="options-divider">Or</p>
 		<ion-button
 			class="social-auth-btn facebook-auth-btn"
@@ -108,5 +117,5 @@
 			(click)="doTwitterLogin()"
 			>Log In with Twitter</ion-button
 		>
-	</div>
+	</div> -->
 </ion-content>

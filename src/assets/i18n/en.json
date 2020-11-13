@@ -1,5 +1,6 @@
 {
 	"AND": "and",
+	"LOADING": "Loading...",
 	"validation": {
 		"REQUIRED": "{{ text }} is required.",
 		"MIN_LEN": "{{ text }} must be at least {{ value }} characters long.",
@@ -11,7 +12,9 @@
 		}
 	},
 	"fields": {
+		"EMAIL": "Email",
 		"PW": "Password",
+		"CONFIRM_PW": "Confirm Password",
 		"NAME": "Name",
 		"LAST_NAME": "Last name",
 		"ID": "Venezuelan ID number",
@@ -25,21 +28,21 @@
 		"COUNTRY_OF_ORIGIN": "Country of origin",
 		"COUNTRY_OF_RESIDENCE": "Country of residence"
 	},
-	"login": {
-		"LOG_IN": "Log In",
-		"WELCOME_1": "Welcome!",
-		"WELCOME_2": "",
+	"signIn": {
+		"SIGN_IN": "Sign in",
+		"WELCOME": "Welcome!",
 		"FORGOT_PW": "Forgot password?",
-		"SIGN_UP": "Sign Up!"
+		"SIGN_UP": "Sign up!",
+		"SIGNING_IN": "Signing in..."
 	},
 	"signUp": {
 		"SIGN_UP": "Sign Up",
-		"ACC_CREATE": "Create an account",
-		"CONFIRM_PW": "Confirm Password",
+		"ACC_CREATE": "Join us!",
 		"ALREADY_ACC": "Already have an account?",
 		"LEGAL_1": "By creating an account you agree to our",
 		"LEGAL_2": "Privacy policy",
-		"LEGAL_3": "Terms of use"
+		"LEGAL_3": "Terms of use",
+		"SIGNING_UP": "Creating your account..."
 	},
 	"forgotPw": {
 		"RECOVER": "Recover your password",
@@ -48,7 +51,16 @@
 	},
 	"profile": {
 		"CREATE": "Personal information",
-		"ALMOST": "Almost there, just a few more questions..."
+		"ALMOST": "Almost there, just a few more questions...",
+		"CREATING": "Saving personal information..."
+	},
+	"error": {
+		"ERROR": "Oops!",
+		"NO_USER": "Email and password error.",
+		"IN_USE": "Email is already in use.",
+		"NOT_ALLOWED": "Access denied.",
+		"UNEXPECTED": "An unexpected error has occurred, try again later.",
+		"UNKNOWN": "An unknown error has occurred."
 	},
 	"FOLLOW": "Follow",
 	"MESSAGE": "Message",

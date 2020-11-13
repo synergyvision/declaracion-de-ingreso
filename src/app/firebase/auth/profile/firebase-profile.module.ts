@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
 import { ComponentsModule } from "../../../components/components.module";
 import { AuthGuard } from "../auth.guard";
+import { NoProfileGuard } from "../no-profile.guard";
 import { FirebaseProfilePage } from "./firebase-profile.page";
 import { FirebaseProfileResolver } from "./firebase-profile.resolver";
 import { SharedModule } from "../../../shared/shared.module";
@@ -24,6 +25,7 @@ const routes: Routes = [
       import("./firebase-profile-create/firebase-profile-create.module").then(
         (m) => m.FirebaseProfileCreatePageModule
       ),
+    canActivate: [NoProfileGuard],
   },
 ];
 
