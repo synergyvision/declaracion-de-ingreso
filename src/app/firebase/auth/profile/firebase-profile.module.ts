@@ -9,12 +9,13 @@ import { NoProfileGuard } from "../no-profile.guard";
 import { FirebaseProfilePage } from "./firebase-profile.page";
 import { FirebaseProfileResolver } from "./firebase-profile.resolver";
 import { SharedModule } from "../../../shared/shared.module";
+import { ProfileGuard } from "../profile.guard";
 
 const routes: Routes = [
   {
     path: "",
     component: FirebaseProfilePage,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, ProfileGuard],
     resolve: {
       data: FirebaseProfileResolver,
     },
@@ -25,7 +26,7 @@ const routes: Routes = [
       import("./firebase-profile-create/firebase-profile-create.module").then(
         (m) => m.FirebaseProfileCreatePageModule
       ),
-    canActivate: [NoProfileGuard],
+    canActivate: [AuthGuard, NoProfileGuard],
   },
 ];
 
