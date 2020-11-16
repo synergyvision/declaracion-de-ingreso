@@ -1,6 +1,21 @@
 {
 	"AND": "y",
 	"LOADING": "Cargando...",
+	"FORMATTED_DOB": "{{ day }} de {{ month }} de {{ year }}",
+	"MONTH": [
+		"Enero",
+		"Febrero",
+		"Marzo",
+		"Abril",
+		"Mayo",
+		"Junio",
+		"Julio",
+		"Agosto",
+		"Septiembre",
+		"Octubre",
+		"Noviembre",
+		"Diciembre"
+	],
 	"validation": {
 		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
 		"MIN_LEN": "El campo \"{{ text }}\" debe ser de al menos {{ value }} caracteres.",
@@ -17,6 +32,7 @@
 		"CONFIRM_PW": "Confirme la contraseña",
 		"NAME": "Nombre",
 		"LAST_NAME": "Apellido",
+		"DOB": "Fecha de nacimiento",
 		"ID": "Cédula",
 		"PASSPORT": "Número de pasaporte",
 		"NATIONALITY": "Nacionalidad",

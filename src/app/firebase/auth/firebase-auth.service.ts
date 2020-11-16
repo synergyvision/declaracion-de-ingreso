@@ -5,19 +5,20 @@ import { DataStore } from "../../shell/data-store";
 import { FirebaseProfileModel } from "./profile/firebase-profile.model";
 import { Platform } from "@ionic/angular";
 
-import { User, auth } from "firebase/app";
+import firebase, { User, auth } from "firebase/app";
 import {
 	cfaSignIn,
 	cfaSignOut,
 	mapUserToUserInfo,
 } from "capacitor-firebase-auth";
 import { AngularFireDatabase, AngularFireObject } from "@angular/fire/database";
-import { take } from "rxjs/operators";
+import { map, take, tap } from "rxjs/operators";
+import { Plugins } from "@capacitor/core";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseAuthService {
 	currentUser: User;
-	profile: AngularFireObject<FirebaseProfileModel> | null = null;
+	profile: AngularFireObject<FirebaseProfileModel>;
 	userProviderAdditionalInfo: any;
 	profileDataStore: DataStore<FirebaseProfileModel>;
 	redirectResult: Subject<any> = new Subject<any>();
@@ -37,6 +38,7 @@ export class FirebaseAuthService {
 			} else {
 				// No user is signed in.
 				this.currentUser = null;
+				this.profile = null;
 			}
 		});
 
@@ -66,13 +68,13 @@ export class FirebaseAuthService {
 		if (this.profile != null) {
 			return this.profile.valueChanges();
 		} else {
-			return of(null);
+			return of({} as FirebaseProfileModel);
 		}
 	}
 
 	// Get the currently signed-in user
-	getLoggedInUser() {
-		return this.currentUser;
+	getAuthState() {
+		return this.angularFire.authState;
 	}
 
 	signOut(): Observable<any> {
@@ -87,14 +89,28 @@ export class FirebaseAuthService {
 		email: string,
 		password: string
 	): Promise<auth.UserCredential> {
-		return this.angularFire.signInWithEmailAndPassword(email, password);
+		return this.angularFire
+			.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+			.then(() => {
+				return this.angularFire.signInWithEmailAndPassword(
+					email,
+					password
+				);
+			});
 	}
 
 	signUpWithEmail(
 		email: string,
 		password: string
 	): Promise<auth.UserCredential> {
-		return this.angularFire.createUserWithEmailAndPassword(email, password);
+		return this.angularFire
+			.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+			.then(() => {
+				return this.angularFire.createUserWithEmailAndPassword(
+					email,
+					password
+				);
+			});
 	}
 
 	socialSignIn(

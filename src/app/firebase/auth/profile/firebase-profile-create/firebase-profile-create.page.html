@@ -64,6 +64,32 @@
 				</ng-container>
 			</div>
 
+			<!-- ################## DOB ################## -->
+
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.DOB' | translate }}</ion-label
+				>
+				<ion-datetime
+					formControlName="dob"
+					clearInput
+					displayFormat="DD/MM/YYYY"
+				></ion-datetime>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.dob"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('dob').hasError(validation.type) && (profileForm.get('dob').dirty || profileForm.get('dob').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
 			<!-- ################## SEX ################## -->
 
 			<hr />

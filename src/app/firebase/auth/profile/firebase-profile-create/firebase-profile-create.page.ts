@@ -31,6 +31,14 @@ export class FirebaseProfileCreatePage implements OnInit {
 				}),
 			},
 		],
+		dob: [
+			{
+				type: "required",
+				message: this.shared.translateText("validation.REQUIRED", {
+					text: this.shared.translateText("fields.DOB"),
+				}),
+			},
+		],
 		id: [
 			{
 				type: "required",
@@ -108,6 +116,7 @@ export class FirebaseProfileCreatePage implements OnInit {
 				"",
 				Validators.compose([Validators.required])
 			),
+			dob: new FormControl("", Validators.compose([Validators.required])),
 			sex: new FormControl(
 				"male",
 				Validators.compose([Validators.required])

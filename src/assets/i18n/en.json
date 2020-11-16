@@ -1,6 +1,21 @@
 {
 	"AND": "and",
 	"LOADING": "Loading...",
+	"FORMATTED_DOB": "{{ month }} {{ day }}, {{ year }}",
+	"MONTH": [
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December"
+	],
 	"validation": {
 		"REQUIRED": "{{ text }} is required.",
 		"MIN_LEN": "{{ text }} must be at least {{ value }} characters long.",
@@ -17,6 +32,7 @@
 		"CONFIRM_PW": "Confirm Password",
 		"NAME": "Name",
 		"LAST_NAME": "Last name",
+		"DOB": "Date of birth",
 		"ID": "Venezuelan ID number",
 		"PASSPORT": "Passport number",
 		"NATIONALITY": "Nationality",

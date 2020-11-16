@@ -8,7 +8,7 @@ import {
 } from "@angular/router";
 import { Observable } from "rxjs";
 import { FirebaseAuthService } from "./firebase-auth.service";
-import { map, take } from "rxjs/operators";
+import { map, switchMap, take, tap } from "rxjs/operators";
 
 @Injectable({
 	providedIn: "root",
@@ -23,15 +23,19 @@ export class ProfileGuard implements CanActivate {
 		| Promise<boolean | UrlTree>
 		| boolean
 		| UrlTree {
-		return this.firebaseAuthService.getProfileDataSource().pipe(
-			take(1),
-			map((profile) => {
-				if (profile != null) {
-					return true;
-				} else {
-					this.router.navigate(["auth/profile/create"]);
-					return false;
-				}
+		console.log("guard");
+		return this.firebaseAuthService.getAuthState().pipe(
+			switchMap(() => {
+				return this.firebaseAuthService.getProfileDataSource().pipe(
+					map((profile) => {
+						if (profile != null) {
+							return true;
+						} else {
+							this.router.navigate(["auth/profile/create"]);
+							return false;
+						}
+					})
+				);
 			})
 		);
 	}

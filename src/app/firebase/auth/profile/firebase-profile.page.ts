@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FirebaseProfileModel } from "./firebase-profile.model";
 import { FirebaseAuthService } from "../firebase-auth.service";
 import { Subscription } from "rxjs";
+import { SharedService } from "../../../shared/shared.service";
 import {
 	IResolvedRouteData,
 	ResolverHelper,
@@ -28,7 +29,8 @@ export class FirebaseProfilePage implements OnInit {
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		public authService: FirebaseAuthService
+		public authService: FirebaseAuthService,
+		private shared: SharedService
 	) {}
 
 	ngOnInit() {
@@ -66,5 +68,16 @@ export class FirebaseProfilePage implements OnInit {
 	// Since ngOnDestroy might not fire when you navigate from the current page, use ionViewWillLeave to cleanup Subscriptions
 	ionViewWillLeave(): void {
 		this.subscriptions.unsubscribe();
+	}
+
+	getUserDOB() {
+		const day = new Date(this.user.dob).getDate().toString();
+		const month = new Date(this.user.dob).getMonth().toString();
+		const year = new Date(this.user.dob).getFullYear().toString();
+		return this.shared.translateText("FORMATTED_DOB", {
+			day,
+			month: this.shared.translateText("MONTH")[month],
+			year,
+		});
 	}
 }

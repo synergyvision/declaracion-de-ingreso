@@ -6,7 +6,7 @@ import { ProfileGuard } from "./firebase/auth/profile.guard";
 const routes: Routes = [
 	{
 		path: "",
-		redirectTo: "/auth/login",
+		redirectTo: "/app/categories",
 		pathMatch: "full",
 	},
 	{
@@ -41,7 +41,7 @@ const routes: Routes = [
 		path: "app",
 		loadChildren: () =>
 			import("./tabs/tabs.module").then((m) => m.TabsPageModule),
-		canActivate: [AuthGuard, ProfileGuard],
+		canActivate: [AuthGuard],
 	},
 	{
 		path: "contact-card",

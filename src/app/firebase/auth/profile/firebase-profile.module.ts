@@ -12,35 +12,35 @@ import { SharedModule } from "../../../shared/shared.module";
 import { ProfileGuard } from "../profile.guard";
 
 const routes: Routes = [
-  {
-    path: "",
-    component: FirebaseProfilePage,
-    canActivate: [AuthGuard, ProfileGuard],
-    resolve: {
-      data: FirebaseProfileResolver,
-    },
-  },
-  {
-    path: "create",
-    loadChildren: () =>
-      import("./firebase-profile-create/firebase-profile-create.module").then(
-        (m) => m.FirebaseProfileCreatePageModule
-      ),
-    canActivate: [AuthGuard, NoProfileGuard],
-  },
+	{
+		path: "",
+		component: FirebaseProfilePage,
+		canActivate: [ProfileGuard],
+		resolve: {
+			data: FirebaseProfileResolver,
+		},
+	},
+	{
+		path: "create",
+		loadChildren: () =>
+			import(
+				"./firebase-profile-create/firebase-profile-create.module"
+			).then((m) => m.FirebaseProfileCreatePageModule),
+		canActivate: [NoProfileGuard],
+	},
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    ComponentsModule,
-  ],
-  declarations: [FirebaseProfilePage],
-  providers: [AuthGuard, FirebaseProfileResolver],
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		SharedModule,
+		IonicModule,
+		RouterModule.forChild(routes),
+		ComponentsModule,
+	],
+	declarations: [FirebaseProfilePage],
+	providers: [AuthGuard, FirebaseProfileResolver],
 })
 export class FirebaseProfilePageModule {}

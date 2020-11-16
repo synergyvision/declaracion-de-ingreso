@@ -7,40 +7,45 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireModule } from "@angular/fire";
 import { environment } from "../../../environments/environment";
 import { FirebaseAuthService } from "./firebase-auth.service";
+import { NoAuthGuard } from "./no-auth.guard";
+import { AuthGuard } from "./auth.guard";
 
 const routes: Routes = [
-  {
-    path: "login",
-    loadChildren: () =>
-      import("./sign-in/firebase-sign-in.module").then(
-        (m) => m.FirebaseSignInPageModule
-      ),
-  },
-  {
-    path: "signup",
-    loadChildren: () =>
-      import("./sign-up/firebase-sign-up.module").then(
-        (m) => m.FirebaseSignUpPageModule
-      ),
-  },
-  {
-    path: "profile",
-    loadChildren: () =>
-      import("./profile/firebase-profile.module").then(
-        (m) => m.FirebaseProfilePageModule
-      ),
-  },
+	{
+		path: "login",
+		loadChildren: () =>
+			import("./sign-in/firebase-sign-in.module").then(
+				(m) => m.FirebaseSignInPageModule
+			),
+		canActivate: [NoAuthGuard],
+	},
+	{
+		path: "signup",
+		loadChildren: () =>
+			import("./sign-up/firebase-sign-up.module").then(
+				(m) => m.FirebaseSignUpPageModule
+			),
+		canActivate: [NoAuthGuard],
+	},
+	{
+		path: "profile",
+		loadChildren: () =>
+			import("./profile/firebase-profile.module").then(
+				(m) => m.FirebaseProfilePageModule
+			),
+		canActivate: [AuthGuard],
+	},
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    ComponentsModule,
-    RouterModule.forChild(routes),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
-  ],
-  providers: [FirebaseAuthService],
+	imports: [
+		CommonModule,
+		IonicModule,
+		ComponentsModule,
+		RouterModule.forChild(routes),
+		AngularFireModule.initializeApp(environment.firebase),
+		AngularFireAuthModule,
+	],
+	providers: [FirebaseAuthService],
 })
 export class FirebaseAuthModule {}

@@ -1,6 +1,6 @@
 {
   "appId": "com.ionicthemes.declaracionDeImpuesto",
-  "appName": "Ionic5FullApp",
+  "appName": "Declaración de Impuesto",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

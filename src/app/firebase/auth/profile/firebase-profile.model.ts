@@ -3,6 +3,7 @@ import { ShellModel } from "../../../shell/data-store";
 export class FirebaseProfileModel extends ShellModel {
 	name: string;
 	lastName: string;
+	dob: string;
 	sex: string;
 	id: string;
 	passport: string;
