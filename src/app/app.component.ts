@@ -3,6 +3,8 @@ import { Plugins } from "@capacitor/core";
 const { SplashScreen } = Plugins;
 import { TranslateService, LangChangeEvent } from "@ngx-translate/core";
 import { HistoryHelperService } from "./utils/history-helper.service";
+import { FirebaseAuthService } from "./firebase/auth/firebase-auth.service";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: "app-root",
@@ -74,7 +76,9 @@ export class AppComponent {
 	// Inject HistoryHelperService in the app.components.ts so its available app-wide
 	constructor(
 		public translate: TranslateService,
-		public historyHelper: HistoryHelperService
+		public historyHelper: HistoryHelperService,
+		private authService: FirebaseAuthService,
+		private router: Router
 	) {
 		this.initializeApp();
 		this.setLanguage();
@@ -100,5 +104,19 @@ export class AppComponent {
 		// this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
 		//   this.textDir = (event.lang === 'ar' || event.lang === 'iw') ? 'rtl' : 'ltr';
 		// });
+	}
+
+	signOut() {
+		this.authService.signOut().subscribe(
+			() => {
+				// Sign-out successful.
+				// Replace state as we are no longer authorized to access profile page.
+				this.authService.clearProfile();
+				this.router.navigate(["auth/login"], { replaceUrl: true });
+			},
+			(error) => {
+				console.log("signout error", error);
+			}
+		);
 	}
 }

@@ -1,12 +1,16 @@
 <ion-header>
-	<ion-toolbar color="primary">
-		<ion-title>{{ 'profile.PERSONAL_INFO' | translate }}</ion-title>
+	<ion-toolbar>
+		<ion-title>{{ 'profile.EDIT' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button [routerLink]="['/auth/profile']"
+				><ion-icon slot="icon-only" name="close-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="profile-content">
-	<h2 class="auth-title">{{ 'profile.ALMOST' | translate }}</h2>
-	<form [formGroup]="profileForm" (ngSubmit)="doCreateProfile()">
+	<form [formGroup]="profileForm" (ngSubmit)="doUpdateProfile()">
 		<ion-list class="inputs-list" lines="full">
 			<!-- ################## NAME ################## -->
 
@@ -97,7 +101,9 @@
 			<hr />
 			<hr />
 			<hr />
-			<ion-label>{{ 'fields.SEX' | translate }}</ion-label>
+			<ion-label position="floating"
+				>{{ 'fields.SEX' | translate }}</ion-label
+			>
 			<ion-radio-group formControlName="sex">
 				<ion-item class="input-item">
 					<ion-label>{{ 'fields.MALE' | translate }}</ion-label>
@@ -317,7 +323,7 @@
 			type="submit"
 			expand="block"
 			[disabled]="!profileForm.valid"
-			>OK</ion-button
+			>{{ 'profile.SAVE' | translate }}</ion-button
 		>
 	</form>
 </ion-content>

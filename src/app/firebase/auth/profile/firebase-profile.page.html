@@ -1,8 +1,13 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-title>Perfil</ion-title>
+		<ion-title>{{ 'profile.PROFILE' | translate }}</ion-title>
 		<ion-buttons slot="start">
 			<ion-back-button defaultHref="app/categories"></ion-back-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button (click)="editPopoverMenu($event)"
+				><ion-icon slot="icon-only" name="create-outline"></ion-icon
+			></ion-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
@@ -216,10 +221,12 @@
 			<ion-button
 				class="sign-out-btn"
 				expand="block"
-				fill="outline"
-				color="bright-blue"
-				(click)="signOut()"
-				>Sign out</ion-button
+				fill="solid"
+				color="danger"
+				(click)="deleteUser()"
+			>
+				<ion-icon slot="start" name="trash-outline"></ion-icon>
+				{{ 'profile.DELETE' | translate }}</ion-button
 			>
 		</ion-col>
 	</ion-row>

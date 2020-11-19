@@ -42,7 +42,9 @@
 		"FEMALE": "Femenino",
 		"PROFESSION": "Profesión",
 		"COUNTRY_OF_ORIGIN": "Pais de origen",
-		"COUNTRY_OF_RESIDENCE": "Pais de residencia"
+		"COUNTRY_OF_RESIDENCE": "Pais de residencia",
+		"DONE": "Listo",
+		"CANCEL": "Cancelar"
 	},
 	"signIn": {
 		"SIGN_IN": "Iniciar sesión",
@@ -66,15 +68,28 @@
 		"RESET": "Recuperar contraseña"
 	},
 	"profile": {
+		"PROFILE": "Perfil",
 		"PERSONAL_INFO": "Información personal",
 		"ALMOST": "Ya casi, sólo unas preguntas más...",
-		"CREATING": "Guardando Información personal..."
+		"CREATING": "Guardando Información personal...",
+		"EDIT": "Editar perfil",
+		"RETRIEVING": "Buscando su información...",
+		"SAVE": "Guardar cambios",
+		"UPDATING": "Guardando cambios...",
+		"DELETE": "Borrar usuario",
+		"DELETE_WARNING": "ADVERTENCIA",
+		"DELETE_MSG": "Borrar tu cuenta removerá toda tu información guardada en nuestra base de datos. Esta acción es irreversible.",
+		"DELETING": "Borrando..."
+	},
+	"menu": {
+		"SIGN_OUT": "Cerrar sesión"
 	},
 	"error": {
 		"ERROR": "¡Ups!",
 		"NO_USER": "Error de usuario y contraseña.",
 		"IN_USE": "El email ya se encuentra en uso.",
 		"NOT_ALLOWED": "Acceso denegado.",
+		"DELETE_SIGN_OUT": "Esta acción requiere que haya iniciado sesión recientemente, inicie sesión e intentelo nuevamente.",
 		"UNEXPECTED": "Ha ocurrido un error inesperado, inténtelo nuevamente más tarde.",
 		"UNKNOWN": "Ha ocurrido un error desconocido."
 	},

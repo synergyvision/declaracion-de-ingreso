@@ -7,9 +7,12 @@ import { ComponentsModule } from "../../../components/components.module";
 import { AuthGuard } from "../auth.guard";
 import { NoProfileGuard } from "../no-profile.guard";
 import { FirebaseProfilePage } from "./firebase-profile.page";
+import { ProfileEditPageModule } from "./profile-edit/profile-edit.module";
 import { FirebaseProfileResolver } from "./firebase-profile.resolver";
 import { SharedModule } from "../../../shared/shared.module";
 import { ProfileGuard } from "../profile.guard";
+import { PopoverComponent } from "./popover/popover.component";
+import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
 
 const routes: Routes = [
 	{
@@ -28,6 +31,14 @@ const routes: Routes = [
 			).then((m) => m.FirebaseProfileCreatePageModule),
 		canActivate: [NoProfileGuard],
 	},
+	{
+		path: "edit",
+		loadChildren: () =>
+			import("./profile-edit/profile-edit.module").then(
+				(m) => m.ProfileEditPageModule
+			),
+		canActivate: [ProfileGuard],
+	},
 ];
 
 @NgModule({
@@ -40,7 +51,8 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		ComponentsModule,
 	],
-	declarations: [FirebaseProfilePage],
+	entryComponents: [PopoverComponent, DeleteModalComponent],
+	declarations: [FirebaseProfilePage, PopoverComponent, DeleteModalComponent],
 	providers: [AuthGuard, FirebaseProfileResolver],
 })
 export class FirebaseProfilePageModule {}

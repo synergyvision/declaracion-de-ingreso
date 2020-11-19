@@ -8,6 +8,14 @@ import {
 	IResolvedRouteData,
 	ResolverHelper,
 } from "../../../utils/resolver-helper";
+import {
+	LoadingController,
+	ModalController,
+	PopoverController,
+} from "@ionic/angular";
+import { PopoverComponent } from "./popover/popover.component";
+import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
+import { take } from "rxjs/operators";
 
 @Component({
 	selector: "app-firebase-profile",
@@ -30,7 +38,10 @@ export class FirebaseProfilePage implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		public authService: FirebaseAuthService,
-		private shared: SharedService
+		private shared: SharedService,
+		private popoverCtrl: PopoverController,
+		private modalCtrl: ModalController,
+		private loadCtrl: LoadingController
 	) {}
 
 	ngOnInit() {
@@ -51,12 +62,81 @@ export class FirebaseProfilePage implements OnInit {
 		);
 	}
 
-	signOut() {
+	deleteUser() {
+		this.modalCtrl
+			.create({
+				component: DeleteModalComponent,
+			})
+			.then((modalEl) => {
+				modalEl.present();
+				return modalEl.onDidDismiss();
+			})
+			.then((resultData) => {
+				console.log(resultData);
+				if (resultData.role === "delete") {
+					this.loadCtrl
+						.create({
+							keyboardClose: true,
+							message: this.shared.translateText(
+								"profile.DELETING"
+							),
+						})
+						.then((loadEl) => {
+							loadEl.present();
+							this.authService
+								.getAuthState()
+								.pipe(take(1))
+								.subscribe((authState) => {
+									authState
+										.delete()
+										.then(() => {
+											this.authService
+												.deleteProfile()
+												.pipe(take(1))
+												.subscribe(() => {
+													loadEl.dismiss();
+													this.router.navigate(
+														["/auth/login"],
+														{
+															replaceUrl: true,
+														}
+													);
+												});
+										})
+										.catch((err) => {
+											if (
+												err.code ==
+												"auth/requires-recent-login"
+											) {
+												this.signOutError();
+											} else {
+												this.shared.showAlert(
+													this.shared.translateText(
+														"error.ERROR"
+													),
+													this.shared.translateText(
+														"error.UNKNOWN"
+													)
+												);
+											}
+											loadEl.dismiss();
+										});
+								});
+						});
+				}
+			});
+	}
+
+	signOutError() {
 		this.authService.signOut().subscribe(
 			() => {
-				// Sign-out successful.
-				// Replace state as we are no longer authorized to access profile page.
-				this.router.navigate(["auth/login"], { replaceUrl: true });
+				this.authService.clearProfile();
+				this.router.navigate(["auth/login"], {
+					replaceUrl: true,
+					queryParams: {
+						deleteSignOut: "true",
+					},
+				});
 			},
 			(error) => {
 				console.log("signout error", error);
@@ -83,5 +163,14 @@ export class FirebaseProfilePage implements OnInit {
 
 	getUserLength(): Array<number> {
 		return Array(10).fill(1);
+	}
+
+	async editPopoverMenu(event: any) {
+		const popover = await this.popoverCtrl.create({
+			component: PopoverComponent,
+			event,
+			translucent: true,
+		});
+		return await popover.present();
 	}
 }

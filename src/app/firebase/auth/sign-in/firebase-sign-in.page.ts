@@ -8,6 +8,7 @@ import { Subscription } from "rxjs";
 import { HistoryHelperService } from "../../../utils/history-helper.service";
 import { FirebaseAuthService } from "../firebase-auth.service";
 import { SharedService } from "../../../shared/shared.service";
+import { take } from "rxjs/operators";
 
 @Component({
 	selector: "app-firebase-sign-in",
@@ -103,6 +104,14 @@ export class FirebaseSignInPage implements OnInit {
 
 	ngOnInit(): void {
 		this.menu.enable(false);
+		this.route.queryParams.pipe(take(1)).subscribe((params) => {
+			if (params.deleteSignOut) {
+				this.shared.showAlert(
+					this.shared.translateText("error.ERROR"),
+					this.shared.translateText("error.DELETE_SIGN_OUT")
+				);
+			}
+		});
 	}
 
 	// Once the auth provider finished the authentication flow, and the auth redirect completes,

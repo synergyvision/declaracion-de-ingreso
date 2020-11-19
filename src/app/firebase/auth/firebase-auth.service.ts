@@ -85,6 +85,10 @@ export class FirebaseAuthService {
 		}
 	}
 
+	clearProfile(): void {
+		this.profile = null;
+	}
+
 	signInWithEmail(
 		email: string,
 		password: string
@@ -166,5 +170,13 @@ export class FirebaseAuthService {
 
 	createProfile(profile: FirebaseProfileModel): Observable<void> {
 		return from(this.profile.set(profile));
+	}
+
+	updateProfile(profile: FirebaseProfileModel): Observable<void> {
+		return from(this.profile.update(profile));
+	}
+
+	deleteProfile(): Observable<void> {
+		return from(this.profile.remove());
 	}
 }

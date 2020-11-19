@@ -42,7 +42,9 @@
 		"FEMALE": "Female",
 		"PROFESSION": "Profession",
 		"COUNTRY_OF_ORIGIN": "Country of origin",
-		"COUNTRY_OF_RESIDENCE": "Country of residence"
+		"COUNTRY_OF_RESIDENCE": "Country of residence",
+		"DONE": "Done",
+		"CANCEL": "Cancel"
 	},
 	"signIn": {
 		"SIGN_IN": "Sign in",
@@ -66,15 +68,28 @@
 		"RESET": "Reset password"
 	},
 	"profile": {
+		"PROFILE": "Profile",
 		"PERSONAL_INFO": "Personal information",
 		"ALMOST": "Almost there, just a few more questions...",
-		"CREATING": "Saving personal information..."
+		"CREATING": "Saving personal information...",
+		"EDIT": "Edit",
+		"RETRIEVING": "Retrieving your information...",
+		"SAVE": "Save changes",
+		"UPDATING": "Saving changes...",
+		"DELETE": "Delete user",
+		"DELETE_WARNING": "WARNING",
+		"DELETE_MSG": "Deleting your account will erase all your information stored in our database. This action is irreversible.",
+		"DELETING": "Deleting..."
+	},
+	"menu": {
+		"SIGN_OUT": "Sign out"
 	},
 	"error": {
 		"ERROR": "Oops!",
 		"NO_USER": "Email and password error.",
 		"IN_USE": "Email is already in use.",
 		"NOT_ALLOWED": "Access denied.",
+		"DELETE_SIGN_OUT": "This action requires you to have signed in recently, sign in and try again.",
 		"UNEXPECTED": "An unexpected error has occurred, try again later.",
 		"UNKNOWN": "An unknown error has occurred."
 	},
