@@ -80,4 +80,8 @@ export class FirebaseProfilePage implements OnInit {
 			year,
 		});
 	}
+
+	getUserLength(): Array<number> {
+		return Array(10).fill(1);
+	}
 }

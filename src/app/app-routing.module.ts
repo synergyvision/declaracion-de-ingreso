@@ -41,7 +41,7 @@ const routes: Routes = [
 		path: "app",
 		loadChildren: () =>
 			import("./tabs/tabs.module").then((m) => m.TabsPageModule),
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, ProfileGuard],
 	},
 	{
 		path: "contact-card",

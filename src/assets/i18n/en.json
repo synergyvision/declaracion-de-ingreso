@@ -36,7 +36,7 @@
 		"ID": "Venezuelan ID number",
 		"PASSPORT": "Passport number",
 		"NATIONALITY": "Nationality",
-		"ADDRESS": "Venezuelan address",
+		"ADDRESS": "Address",
 		"SEX": "Sex",
 		"MALE": "Male",
 		"FEMALE": "Female",
@@ -66,7 +66,7 @@
 		"RESET": "Reset password"
 	},
 	"profile": {
-		"CREATE": "Personal information",
+		"PERSONAL_INFO": "Personal information",
 		"ALMOST": "Almost there, just a few more questions...",
 		"CREATING": "Saving personal information..."
 	},

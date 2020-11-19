@@ -1,97 +1,217 @@
-<ion-header class="ion-no-border">
+<ion-header>
 	<ion-toolbar>
+		<ion-title>Perfil</ion-title>
 		<ion-buttons slot="start">
-			<ion-back-button
-				defaultHref="firebase/auth/sign-in"
-			></ion-back-button>
+			<ion-back-button defaultHref="app/categories"></ion-back-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content class="user-content">
+	<ion-list>
+		<ion-list-header style="font-size: 1.5em"
+			>{{ 'profile.PERSONAL_INFO' | translate }}</ion-list-header
+		>
+		<ng-container *ngIf="user.isShell else profileList">
+			<ion-item *ngFor="let n of getUserLength()">
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label
+								><ion-skeleton-text
+									animated
+									style="width: 50%"
+								></ion-skeleton-text
+							></ion-label>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<ion-label
+								><ion-skeleton-text animated></ion-skeleton-text
+							></ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+		</ng-container>
+		<ng-template #profileList>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.NAME' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label
+								>{{ user?.name + " " + user?.lastName
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.SEX' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label
+								>{{ user?.sex == 'male' ? ('fields.MALE' |
+								translate) : ('fields.FEMALE' | translate)
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.DOB' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ getUserDOB() }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.ID' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.id }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.PASSPORT' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.passport }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.NATIONALITY' | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.nationality }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.COUNTRY_OF_ORIGIN' | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.countryOfOrigin }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.COUNTRY_OF_RESIDENCE' | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label
+								>{{ user?.countryOfResidence }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.PROFESSION' | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.profession }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.ADDRESS' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.address }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+		</ng-template>
+	</ion-list>
 	<ion-row>
-		<ion-col class="ion-no-padding">
-			<!-- No image yet -->
-			<app-image-shell
-				class="user-image add-overlay"
-				[display]="'cover'"
-				animation="spinner"
-				[src]=""
-				[alt]="'item image'"
-			>
-				<app-aspect-ratio [ratio]="{w:1, h:1}"> </app-aspect-ratio>
-			</app-image-shell>
-		</ion-col>
-	</ion-row>
-
-	<ion-row class="user-details">
-		<ion-col class="ion-no-padding details-wrapper">
-			<h2 class="user-name">
-				<app-text-shell
-					[data]="user?.name ? user?.name + ' ' + user?.lastName : null"
-				></app-text-shell>
-			</h2>
-			<span class="user-role">
-				<app-text-shell
-					[data]="user?.dob ? getUserDOB() : null"
-				></app-text-shell>
-			</span>
-			<p class="user-description">
-				<app-text-shell
-					lines="3"
-					[data]="user?.id && user?.sex ? 'CI: ' + user?.id + ' | ' + (user?.sex == 'male' ? ('fields.MALE' | translate) : ('fields.FEMALE' | translate)) : null"
-				></app-text-shell>
-			</p>
-		</ion-col>
-	</ion-row>
-
-	<ion-row class="user-preferences-wrapper">
-		<ion-col size="12">
-			<h4 class="preference-name">{{ 'fields.PASSPORT' | translate }}</h4>
-			<p class="preference-value">
-				<app-text-shell [data]="user?.passport"></app-text-shell>
-			</p>
-		</ion-col>
-		<ion-col size="12">
-			<h4 class="preference-name">
-				{{ 'fields.NATIONALITY' | translate }}
-			</h4>
-			<p class="preference-value">
-				<app-text-shell [data]="user?.nationality"></app-text-shell>
-			</p>
-		</ion-col>
-		<ion-col size="12">
-			<h4 class="preference-name">{{ 'fields.ADDRESS' | translate }}</h4>
-			<p class="preference-value">
-				<app-text-shell [data]="user?.address"></app-text-shell>
-			</p>
-		</ion-col>
-		<ion-col size="12">
-			<h4 class="preference-name">
-				{{ 'fields.PROFESSION' | translate }}
-			</h4>
-			<p class="preference-value">
-				<app-text-shell [data]="user?.profession"></app-text-shell>
-			</p>
-		</ion-col>
-		<ion-col size="12">
-			<h4 class="preference-name">
-				{{ 'fields.COUNTRY_OF_ORIGIN' | translate }}
-			</h4>
-			<p class="preference-value">
-				<app-text-shell [data]="user?.countryOfOrigin"></app-text-shell>
-			</p>
-		</ion-col>
-		<ion-col size="12">
-			<h4 class="preference-name">
-				{{ 'fields.COUNTRY_OF_RESIDENCE' | translate }}
-			</h4>
-			<p class="preference-value">
-				<app-text-shell
-					[data]="user?.countryOfResidence"
-				></app-text-shell>
-			</p>
-		</ion-col>
 		<ion-col size="12">
 			<ion-button
 				class="sign-out-btn"

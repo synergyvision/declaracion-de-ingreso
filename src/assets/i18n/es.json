@@ -27,7 +27,7 @@
 		}
 	},
 	"fields": {
-		"EMAIL": "Email",
+		"EMAIL": "Correo electrónico",
 		"PW": "Contraseña",
 		"CONFIRM_PW": "Confirme la contraseña",
 		"NAME": "Nombre",
@@ -36,7 +36,7 @@
 		"ID": "Cédula",
 		"PASSPORT": "Número de pasaporte",
 		"NATIONALITY": "Nacionalidad",
-		"ADDRESS": "Dirección venezolana",
+		"ADDRESS": "Dirección",
 		"SEX": "Sexo",
 		"MALE": "Masculino",
 		"FEMALE": "Femenino",
@@ -66,7 +66,7 @@
 		"RESET": "Recuperar contraseña"
 	},
 	"profile": {
-		"CREATE": "Información personal",
+		"PERSONAL_INFO": "Información personal",
 		"ALMOST": "Ya casi, sólo unas preguntas más...",
 		"CREATING": "Guardando Información personal..."
 	},
