@@ -12,7 +12,7 @@ import {
 	mapUserToUserInfo,
 } from "capacitor-firebase-auth";
 import { AngularFireDatabase, AngularFireObject } from "@angular/fire/database";
-import { map, take, tap } from "rxjs/operators";
+import { map, switchMap, take, tap } from "rxjs/operators";
 import { Plugins } from "@capacitor/core";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -31,7 +31,6 @@ export class FirebaseAuthService {
 		private translate: TranslateService
 	) {
 		this.angularFire.languageCode = new Promise(() => {
-			console.log(this.translate.currentLang);
 			return this.translate.currentLang;
 		});
 		this.angularFire.onAuthStateChanged((user) => {
@@ -87,8 +86,36 @@ export class FirebaseAuthService {
 		if (this.platform.is("capacitor")) {
 			return cfaSignOut();
 		} else {
-			return from(this.angularFire.signOut());
+			return from(this.angularFire.signOut()).pipe(
+				tap(() => {
+					this.clearSignOutDate();
+					this.clearProfile();
+				})
+			);
 		}
+	}
+
+	generateSignOutDate() {
+		const date = new Date();
+		const signOutDate = new Date(date.setMonth(date.getMonth() + 1));
+		Plugins.Storage.set({
+			key: "signOutDate",
+			value: signOutDate.toString(),
+		});
+	}
+
+	getSignOutDate(): Observable<Date> {
+		return from(Plugins.Storage.get({ key: "signOutDate" })).pipe(
+			take(1),
+			switchMap((data) => {
+				const signOutDate = new Date(data.value);
+				return of(signOutDate);
+			})
+		);
+	}
+
+	clearSignOutDate() {
+		Plugins.Storage.remove({ key: "signOutDate" });
 	}
 
 	clearProfile(): void {
@@ -186,7 +213,7 @@ export class FirebaseAuthService {
 		return from(this.profile.remove());
 	}
 
-	changePassword(email: string) {
+	resetPassword(email: string) {
 		return from(this.angularFire.sendPasswordResetEmail(email));
 	}
 }

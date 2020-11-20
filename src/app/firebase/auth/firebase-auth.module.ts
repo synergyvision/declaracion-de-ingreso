@@ -9,6 +9,7 @@ import { environment } from "../../../environments/environment";
 import { FirebaseAuthService } from "./firebase-auth.service";
 import { NoAuthGuard } from "./no-auth.guard";
 import { AuthGuard } from "./auth.guard";
+import { AutoSignOutGuard } from "./auto-sign-out.guard";
 import { TranslateModule } from "@ngx-translate/core";
 
 const routes: Routes = [
@@ -34,7 +35,7 @@ const routes: Routes = [
 			import("./profile/firebase-profile.module").then(
 				(m) => m.FirebaseProfilePageModule
 			),
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, AutoSignOutGuard],
 	},
 ];
 

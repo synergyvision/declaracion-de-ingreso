@@ -14,12 +14,13 @@ import { ProfileGuard } from "../profile.guard";
 import { PopoverComponent } from "./popover/popover.component";
 import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
 import { ChangePasswordModalComponent } from "./change-password-modal/change-password-modal.component";
+import { AutoSignOutGuard } from "../auto-sign-out.guard";
 
 const routes: Routes = [
 	{
 		path: "",
 		component: FirebaseProfilePage,
-		canActivate: [ProfileGuard],
+		canActivate: [ProfileGuard, AutoSignOutGuard],
 		resolve: {
 			data: FirebaseProfileResolver,
 		},
@@ -30,7 +31,7 @@ const routes: Routes = [
 			import(
 				"./firebase-profile-create/firebase-profile-create.module"
 			).then((m) => m.FirebaseProfileCreatePageModule),
-		canActivate: [NoProfileGuard],
+		canActivate: [NoProfileGuard, AutoSignOutGuard],
 	},
 	{
 		path: "edit",
@@ -38,7 +39,7 @@ const routes: Routes = [
 			import("./profile-edit/profile-edit.module").then(
 				(m) => m.ProfileEditPageModule
 			),
-		canActivate: [ProfileGuard],
+		canActivate: [ProfileGuard, AutoSignOutGuard],
 	},
 ];
 
@@ -52,8 +53,17 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		ComponentsModule,
 	],
-	entryComponents: [PopoverComponent, DeleteModalComponent, ChangePasswordModalComponent],
-	declarations: [FirebaseProfilePage, PopoverComponent, DeleteModalComponent, ChangePasswordModalComponent],
+	entryComponents: [
+		PopoverComponent,
+		DeleteModalComponent,
+		ChangePasswordModalComponent,
+	],
+	declarations: [
+		FirebaseProfilePage,
+		PopoverComponent,
+		DeleteModalComponent,
+		ChangePasswordModalComponent,
+	],
 	providers: [AuthGuard, FirebaseProfileResolver],
 })
 export class FirebaseProfilePageModule {}

@@ -51,6 +51,7 @@
 		"WELCOME": "Welcome!",
 		"FORGOT_PW": "Forgot password?",
 		"SIGN_UP": "Sign up!",
+		"REMEMBER_ME": "Remember me",
 		"SIGNING_IN": "Signing in..."
 	},
 	"signUp": {

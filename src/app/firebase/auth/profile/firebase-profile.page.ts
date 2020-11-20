@@ -130,7 +130,6 @@ export class FirebaseProfilePage implements OnInit {
 	signOutError() {
 		this.authService.signOut().subscribe(
 			() => {
-				this.authService.clearProfile();
 				this.router.navigate(["auth/login"], {
 					replaceUrl: true,
 					queryParams: {
@@ -196,7 +195,7 @@ export class FirebaseProfilePage implements OnInit {
 										take(1),
 										switchMap((authState) => {
 											console.log(authState);
-											return this.authService.changePassword(
+											return this.authService.resetPassword(
 												authState.email
 											);
 										})

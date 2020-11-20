@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthGuard } from "./firebase/auth/auth.guard";
 import { ProfileGuard } from "./firebase/auth/profile.guard";
+import { AutoSignOutGuard } from "./firebase/auth/auto-sign-out.guard";
 
 const routes: Routes = [
 	{
@@ -41,7 +42,7 @@ const routes: Routes = [
 		path: "app",
 		loadChildren: () =>
 			import("./tabs/tabs.module").then((m) => m.TabsPageModule),
-		canActivate: [AuthGuard, ProfileGuard],
+		canActivate: [AuthGuard, ProfileGuard, AutoSignOutGuard],
 	},
 	{
 		path: "contact-card",

@@ -3,12 +3,18 @@ import { Location } from "@angular/common";
 import { Validators, FormGroup, FormControl } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MenuController, LoadingController } from "@ionic/angular";
-import { Subscription } from "rxjs";
+import { Subscription, from } from "rxjs";
 
 import { HistoryHelperService } from "../../../utils/history-helper.service";
 import { FirebaseAuthService } from "../firebase-auth.service";
 import { SharedService } from "../../../shared/shared.service";
 import { take } from "rxjs/operators";
+import { Plugins } from "@capacitor/core";
+
+interface RememberMeModel {
+	user: string | null;
+	rememberMe: boolean;
+}
 
 @Component({
 	selector: "app-firebase-sign-in",
@@ -79,6 +85,7 @@ export class FirebaseSignInPage implements OnInit {
 					Validators.required,
 				])
 			),
+			rememberMe: new FormControl(false),
 		});
 
 		// Get firebase authentication redirect result invoken when using signInWithRedirect()
@@ -100,6 +107,20 @@ export class FirebaseSignInPage implements OnInit {
 				this.presentLoading(authProvider);
 			}
 		});
+		from(Plugins.Storage.get({ key: "rememberMe" }))
+			.pipe(take(1))
+			.subscribe(
+				(data) => {
+					if (data.value != null) {
+						const { user, rememberMe } = JSON.parse(data.value);
+						this.loginForm.controls["email"].setValue(user);
+						this.loginForm.controls["rememberMe"].setValue(
+							rememberMe
+						);
+					}
+				},
+				(err) => console.log(err)
+			);
 	}
 
 	ngOnInit(): void {
@@ -188,7 +209,14 @@ export class FirebaseSignInPage implements OnInit {
 						this.loginForm.value["password"]
 					)
 					.then((user) => {
-						// navigate to user profile
+						this.authService.generateSignOutDate();
+						const { rememberMe, email } = this.loginForm.value;
+						let dataObj: RememberMeModel = {
+							rememberMe,
+							user: rememberMe ? email : null,
+						};
+						const data = JSON.stringify(dataObj);
+						Plugins.Storage.set({ key: "rememberMe", value: data });
 						loadEl.dismiss();
 						this.redirectLoggedUserToProfilePage();
 					})

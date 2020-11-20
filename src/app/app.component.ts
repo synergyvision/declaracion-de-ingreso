@@ -109,9 +109,6 @@ export class AppComponent {
 	signOut() {
 		this.authService.signOut().subscribe(
 			() => {
-				// Sign-out successful.
-				// Replace state as we are no longer authorized to access profile page.
-				this.authService.clearProfile();
 				this.router.navigate(["auth/login"], { replaceUrl: true });
 			},
 			(error) => {
