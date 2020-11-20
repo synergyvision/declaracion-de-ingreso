@@ -9,6 +9,7 @@ import { environment } from "../../../environments/environment";
 import { FirebaseAuthService } from "./firebase-auth.service";
 import { NoAuthGuard } from "./no-auth.guard";
 import { AuthGuard } from "./auth.guard";
+import { TranslateModule } from "@ngx-translate/core";
 
 const routes: Routes = [
 	{
@@ -45,6 +46,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFireAuthModule,
+		TranslateModule,
 	],
 	providers: [FirebaseAuthService],
 })

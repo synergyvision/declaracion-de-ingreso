@@ -73,6 +73,8 @@
 		"ALMOST": "Almost there, just a few more questions...",
 		"CREATING": "Saving personal information...",
 		"EDIT": "Edit",
+		"CHANGE_PW": "Change password",
+		"CHANGE_PW_MSG": "Are you sure you want to reset your password?",
 		"RETRIEVING": "Retrieving your information...",
 		"SAVE": "Save changes",
 		"UPDATING": "Saving changes...",

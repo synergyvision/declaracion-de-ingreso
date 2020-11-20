@@ -14,6 +14,7 @@ import {
 import { AngularFireDatabase, AngularFireObject } from "@angular/fire/database";
 import { map, take, tap } from "rxjs/operators";
 import { Plugins } from "@capacitor/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseAuthService {
@@ -26,8 +27,13 @@ export class FirebaseAuthService {
 	constructor(
 		public angularFire: AngularFireAuth,
 		public platform: Platform,
-		private db: AngularFireDatabase
+		private db: AngularFireDatabase,
+		private translate: TranslateService
 	) {
+		this.angularFire.languageCode = new Promise(() => {
+			console.log(this.translate.currentLang);
+			return this.translate.currentLang;
+		});
 		this.angularFire.onAuthStateChanged((user) => {
 			if (user) {
 				// User is signed in.
@@ -178,5 +184,9 @@ export class FirebaseAuthService {
 
 	deleteProfile(): Observable<void> {
 		return from(this.profile.remove());
+	}
+
+	changePassword(email: string) {
+		return from(this.angularFire.sendPasswordResetEmail(email));
 	}
 }

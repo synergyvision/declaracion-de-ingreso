@@ -15,7 +15,8 @@ import {
 } from "@ionic/angular";
 import { PopoverComponent } from "./popover/popover.component";
 import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
-import { take } from "rxjs/operators";
+import { ChangePasswordModalComponent } from "./change-password-modal/change-password-modal.component";
+import { switchMap, take } from "rxjs/operators";
 
 @Component({
 	selector: "app-firebase-profile",
@@ -72,7 +73,6 @@ export class FirebaseProfilePage implements OnInit {
 				return modalEl.onDidDismiss();
 			})
 			.then((resultData) => {
-				console.log(resultData);
 				if (resultData.role === "delete") {
 					this.loadCtrl
 						.create({
@@ -165,12 +165,53 @@ export class FirebaseProfilePage implements OnInit {
 		return Array(10).fill(1);
 	}
 
-	async editPopoverMenu(event: any) {
-		const popover = await this.popoverCtrl.create({
-			component: PopoverComponent,
-			event,
-			translucent: true,
-		});
-		return await popover.present();
+	editPopoverMenu(event: any) {
+		this.popoverCtrl
+			.create({
+				component: PopoverComponent,
+				event,
+				translucent: true,
+			})
+			.then((popoverEl) => {
+				popoverEl.present();
+				return popoverEl.onDidDismiss();
+			})
+			.then((popoverResultData) => {
+				if (popoverResultData.role == "editProfile") {
+					this.router.navigate(["auth/profile/edit"]);
+				} else if (popoverResultData.role == "changePassword") {
+					this.modalCtrl
+						.create({
+							component: ChangePasswordModalComponent,
+						})
+						.then((modalEl) => {
+							modalEl.present();
+							return modalEl.onDidDismiss();
+						})
+						.then((modalResultData) => {
+							if (modalResultData.role == "changePassword") {
+								this.authService
+									.getAuthState()
+									.pipe(
+										take(1),
+										switchMap((authState) => {
+											console.log(authState);
+											return this.authService.changePassword(
+												authState.email
+											);
+										})
+									)
+									.subscribe(
+										() => {
+											console.log("ok");
+										},
+										(err) => {
+											console.log(err);
+										}
+									);
+							}
+						});
+				}
+			});
 	}
 }

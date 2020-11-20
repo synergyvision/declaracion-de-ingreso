@@ -13,6 +13,7 @@ import { SharedModule } from "../../../shared/shared.module";
 import { ProfileGuard } from "../profile.guard";
 import { PopoverComponent } from "./popover/popover.component";
 import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
+import { ChangePasswordModalComponent } from "./change-password-modal/change-password-modal.component";
 
 const routes: Routes = [
 	{
@@ -51,8 +52,8 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		ComponentsModule,
 	],
-	entryComponents: [PopoverComponent, DeleteModalComponent],
-	declarations: [FirebaseProfilePage, PopoverComponent, DeleteModalComponent],
+	entryComponents: [PopoverComponent, DeleteModalComponent, ChangePasswordModalComponent],
+	declarations: [FirebaseProfilePage, PopoverComponent, DeleteModalComponent, ChangePasswordModalComponent],
 	providers: [AuthGuard, FirebaseProfileResolver],
 })
 export class FirebaseProfilePageModule {}

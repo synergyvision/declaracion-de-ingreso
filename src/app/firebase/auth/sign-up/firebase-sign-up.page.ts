@@ -59,7 +59,7 @@ export class FirebaseSignUpPage implements OnInit {
 			{
 				type: "required",
 				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("signUp.CONFIRM_PW"),
+					text: this.shared.translateText("fields.CONFIRM_PW"),
 				}),
 			},
 		],

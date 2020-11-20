@@ -73,6 +73,8 @@
 		"ALMOST": "Ya casi, sólo unas preguntas más...",
 		"CREATING": "Guardando Información personal...",
 		"EDIT": "Editar perfil",
+		"CHANGE_PW": "Cambiar contraseña",
+		"CHANGE_PW_MSG": "¿Está seguro que desea cambiar su contraseña?",
 		"RETRIEVING": "Buscando su información...",
 		"SAVE": "Guardar cambios",
 		"UPDATING": "Guardando cambios...",
