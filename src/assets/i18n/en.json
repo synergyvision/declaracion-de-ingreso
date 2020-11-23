@@ -19,6 +19,13 @@
 	"validation": {
 		"REQUIRED": "{{ text }} is required.",
 		"MIN_LEN": "{{ text }} must be at least {{ value }} characters long.",
+		"MAX_LEN": "{{ text }} can't be longer than {{ value }} characters.",
+		"NAMES": "{{ text }} cannot contain special characters.",
+		"NUMBERS": "{{ text }} can only contain numbers.",
+		"SPECIAL_CHAR": "{{ text }} cannot contain special characters.",
+		"passport": {
+			"PATTERN": "Enter a valid passport."
+		},
 		"email": {
 			"PATTERN": "Enter a valid email."
 		},

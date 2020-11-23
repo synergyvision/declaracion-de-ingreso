@@ -30,7 +30,6 @@ export class AutoSignOutGuard implements CanActivate {
 		return this.firebaseAuthService.getSignOutDate().pipe(
 			take(1),
 			switchMap((signOutDate) => {
-				console.log(date, signOutDate);
 				if (date > signOutDate) {
 					return this.firebaseAuthService.signOut().pipe(
 						map(() => {

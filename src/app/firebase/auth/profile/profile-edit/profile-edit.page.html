@@ -125,11 +125,12 @@
 					>{{ 'fields.ID' | translate }}</ion-label
 				>
 				<ion-input
-					type="text"
+					type="number"
 					formControlName="id"
 					clearInput
 					autocapitalize="off"
-					inputmode="text"
+					inputmode="numeric"
+					(keypress)="noDecimals($event)"
 				></ion-input>
 			</ion-item>
 			<div class="error-container">

@@ -19,6 +19,13 @@
 	"validation": {
 		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
 		"MIN_LEN": "El campo \"{{ text }}\" debe ser de al menos {{ value }} caracteres.",
+		"MAX_LEN": "El campo \"{{ text }}\" debe tener máximo {{ value }} caracteres.",
+		"NAMES": "El campo \"{{ text }}\" no puede contener caracteres especiales.",
+		"NUMBERS": "El campo \"{{ text }}\" sólo admite números.",
+		"SPECIAL_CHAR": "El campo \"{{ text }}\" no puede contener caracteres especiales.",
+		"passport": {
+			"PATTERN": "Ingrese un pasaporte válido."
+		},
 		"email": {
 			"PATTERN": "Ingrese un email válido."
 		},

@@ -51,7 +51,7 @@ export class FirebaseSignUpPage implements OnInit {
 				type: "minlength",
 				message: this.shared.translateText("validation.MIN_LEN", {
 					text: this.shared.translateText("fields.PW"),
-					value: "5",
+					value: this.shared.validation.password.MIN_LENGTH.toString(),
 				}),
 			},
 		],
@@ -106,9 +106,7 @@ export class FirebaseSignUpPage implements OnInit {
 				"",
 				Validators.compose([
 					Validators.required,
-					Validators.pattern(
-						"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
-					),
+					Validators.pattern(this.shared.validation.pattern.emails),
 				])
 			),
 			matching_passwords: this.matching_passwords_group,

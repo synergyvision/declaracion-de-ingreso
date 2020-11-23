@@ -14,90 +14,7 @@ import { LoadingController } from "@ionic/angular";
 export class FirebaseProfileCreatePage implements OnInit {
 	profileForm: FormGroup;
 
-	validation_messages = {
-		name: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.NAME"),
-				}),
-			},
-		],
-		lastName: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.LAST_NAME"),
-				}),
-			},
-		],
-		dob: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.DOB"),
-				}),
-			},
-		],
-		id: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.ID"),
-				}),
-			},
-		],
-		passport: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.PASSPORT"),
-				}),
-			},
-		],
-		nationality: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.NATIONALITY"),
-				}),
-			},
-		],
-		address: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.ADDRESS"),
-				}),
-			},
-		],
-		profession: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.PROFESSION"),
-				}),
-			},
-		],
-		countryOfOrigin: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText("fields.COUNTRY_OF_ORIGIN"),
-				}),
-			},
-		],
-		countryOfResidence: [
-			{
-				type: "required",
-				message: this.shared.translateText("validation.REQUIRED", {
-					text: this.shared.translateText(
-						"fields.COUNTRY_OF_RESIDENCE"
-					),
-				}),
-			},
-		],
-	};
+	validation_messages = this.shared.profileValidationMessages;
 
 	constructor(
 		private shared: SharedService,
@@ -107,36 +24,66 @@ export class FirebaseProfileCreatePage implements OnInit {
 	) {}
 
 	ngOnInit() {
+		const validation = this.shared.validation;
 		this.profileForm = new FormGroup({
 			name: new FormControl(
 				"",
-				Validators.compose([Validators.required])
+				Validators.compose([
+					Validators.required,
+					Validators.maxLength(validation.name.MAX_LENGTH),
+					Validators.pattern(validation.pattern.names),
+				])
 			),
 			lastName: new FormControl(
 				"",
-				Validators.compose([Validators.required])
+				Validators.compose([
+					Validators.required,
+					Validators.maxLength(validation.lastName.MAX_LENGTH),
+					Validators.pattern(validation.pattern.names),
+				])
 			),
 			dob: new FormControl("", Validators.compose([Validators.required])),
-			sex: new FormControl(
-				"male",
-				Validators.compose([Validators.required])
+			sex: new FormControl("", Validators.compose([Validators.required])),
+			id: new FormControl(
+				"",
+				Validators.compose([
+					Validators.required,
+					Validators.maxLength(validation.id.MAX_LENGTH),
+					Validators.pattern(validation.pattern.numbers),
+				])
 			),
-			id: new FormControl("", Validators.compose([Validators.required])),
 			passport: new FormControl(
 				"",
-				Validators.compose([Validators.required])
+				Validators.compose([
+					Validators.required,
+					Validators.minLength(validation.passport.MIN_LENGTH),
+					Validators.maxLength(validation.passport.MAX_LENGTH),
+					Validators.pattern(validation.pattern.passports),
+				])
 			),
 			nationality: new FormControl(
 				"",
-				Validators.compose([Validators.required])
+				Validators.compose([
+					Validators.required,
+					Validators.maxLength(validation.nationality.MAX_LENGTH),
+					Validators.pattern(validation.pattern.names),
+				])
 			),
 			address: new FormControl(
 				"",
-				Validators.compose([Validators.required])
+				Validators.compose([
+					Validators.required,
+					Validators.maxLength(validation.address.MAX_LENGTH),
+					Validators.pattern(validation.pattern.specialChar),
+				])
 			),
 			profession: new FormControl(
 				"",
-				Validators.compose([Validators.required])
+				Validators.compose([
+					Validators.required,
+					Validators.maxLength(validation.profession.MAX_LENGTH),
+					Validators.pattern(validation.pattern.names),
+				])
 			),
 			countryOfOrigin: new FormControl(
 				"",
@@ -173,5 +120,14 @@ export class FirebaseProfileCreatePage implements OnInit {
 					},
 				});
 			});
+	}
+
+	noDecimals(event: any) {
+		const pattern = /[.,]/;
+		let inputChar = String.fromCharCode(event.charCode);
+
+		if (pattern.test(inputChar)) {
+			event.preventDefault();
+		}
 	}
 }
