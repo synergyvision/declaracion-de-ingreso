@@ -1,4 +1,10 @@
-import { Component, OnInit, HostBinding } from "@angular/core";
+import {
+	Component,
+	ElementRef,
+	OnInit,
+	HostBinding,
+	ViewChild,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FirebaseProfileModel } from "./firebase-profile.model";
 import { FirebaseAuthService } from "../firebase-auth.service";
@@ -17,6 +23,34 @@ import { PopoverComponent } from "./popover/popover.component";
 import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
 import { ChangePasswordModalComponent } from "./change-password-modal/change-password-modal.component";
 import { switchMap, take } from "rxjs/operators";
+import { CountryService } from "../../../country/country.service";
+import {
+	CameraResultType,
+	CameraSource,
+	Capacitor,
+	Plugins,
+} from "@capacitor/core";
+
+function base64toBlob(base64Data, contentType) {
+	contentType = contentType || "";
+	const sliceSize = 1024;
+	const byteCharacters = atob(base64Data);
+	const bytesLength = byteCharacters.length;
+	const slicesCount = Math.ceil(bytesLength / sliceSize);
+	const byteArrays = new Array(slicesCount);
+
+	for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+		const begin = sliceIndex * sliceSize;
+		const end = Math.min(begin + sliceSize, bytesLength);
+
+		const bytes = new Array(end - begin);
+		for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
+			bytes[i] = byteCharacters[offset].charCodeAt(0);
+		}
+		byteArrays[sliceIndex] = new Uint8Array(bytes);
+	}
+	return new Blob(byteArrays, { type: contentType });
+}
 
 @Component({
 	selector: "app-firebase-profile",
@@ -30,6 +64,7 @@ export class FirebaseProfilePage implements OnInit {
 	// Gather all component subscription in one place. Can be one Subscription or multiple (chained using the Subscription.add() method)
 	subscriptions: Subscription;
 	user: FirebaseProfileModel;
+	@ViewChild("filePicker") filePickerRef: ElementRef<HTMLInputElement>;
 
 	@HostBinding("class.is-shell") get isShell() {
 		return this.user && this.user.isShell ? true : false;
@@ -42,7 +77,8 @@ export class FirebaseProfilePage implements OnInit {
 		private shared: SharedService,
 		private popoverCtrl: PopoverController,
 		private modalCtrl: ModalController,
-		private loadCtrl: LoadingController
+		private loadCtrl: LoadingController,
+		private countryService: CountryService
 	) {}
 
 	ngOnInit() {
@@ -212,5 +248,62 @@ export class FirebaseProfilePage implements OnInit {
 						});
 				}
 			});
+	}
+
+	getCountryName(alpha3: string): string {
+		return this.countryService.getCountryName(alpha3);
+	}
+
+	showProfilePictureModal() {
+		if (!Capacitor.isPluginAvailable("Camera")) {
+			this.filePickerRef.nativeElement.click();
+			return;
+		}
+		Plugins.Camera.getPhoto({
+			quality: 50,
+			source: CameraSource.Prompt,
+			correctOrientation: true,
+			width: 600,
+			resultType: CameraResultType.DataUrl,
+		})
+			.then((image) => {
+				this.onImagePick(image.dataUrl);
+			})
+			.catch((err) => {
+				console.log("error", err);
+				if (!this.filePickerRef) {
+					return;
+				}
+				this.filePickerRef.nativeElement.click();
+				return false;
+			});
+	}
+
+	onFileChosen(event: Event) {
+		const pickedFile = (event.target as HTMLInputElement).files[0];
+		if (!pickedFile) return;
+		const fr = new FileReader();
+		fr.onload = () => {
+			this.onImagePick(pickedFile);
+		};
+		fr.readAsDataURL(pickedFile);
+	}
+
+	onImagePick(image: string | File) {
+		let imageFile: File | Blob;
+		if (typeof image === "string") {
+			try {
+				imageFile = base64toBlob(
+					image.replace("data:image/jpeg;base64,", ""),
+					"image/jpeg"
+				);
+			} catch (error) {
+				console.log("Error:", error);
+				return;
+			}
+		} else {
+			imageFile = image;
+		}
+		this.authService.uploadImage(imageFile);
 	}
 }

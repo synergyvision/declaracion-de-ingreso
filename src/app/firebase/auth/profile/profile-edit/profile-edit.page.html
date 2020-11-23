@@ -207,13 +207,19 @@
 				<ion-label position="floating"
 					>{{ 'fields.COUNTRY_OF_ORIGIN' | translate }}</ion-label
 				>
-				<ion-input
-					type="text"
+				<ion-select
 					formControlName="countryOfOrigin"
-					clearInput
-					autocapitalize="off"
-					inputmode="text"
-				></ion-input>
+					[placeholder]="'profile.SELECT_COUNTRY' | translate"
+					[cancelText]="'fields.CANCEL' | translate"
+					[okText]="'fields.DONE' | translate"
+					interface="action-sheet"
+				>
+					<ion-select-option
+						*ngFor="let country of countries"
+						[value]="country.alpha3"
+						>{{ country.name }}</ion-select-option
+					>
+				</ion-select>
 			</ion-item>
 			<div class="error-container">
 				<ng-container
@@ -235,13 +241,19 @@
 				<ion-label position="floating"
 					>{{ 'fields.COUNTRY_OF_RESIDENCE' | translate }}</ion-label
 				>
-				<ion-input
-					type="text"
+				<ion-select
 					formControlName="countryOfResidence"
-					clearInput
-					autocapitalize="off"
-					inputmode="text"
-				></ion-input>
+					[placeholder]="'profile.SELECT_COUNTRY' | translate"
+					[cancelText]="'fields.CANCEL' | translate"
+					[okText]="'fields.DONE' | translate"
+					interface="action-sheet"
+				>
+					<ion-select-option
+						*ngFor="let country of countries"
+						[value]="country.alpha3"
+						>{{ country.name }}</ion-select-option
+					>
+				</ion-select>
 			</ion-item>
 			<div class="error-container">
 				<ng-container

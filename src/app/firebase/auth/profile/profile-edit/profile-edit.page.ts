@@ -6,6 +6,7 @@ import { LoadingController } from "@ionic/angular";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { take } from "rxjs/operators";
 import { FirebaseProfileModel } from "../firebase-profile.model";
+import { CountryService } from "../../../../country/country.service";
 
 @Component({
 	selector: "app-profile-edit",
@@ -18,12 +19,21 @@ export class ProfileEditPage implements OnInit {
 
 	validation_messages = this.shared.profileValidationMessages;
 
+	countries = [];
+
 	constructor(
 		private shared: SharedService,
 		private fireAuth: FirebaseAuthService,
 		private router: Router,
-		private loadCtrl: LoadingController
-	) {}
+		private loadCtrl: LoadingController,
+		private countryService: CountryService
+	) {
+		this.countries = countryService.getCountries();
+	}
+
+	ionViewWillEnter() {
+		this.countries = this.countryService.getCountries();
+	}
 
 	ngOnInit() {
 		let profile: FirebaseProfileModel;

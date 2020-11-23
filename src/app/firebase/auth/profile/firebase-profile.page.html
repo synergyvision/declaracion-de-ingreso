@@ -13,6 +13,27 @@
 </ion-header>
 
 <ion-content class="user-content">
+	<ion-list lines="none">
+		<ion-item class="image-item">
+			<ion-avatar
+				class="image-avatar"
+				(click)="showProfilePictureModal()"
+			>
+				<img
+					src="..\..\..\assets\profile\no-profile.jpg"
+					alt="..\..\..\assets\profile\no-profile.jpg"
+					class="image-tag"
+				/>
+			</ion-avatar>
+			<input
+				type="file"
+				*ngIf="false"
+				#filePicker
+				(change)="onFileChosen($event)"
+				accept="image/jpeg"
+			/>
+		</ion-item>
+	</ion-list>
 	<ion-list>
 		<ion-list-header style="font-size: 1.5em"
 			>{{ 'profile.PERSONAL_INFO' | translate }}</ion-list-header
@@ -157,7 +178,10 @@
 					</ion-row>
 					<ion-row class="field-content">
 						<ion-col>
-							<ion-label>{{ user?.countryOfOrigin }}</ion-label>
+							<ion-label
+								>{{ getCountryName(user?.countryOfOrigin)
+								}}</ion-label
+							>
 						</ion-col>
 					</ion-row>
 				</ion-grid>
@@ -175,7 +199,8 @@
 					<ion-row class="field-content">
 						<ion-col>
 							<ion-label
-								>{{ user?.countryOfResidence }}</ion-label
+								>{{ getCountryName(user?.countryOfResidence)
+								}}</ion-label
 							>
 						</ion-col>
 					</ion-row>

@@ -5,6 +5,7 @@ import { SharedService } from "../../../../shared/shared.service";
 import { FirebaseAuthService } from "../../firebase-auth.service";
 import { Router } from "@angular/router";
 import { LoadingController } from "@ionic/angular";
+import { CountryService } from "../../../../country/country.service";
 
 @Component({
 	selector: "app-firebase-profile-create",
@@ -16,12 +17,21 @@ export class FirebaseProfileCreatePage implements OnInit {
 
 	validation_messages = this.shared.profileValidationMessages;
 
+	countries = [];
+
 	constructor(
 		private shared: SharedService,
 		private fireAuth: FirebaseAuthService,
 		private router: Router,
-		private loadCtrl: LoadingController
-	) {}
+		private loadCtrl: LoadingController,
+		private countryService: CountryService
+	) {
+		this.countries = countryService.getCountries();
+	}
+
+	ionViewWillEnter() {
+		this.countries = this.countryService.getCountries();
+	}
 
 	ngOnInit() {
 		const validation = this.shared.validation;

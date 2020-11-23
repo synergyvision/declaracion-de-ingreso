@@ -45,9 +45,6 @@ export class SharedService {
 		profession: {
 			MAX_LENGTH: 20,
 		},
-		messages: {
-			profile: 
-		}
 	};
 
 	public profileValidationMessages = {

@@ -118,3 +118,20 @@
 .field-content {
 	margin-bottom: 4px;
 }
+
+.image-item {
+	text-align: center;
+	height: 160px;
+}
+
+.image-avatar {
+	width: 160px !important;
+	height: 160px !important;
+	max-width: 160px !important;
+	max-height: 160px !important;
+	margin: auto;
+}
+
+.image-tag {
+	height: 160px;
+}
