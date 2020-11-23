@@ -1,0 +1,120 @@
+{
+	"AND": "y",
+	"LOADING": "Cargando...",
+	"FORMATTED_DOB": "{{ day }} de {{ month }} de {{ year }}",
+	"MONTH": [
+		"Enero",
+		"Febrero",
+		"Marzo",
+		"Abril",
+		"Mayo",
+		"Junio",
+		"Julio",
+		"Agosto",
+		"Septiembre",
+		"Octubre",
+		"Noviembre",
+		"Diciembre"
+	],
+	"validation": {
+		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
+		"MIN_LEN": "El campo \"{{ text }}\" debe ser de al menos {{ value }} caracteres.",
+		"MAX_LEN": "El campo \"{{ text }}\" debe tener máximo {{ value }} caracteres.",
+		"NAMES": "El campo \"{{ text }}\" no puede contener caracteres especiales.",
+		"NUMBERS": "El campo \"{{ text }}\" sólo admite números.",
+		"SPECIAL_CHAR": "El campo \"{{ text }}\" no puede contener caracteres especiales.",
+		"passport": {
+			"PATTERN": "Ingrese un pasaporte válido."
+		},
+		"email": {
+			"PATTERN": "Ingrese un email válido."
+		},
+		"password": {
+			"NOT_EQUAL": "Las contraseñas no son iguales."
+		}
+	},
+	"fields": {
+		"EMAIL": "Correo electrónico",
+		"PW": "Contraseña",
+		"CONFIRM_PW": "Confirme la contraseña",
+		"NAME": "Nombre",
+		"LAST_NAME": "Apellido",
+		"DOB": "Fecha de nacimiento",
+		"ID": "Cédula",
+		"PASSPORT": "Número de pasaporte",
+		"NATIONALITY": "Nacionalidad",
+		"ADDRESS": "Dirección",
+		"IMAGE": "Imagen de perfil",
+		"SEX": "Sexo",
+		"MALE": "Masculino",
+		"FEMALE": "Femenino",
+		"PROFESSION": "Profesión",
+		"COUNTRY_OF_ORIGIN": "Pais de origen",
+		"COUNTRY_OF_RESIDENCE": "Pais de residencia",
+		"DONE": "Listo",
+		"CANCEL": "Cancelar"
+	},
+	"signIn": {
+		"SIGN_IN": "Iniciar sesión",
+		"WELCOME": "¡Bienvenido!",
+		"FORGOT_PW": "¿Olvidó su contraseña?",
+		"SIGN_UP": "¡Regístrese!",
+		"REMEMBER_ME": "Recuerdame",
+		"SIGNING_IN": "Iniciando sesión..."
+	},
+	"signUp": {
+		"SIGN_UP": "Registrar",
+		"ACC_CREATE": "¡Únase!",
+		"ALREADY_ACC": "¿Ya tiene cuenta?",
+		"LEGAL_1": "Al crear una cuenta usted esta de acuerdo con nuestras",
+		"LEGAL_2": "Políticas de privacidad",
+		"LEGAL_3": "Términos de servicio",
+		"SIGNING_UP": "Creando su cuenta..."
+	},
+	"forgotPw": {
+		"RECOVER": "Recupere su contraseña",
+		"MSG": "Por favor introduzca su email y le enviaremos un correo para resetear su contraseña.",
+		"RESET": "Recuperar contraseña"
+	},
+	"profile": {
+		"PROFILE": "Perfil",
+		"PERSONAL_INFO": "Información personal",
+		"ALMOST": "Ya casi, sólo unas preguntas más...",
+		"CREATING": "Guardando Información personal...",
+		"EDIT": "Editar perfil",
+		"CHANGE_PW": "Cambiar contraseña",
+		"CHANGE_PW_MSG": "¿Está seguro que desea cambiar su contraseña?",
+		"RETRIEVING": "Buscando su información...",
+		"SELECT_COUNTRY": "Seleccione un país",
+		"SAVE": "Guardar cambios",
+		"UPDATING": "Guardando cambios...",
+		"DELETE": "Borrar usuario",
+		"DELETE_WARNING": "ADVERTENCIA",
+		"DELETE_MSG": "Borrar tu cuenta removerá toda tu información guardada en nuestra base de datos. Esta acción es irreversible.",
+		"DELETING": "Borrando..."
+	},
+	"menu": {
+		"SIGN_OUT": "Cerrar sesión"
+	},
+	"error": {
+		"ERROR": "¡Ups!",
+		"NO_USER": "Error de usuario y contraseña.",
+		"IN_USE": "El email ya se encuentra en uso.",
+		"NOT_ALLOWED": "Acceso denegado.",
+		"DELETE_SIGN_OUT": "Esta acción requiere que haya iniciado sesión recientemente, inicie sesión e intentelo nuevamente.",
+		"UNEXPECTED": "Ha ocurrido un error inesperado, inténtelo nuevamente más tarde.",
+		"UNKNOWN": "Ha ocurrido un error desconocido."
+	},
+	"FOLLOW": "Seguir",
+	"MESSAGE": "Mensaje",
+	"LIKES": "Me gusta",
+	"FOLLOWERS": "Seguidores",
+	"FOLLOWING": "Siguiendo",
+	"ABOUT": "Descripción",
+	"FRIENDS": "Amigos",
+	"PHOTOS": "Fotos",
+	"SEE_ALL": "Ver mas",
+	"OK": "OK",
+	"CANCEL": "Cancelar",
+	"SELECT_LANGUAGE": "Selecciona tu idioma"
+}

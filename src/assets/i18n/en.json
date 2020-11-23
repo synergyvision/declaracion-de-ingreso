@@ -1,0 +1,120 @@
+{
+	"AND": "and",
+	"LOADING": "Loading...",
+	"FORMATTED_DOB": "{{ month }} {{ day }}, {{ year }}",
+	"MONTH": [
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December"
+	],
+	"validation": {
+		"REQUIRED": "{{ text }} is required.",
+		"MIN_LEN": "{{ text }} must be at least {{ value }} characters long.",
+		"MAX_LEN": "{{ text }} can't be longer than {{ value }} characters.",
+		"NAMES": "{{ text }} cannot contain special characters.",
+		"NUMBERS": "{{ text }} can only contain numbers.",
+		"SPECIAL_CHAR": "{{ text }} cannot contain special characters.",
+		"passport": {
+			"PATTERN": "Enter a valid passport."
+		},
+		"email": {
+			"PATTERN": "Enter a valid email."
+		},
+		"password": {
+			"NOT_EQUAL": "Passwords do not match."
+		}
+	},
+	"fields": {
+		"EMAIL": "Email",
+		"PW": "Password",
+		"CONFIRM_PW": "Confirm Password",
+		"NAME": "Name",
+		"LAST_NAME": "Last name",
+		"DOB": "Date of birth",
+		"ID": "Venezuelan ID number",
+		"PASSPORT": "Passport number",
+		"NATIONALITY": "Nationality",
+		"ADDRESS": "Address",
+		"IMAGE": "Profile picture",
+		"SEX": "Sex",
+		"MALE": "Male",
+		"FEMALE": "Female",
+		"PROFESSION": "Profession",
+		"COUNTRY_OF_ORIGIN": "Country of origin",
+		"COUNTRY_OF_RESIDENCE": "Country of residence",
+		"DONE": "Done",
+		"CANCEL": "Cancel"
+	},
+	"signIn": {
+		"SIGN_IN": "Sign in",
+		"WELCOME": "Welcome!",
+		"FORGOT_PW": "Forgot password?",
+		"SIGN_UP": "Sign up!",
+		"REMEMBER_ME": "Remember me",
+		"SIGNING_IN": "Signing in..."
+	},
+	"signUp": {
+		"SIGN_UP": "Sign Up",
+		"ACC_CREATE": "Join us!",
+		"ALREADY_ACC": "Already have an account?",
+		"LEGAL_1": "By creating an account you agree to our",
+		"LEGAL_2": "Privacy policy",
+		"LEGAL_3": "Terms of use",
+		"SIGNING_UP": "Creating your account..."
+	},
+	"forgotPw": {
+		"RECOVER": "Recover your password",
+		"MSG": "Please enter your email address and we'll send you an email to reset your password.",
+		"RESET": "Reset password"
+	},
+	"profile": {
+		"PROFILE": "Profile",
+		"PERSONAL_INFO": "Personal information",
+		"ALMOST": "Almost there, just a few more questions...",
+		"CREATING": "Saving personal information...",
+		"EDIT": "Edit",
+		"CHANGE_PW": "Change password",
+		"CHANGE_PW_MSG": "Are you sure you want to reset your password?",
+		"RETRIEVING": "Retrieving your information...",
+		"SELECT_COUNTRY": "Select a country",
+		"SAVE": "Save changes",
+		"UPDATING": "Saving changes...",
+		"DELETE": "Delete user",
+		"DELETE_WARNING": "WARNING",
+		"DELETE_MSG": "Deleting your account will erase all your information stored in our database. This action is irreversible.",
+		"DELETING": "Deleting..."
+	},
+	"menu": {
+		"SIGN_OUT": "Sign out"
+	},
+	"error": {
+		"ERROR": "Oops!",
+		"NO_USER": "Email and password error.",
+		"IN_USE": "Email is already in use.",
+		"NOT_ALLOWED": "Access denied.",
+		"DELETE_SIGN_OUT": "This action requires you to have signed in recently, sign in and try again.",
+		"UNEXPECTED": "An unexpected error has occurred, try again later.",
+		"UNKNOWN": "An unknown error has occurred."
+	},
+	"FOLLOW": "Follow",
+	"MESSAGE": "Message",
+	"LIKES": "Likes",
+	"FOLLOWERS": "Followers",
+	"FOLLOWING": "Following",
+	"ABOUT": "About",
+	"FRIENDS": "Friends",
+	"PHOTOS": "Photos",
+	"SEE_ALL": "See all",
+	"OK": "OK",
+	"CANCEL": "Cancel",
+	"SELECT_LANGUAGE": "Select your language"
+}

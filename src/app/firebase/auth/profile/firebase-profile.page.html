@@ -1,0 +1,258 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ 'profile.PROFILE' | translate }}</ion-title>
+		<ion-buttons slot="start">
+			<ion-back-button defaultHref="app/categories"></ion-back-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button (click)="editPopoverMenu($event)"
+				><ion-icon slot="icon-only" name="create-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="user-content">
+	<ion-list lines="none">
+		<ion-item class="image-item">
+			<ion-avatar
+				class="image-avatar"
+				(click)="showProfilePictureModal()"
+			>
+				<img
+					src="..\..\..\assets\profile\no-profile.jpg"
+					alt="..\..\..\assets\profile\no-profile.jpg"
+					class="image-tag"
+				/>
+			</ion-avatar>
+			<input
+				type="file"
+				*ngIf="false"
+				#filePicker
+				(change)="onFileChosen($event)"
+				accept="image/jpeg"
+			/>
+		</ion-item>
+	</ion-list>
+	<ion-list>
+		<ion-list-header style="font-size: 1.5em"
+			>{{ 'profile.PERSONAL_INFO' | translate }}</ion-list-header
+		>
+		<ng-container *ngIf="user.isShell else profileList">
+			<ion-item *ngFor="let n of getUserLength()">
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label
+								><ion-skeleton-text
+									animated
+									style="width: 50%"
+								></ion-skeleton-text
+							></ion-label>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<ion-label
+								><ion-skeleton-text animated></ion-skeleton-text
+							></ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+		</ng-container>
+		<ng-template #profileList>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.NAME' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label
+								>{{ user?.name + " " + user?.lastName
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.SEX' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label
+								>{{ user?.sex == 'male' ? ('fields.MALE' |
+								translate) : ('fields.FEMALE' | translate)
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.DOB' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ getUserDOB() }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.ID' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.id }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.PASSPORT' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.passport }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.NATIONALITY' | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.nationality }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.COUNTRY_OF_ORIGIN' | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label
+								>{{ getCountryName(user?.countryOfOrigin)
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.COUNTRY_OF_RESIDENCE' | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label
+								>{{ getCountryName(user?.countryOfResidence)
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.PROFESSION' | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.profession }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+			<ion-item>
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'fields.ADDRESS' | translate }}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>{{ user?.address }}</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+		</ng-template>
+	</ion-list>
+	<ion-row>
+		<ion-col size="12">
+			<ion-button
+				class="sign-out-btn"
+				expand="block"
+				fill="solid"
+				color="danger"
+				(click)="deleteUser()"
+			>
+				<ion-icon slot="start" name="trash-outline"></ion-icon>
+				{{ 'profile.DELETE' | translate }}</ion-button
+			>
+		</ion-col>
+	</ion-row>
+</ion-content>

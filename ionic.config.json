@@ -1,0 +1,7 @@
+{
+	"name": "DeclaracionDeIngreso",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "angular"
+}

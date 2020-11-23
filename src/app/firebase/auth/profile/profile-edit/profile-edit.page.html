@@ -1,0 +1,342 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ 'profile.EDIT' | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button [routerLink]="['/auth/profile']"
+				><ion-icon slot="icon-only" name="close-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-content">
+	<form [formGroup]="profileForm" (ngSubmit)="doUpdateProfile()">
+		<ion-list class="inputs-list" lines="full">
+			<!-- ################## NAME ################## -->
+
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.NAME' | translate }}</ion-label
+				>
+				<ion-input
+					type="text"
+					formControlName="name"
+					clearInput
+					autocapitalize="off"
+					inputmode="text"
+				></ion-input>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.name"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('name').hasError(validation.type) && (profileForm.get('name').dirty || profileForm.get('name').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## LAST NAME ################## -->
+
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.LAST_NAME' | translate }}</ion-label
+				>
+				<ion-input
+					type="text"
+					formControlName="lastName"
+					clearInput
+					autocapitalize="off"
+					inputmode="text"
+				></ion-input>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.lastName"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('lastName').hasError(validation.type) && (profileForm.get('lastName').dirty || profileForm.get('lastName').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## DOB ################## -->
+
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.DOB' | translate }}</ion-label
+				>
+				<ion-datetime
+					[doneText]="'fields.DONE' | translate"
+					[cancelText]="'fields.CANCEL' | translate"
+					formControlName="dob"
+					clearInput
+					displayFormat="DD/MM/YYYY"
+				></ion-datetime>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.dob"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('dob').hasError(validation.type) && (profileForm.get('dob').dirty || profileForm.get('dob').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## SEX ################## -->
+
+			<hr />
+			<hr />
+			<hr />
+			<ion-label position="floating"
+				>{{ 'fields.SEX' | translate }}</ion-label
+			>
+			<ion-radio-group formControlName="sex">
+				<ion-item class="input-item">
+					<ion-label>{{ 'fields.MALE' | translate }}</ion-label>
+					<ion-radio value="male" checked> </ion-radio>
+				</ion-item>
+				<ion-item class="input-item">
+					<ion-label>{{ 'fields.FEMALE' | translate }}</ion-label>
+					<ion-radio value="female"> </ion-radio>
+				</ion-item>
+			</ion-radio-group>
+
+			<!-- ################## ID (CEDULA) ################## -->
+
+			<hr />
+			<hr />
+			<hr />
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.ID' | translate }}</ion-label
+				>
+				<ion-input
+					type="number"
+					formControlName="id"
+					clearInput
+					autocapitalize="off"
+					inputmode="numeric"
+					(keypress)="noDecimals($event)"
+				></ion-input>
+			</ion-item>
+			<div class="error-container">
+				<ng-container *ngFor="let validation of validation_messages.id">
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('id').hasError(validation.type) && (profileForm.get('id').dirty || profileForm.get('id').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## PASSPORT NUMBER ################## -->
+
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.PASSPORT' | translate }}</ion-label
+				>
+				<ion-input
+					type="text"
+					formControlName="passport"
+					clearInput
+					autocapitalize="off"
+					inputmode="text"
+				></ion-input>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.passport"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('passport').hasError(validation.type) && (profileForm.get('passport').dirty || profileForm.get('passport').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## NATIONALITY ################## -->
+
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.NATIONALITY' | translate }}</ion-label
+				>
+				<ion-input
+					type="text"
+					formControlName="nationality"
+					clearInput
+					autocapitalize="off"
+					inputmode="text"
+				></ion-input>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.nationality"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('nationality').hasError(validation.type) && (profileForm.get('nationality').dirty || profileForm.get('nationality').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## COUNTRY OF ORIGIN ################## -->
+
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.COUNTRY_OF_ORIGIN' | translate }}</ion-label
+				>
+				<ion-select
+					formControlName="countryOfOrigin"
+					[placeholder]="'profile.SELECT_COUNTRY' | translate"
+					[cancelText]="'fields.CANCEL' | translate"
+					[okText]="'fields.DONE' | translate"
+					interface="action-sheet"
+				>
+					<ion-select-option
+						*ngFor="let country of countries"
+						[value]="country.alpha3"
+						>{{ country.name }}</ion-select-option
+					>
+				</ion-select>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.countryOfOrigin"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('countryOfOrigin').hasError(validation.type) && (profileForm.get('countryOfOrigin').dirty || profileForm.get('countryOfOrigin').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## COUNTRY OF RESIDENCE ################## -->
+
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.COUNTRY_OF_RESIDENCE' | translate }}</ion-label
+				>
+				<ion-select
+					formControlName="countryOfResidence"
+					[placeholder]="'profile.SELECT_COUNTRY' | translate"
+					[cancelText]="'fields.CANCEL' | translate"
+					[okText]="'fields.DONE' | translate"
+					interface="action-sheet"
+				>
+					<ion-select-option
+						*ngFor="let country of countries"
+						[value]="country.alpha3"
+						>{{ country.name }}</ion-select-option
+					>
+				</ion-select>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.countryOfResidence"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('countryOfResidence').hasError(validation.type) && (profileForm.get('countryOfResidence').dirty || profileForm.get('countryOfResidence').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## PROFESSION ################## -->
+
+			<hr />
+			<hr />
+			<hr />
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.PROFESSION' | translate }}</ion-label
+				>
+				<ion-input
+					type="text"
+					formControlName="profession"
+					clearInput
+					autocapitalize="off"
+					inputmode="text"
+				></ion-input>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.profession"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('profession').hasError(validation.type) && (profileForm.get('profession').dirty || profileForm.get('profession').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+
+			<!-- ################## ADDRESS ################## -->
+
+			<hr />
+			<hr />
+			<hr />
+			<ion-item class="input-item">
+				<ion-label position="floating"
+					>{{ 'fields.ADDRESS' | translate }}</ion-label
+				>
+				<ion-textarea
+					type="text"
+					formControlName="address"
+					clearInput
+					autocapitalize="off"
+					inputmode="text"
+				></ion-textarea>
+			</ion-item>
+			<div class="error-container">
+				<ng-container
+					*ngFor="let validation of validation_messages.address"
+				>
+					<div
+						class="error-message"
+						*ngIf="profileForm.get('address').hasError(validation.type) && (profileForm.get('address').dirty || profileForm.get('address').touched)"
+					>
+						<ion-icon name="information-circle-outline"></ion-icon>
+						<span>{{ validation.message }}</span>
+					</div>
+				</ng-container>
+			</div>
+		</ion-list>
+		<ion-button
+			class="signup-btn"
+			type="submit"
+			expand="block"
+			[disabled]="!profileForm.valid"
+			>{{ 'profile.SAVE' | translate }}</ion-button
+		>
+	</form>
+</ion-content>
