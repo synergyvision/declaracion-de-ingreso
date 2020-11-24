@@ -17,6 +17,7 @@ import {
 import {
 	LoadingController,
 	ModalController,
+	Platform,
 	PopoverController,
 } from "@ionic/angular";
 import { PopoverComponent } from "./popover/popover.component";
@@ -78,7 +79,8 @@ export class FirebaseProfilePage implements OnInit {
 		private popoverCtrl: PopoverController,
 		private modalCtrl: ModalController,
 		private loadCtrl: LoadingController,
-		private countryService: CountryService
+		private countryService: CountryService,
+		private platform: Platform
 	) {}
 
 	ngOnInit() {
@@ -271,11 +273,18 @@ export class FirebaseProfilePage implements OnInit {
 		return this.countryService.getCountryName(alpha3);
 	}
 
-	showProfilePictureModal() {
-		if (!Capacitor.isPluginAvailable("Camera")) {
+	getPicture() {
+		console.log("modal");
+		console.log(this.platform.platforms());
+		if (
+			!Capacitor.isPluginAvailable("Camera") ||
+			this.platform.is("desktop")
+		) {
+			console.log("no camera");
 			this.filePickerRef.nativeElement.click();
 			return;
 		}
+		console.log("camera");
 		Plugins.Camera.getPhoto({
 			quality: 50,
 			source: CameraSource.Prompt,

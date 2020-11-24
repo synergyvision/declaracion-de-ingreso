@@ -6,6 +6,7 @@ import { FirebaseProfileModel } from "./profile/firebase-profile.model";
 import { Platform } from "@ionic/angular";
 
 import firebase, { User, auth } from "firebase/app";
+import "firebase/storage";
 import {
 	cfaSignIn,
 	cfaSignOut,
@@ -220,19 +221,21 @@ export class FirebaseAuthService {
 	}
 
 	uploadImage(imageFile: File | Blob) {
-		// const filePath = "profile/" + this.currentUser.uid;
-		// const fileRef = this.storage
-		// 	.upload("profile" + this.currentUser.uid, imageFile)
-		// 	.snapshotChanges()
-		// 	.pipe(
-		// 		finalize(() => {
-		// 			console.log("hello");
-		// 		})
-		// 	)
-		// 	.subscribe((url) => {
-		// 		if (url) {
-		// 			console.log(url);
-		// 		}
-		// 	});
+		const storageRef = firebase.storage().ref();
+		const imageRef = storageRef.child(this.currentUser.uid);
+		const imageProfileRef = storageRef.child(
+			"profile/" + this.currentUser.uid
+		);
+		from(imageProfileRef.put(imageFile))
+			.pipe(
+				finalize(() => {
+					console.log("hello");
+				})
+			)
+			.subscribe((url) => {
+				if (url) {
+					console.log(url);
+				}
+			});
 	}
 }

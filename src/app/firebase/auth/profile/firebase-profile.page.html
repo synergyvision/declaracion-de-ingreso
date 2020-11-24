@@ -15,10 +15,7 @@
 <ion-content class="user-content">
 	<ion-list lines="none">
 		<ion-item class="image-item">
-			<ion-avatar
-				class="image-avatar"
-				(click)="showProfilePictureModal()"
-			>
+			<ion-avatar class="image-avatar" (click)="getPicture()">
 				<img
 					src="..\..\..\assets\profile\no-profile.jpg"
 					alt="..\..\..\assets\profile\no-profile.jpg"
@@ -27,7 +24,6 @@
 			</ion-avatar>
 			<input
 				type="file"
-				*ngIf="false"
 				#filePicker
 				(change)="onFileChosen($event)"
 				accept="image/jpeg"
