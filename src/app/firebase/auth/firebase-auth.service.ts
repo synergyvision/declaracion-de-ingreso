@@ -15,7 +15,7 @@ import { AngularFireDatabase, AngularFireObject } from "@angular/fire/database";
 import { finalize, map, switchMap, take, tap } from "rxjs/operators";
 import { Plugins } from "@capacitor/core";
 import { TranslateService } from "@ngx-translate/core";
-import { AngularFireStorage } from "@angular/fire/storage";
+// import { AngularFireStorage } from "@angular/fire/storage";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseAuthService {
@@ -29,7 +29,7 @@ export class FirebaseAuthService {
 		public angularFire: AngularFireAuth,
 		public platform: Platform,
 		private db: AngularFireDatabase,
-		private storage: AngularFireStorage,
+		// private storage: AngularFireStorage,
 		private translate: TranslateService
 	) {
 		this.angularFire.languageCode = new Promise(() => {
@@ -220,19 +220,19 @@ export class FirebaseAuthService {
 	}
 
 	uploadImage(imageFile: File | Blob) {
-		const filePath = "profile/" + this.currentUser.uid;
-		const fileRef = this.storage
-			.upload("profile" + this.currentUser.uid, imageFile)
-			.snapshotChanges()
-			.pipe(
-				finalize(() => {
-					console.log("hello");
-				})
-			)
-			.subscribe((url) => {
-				if (url) {
-					console.log(url);
-				}
-			});
+		// const filePath = "profile/" + this.currentUser.uid;
+		// const fileRef = this.storage
+		// 	.upload("profile" + this.currentUser.uid, imageFile)
+		// 	.snapshotChanges()
+		// 	.pipe(
+		// 		finalize(() => {
+		// 			console.log("hello");
+		// 		})
+		// 	)
+		// 	.subscribe((url) => {
+		// 		if (url) {
+		// 			console.log(url);
+		// 		}
+		// 	});
 	}
 }

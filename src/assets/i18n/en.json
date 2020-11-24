@@ -94,7 +94,9 @@
 		"DELETING": "Deleting..."
 	},
 	"menu": {
-		"SIGN_OUT": "Sign out"
+		"MENU": "Menu",
+		"SIGN_OUT": "Sign out",
+		"SETTINGS": "Settings"
 	},
 	"error": {
 		"ERROR": "Oops!",
@@ -102,6 +104,8 @@
 		"IN_USE": "Email is already in use.",
 		"NOT_ALLOWED": "Access denied.",
 		"DELETE_SIGN_OUT": "This action requires you to have signed in recently, sign in and try again.",
+		"CHANGE_PW": "Email sent",
+		"CHANGE_PW_SIGN_OUT": "The email to change password has been sent, please check your inbox.",
 		"UNEXPECTED": "An unexpected error has occurred, try again later.",
 		"UNKNOWN": "An unknown error has occurred."
 	},

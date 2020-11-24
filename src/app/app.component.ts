@@ -5,6 +5,10 @@ import { TranslateService, LangChangeEvent } from "@ngx-translate/core";
 import { HistoryHelperService } from "./utils/history-helper.service";
 import { FirebaseAuthService } from "./firebase/auth/firebase-auth.service";
 import { Router } from "@angular/router";
+import { SharedService } from "./shared/shared.service";
+import { FirebaseProfileModel } from "./firebase/auth/profile/firebase-profile.model";
+import { switchMap, tap } from "rxjs/operators";
+import { Subscription } from "rxjs";
 
 @Component({
 	selector: "app-root",
@@ -16,72 +20,34 @@ import { Router } from "@angular/router";
 	],
 })
 export class AppComponent {
-	appPages = [
-		{
-			title: "Categories",
-			url: "/app/categories",
-			ionicIcon: "list-outline",
-		},
-		{
-			title: "Profile",
-			url: "/auth/profile",
-			ionicIcon: "person-outline",
-		},
-		{
-			title: "Contact Card",
-			url: "/contact-card",
-			customIcon: "./assets/custom-icons/side-menu/contact-card.svg",
-		},
-		{
-			title: "Notifications",
-			url: "/app/notifications",
-			ionicIcon: "notifications-outline",
-		},
-	];
-	accountPages: {
-		title: string;
-		url: string;
-		ionicIcon: string;
-		customIcon?: string;
-	}[] = [
-		{
-			title: "Log In",
-			url: "/auth/login",
-			ionicIcon: "log-in-outline",
-		},
-		{
-			title: "Sign Up",
-			url: "/auth/signup",
-			ionicIcon: "person-add-outline",
-		},
-		{
-			title: "Tutorial",
-			url: "/walkthrough",
-			ionicIcon: "school-outline",
-		},
-		{
-			title: "Getting Started",
-			url: "/getting-started",
-			ionicIcon: "rocket-outline",
-		},
-		{
-			title: "404 page",
-			url: "/page-not-found",
-			ionicIcon: "alert-circle-outline",
-		},
-	];
-
 	textDir = "ltr";
+
+	userSubscription: Subscription;
+	user: FirebaseProfileModel;
 
 	// Inject HistoryHelperService in the app.components.ts so its available app-wide
 	constructor(
 		public translate: TranslateService,
 		public historyHelper: HistoryHelperService,
 		private authService: FirebaseAuthService,
-		private router: Router
+		private router: Router,
+		private shared: SharedService,
+		private firebaseAuthService: FirebaseAuthService
 	) {
-		this.initializeApp();
 		this.setLanguage();
+		this.initializeApp();
+		this.userSubscription = firebaseAuthService
+			.getAuthState()
+			.pipe(
+				switchMap(() => {
+					return this.firebaseAuthService.getProfileDataSource().pipe(
+						tap((user) => {
+							this.user = user;
+						})
+					);
+				})
+			)
+			.subscribe();
 	}
 
 	async initializeApp() {
@@ -115,5 +81,9 @@ export class AppComponent {
 				console.log("signout error", error);
 			}
 		);
+	}
+
+	ngOnDestroy() {
+		this.userSubscription.unsubscribe();
 	}
 }

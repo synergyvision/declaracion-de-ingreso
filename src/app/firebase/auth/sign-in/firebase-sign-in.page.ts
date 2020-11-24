@@ -131,6 +131,11 @@ export class FirebaseSignInPage implements OnInit {
 					this.shared.translateText("error.ERROR"),
 					this.shared.translateText("error.DELETE_SIGN_OUT")
 				);
+			} else if (params.changePwSignOut) {
+				this.shared.showAlert(
+					this.shared.translateText("error.CHANGE_PW"),
+					this.shared.translateText("error.CHANGE_PW_SIGN_OUT")
+				);
 			}
 		});
 	}

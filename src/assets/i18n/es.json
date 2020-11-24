@@ -94,7 +94,9 @@
 		"DELETING": "Borrando..."
 	},
 	"menu": {
-		"SIGN_OUT": "Cerrar sesión"
+		"MENU": "Menú",
+		"SIGN_OUT": "Cerrar sesión",
+		"SETTINGS": "Ajustes"
 	},
 	"error": {
 		"ERROR": "¡Ups!",
@@ -102,6 +104,8 @@
 		"IN_USE": "El email ya se encuentra en uso.",
 		"NOT_ALLOWED": "Acceso denegado.",
 		"DELETE_SIGN_OUT": "Esta acción requiere que haya iniciado sesión recientemente, inicie sesión e intentelo nuevamente.",
+		"CHANGE_PW": "Correo enviado",
+		"CHANGE_PW_SIGN_OUT": "El correo para cambiar contraseña ha sido enviado, revise su buzón.",
 		"UNEXPECTED": "Ha ocurrido un error inesperado, inténtelo nuevamente más tarde.",
 		"UNKNOWN": "Ha ocurrido un error desconocido."
 	},

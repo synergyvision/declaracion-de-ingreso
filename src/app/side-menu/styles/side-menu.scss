@@ -2,9 +2,9 @@
 // Note:  These ones were added by us and have nothing to do with Ionic CSS Custom Properties
 :host {
   --page-margin: var(--app-fair-margin);
-  --page-background: var(--app-background-alt-shade);
+  --page-background: none;
 
-  --page-headers-shadow-color: rgba(var(--ion-color-darkest-rgb), 0.4);
+  --page-headers-shadow-color: none;
 }
 
 // Note:  All the CSS variables defined below are overrides of Ionic elements CSS Custom Properties
@@ -65,13 +65,13 @@
 
   // Menu list items
   ion-list {
-    --ion-text-color: var(--ion-color-light-shade);
+    --ion-text-color: black;
     --ion-text-color-rgb: var(--ion-color-light-shade-rgb);
     --ion-item-background: var(--page-background);
     --ion-item-border-color: transparent;
 
     ion-list-header {
-      --color: rgba(var(--ion-color-light-shade-rgb), 0.6);
+      --color: black;
 
       text-transform: uppercase;
       box-shadow: inset 0px -4px 8px -2px var(--page-headers-shadow-color);
@@ -88,7 +88,7 @@
     }
 
     ion-icon {
-      color: var(--ion-color-light-shade);
+      color: black;
     }
   }
 }

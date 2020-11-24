@@ -15,7 +15,7 @@ import { CountryService } from "../../../../country/country.service";
 export class FirebaseProfileCreatePage implements OnInit {
 	profileForm: FormGroup;
 
-	validation_messages = this.shared.profileValidationMessages;
+	validation_messages: any;
 
 	countries = [];
 
@@ -27,6 +27,7 @@ export class FirebaseProfileCreatePage implements OnInit {
 		private countryService: CountryService
 	) {
 		this.countries = countryService.getCountries();
+		this.validation_messages = this.shared.profileValidationMessages;
 	}
 
 	ionViewWillEnter() {

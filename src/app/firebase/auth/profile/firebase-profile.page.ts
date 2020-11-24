@@ -179,6 +179,22 @@ export class FirebaseProfilePage implements OnInit {
 		);
 	}
 
+	signOutChangePw() {
+		this.authService.signOut().subscribe(
+			() => {
+				this.router.navigate(["auth/login"], {
+					replaceUrl: true,
+					queryParams: {
+						changePwSignOut: "true",
+					},
+				});
+			},
+			(error) => {
+				console.log("signout error", error);
+			}
+		);
+	}
+
 	// NOTE: Ionic only calls ngOnDestroy if the page was popped (ex: when navigating back)
 	// Since ngOnDestroy might not fire when you navigate from the current page, use ionViewWillLeave to cleanup Subscriptions
 	ionViewWillLeave(): void {
@@ -239,6 +255,7 @@ export class FirebaseProfilePage implements OnInit {
 									.subscribe(
 										() => {
 											console.log("ok");
+											this.signOutChangePw();
 										},
 										(err) => {
 											console.log(err);

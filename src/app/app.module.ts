@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
@@ -11,9 +11,15 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AngularFireModule } from "@angular/fire";
 
 import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import {
+	TranslateModule,
+	TranslateLoader,
+	TranslateService,
+} from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AuthGuard } from "./firebase/auth/auth.guard";
+
+import { appInitializerFactory } from "./app-initializer.factory";
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -42,6 +48,12 @@ export function createTranslateLoader(http: HttpClient) {
 	],
 	providers: [
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+		{
+			provide: APP_INITIALIZER,
+			useFactory: appInitializerFactory,
+			deps: [TranslateService],
+			multi: true,
+		},
 		AuthGuard,
 	],
 	bootstrap: [AppComponent],
