@@ -78,6 +78,9 @@
 	},
 	"profile": {
 		"PROFILE": "Profile",
+		"PICTURE": "Profile picture",
+		"CHANGE_PIC": "Change picture",
+		"UPLOADING": "Uploading image...",
 		"PERSONAL_INFO": "Personal information",
 		"ALMOST": "Almost there, just a few more questions...",
 		"CREATING": "Saving personal information...",

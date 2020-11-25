@@ -25,22 +25,24 @@ export class AppComponent {
 	userSubscription: Subscription;
 	user: FirebaseProfileModel;
 
+	profilePictureSubscription: Subscription;
+	profilePictureUrl: string;
+
 	// Inject HistoryHelperService in the app.components.ts so its available app-wide
 	constructor(
 		public translate: TranslateService,
 		public historyHelper: HistoryHelperService,
 		private authService: FirebaseAuthService,
 		private router: Router,
-		private shared: SharedService,
-		private firebaseAuthService: FirebaseAuthService
+		private shared: SharedService
 	) {
 		this.setLanguage();
 		this.initializeApp();
-		this.userSubscription = firebaseAuthService
+		this.userSubscription = authService
 			.getAuthState()
 			.pipe(
 				switchMap(() => {
-					return this.firebaseAuthService.getProfileDataSource().pipe(
+					return this.authService.getProfileDataSource().pipe(
 						tap((user) => {
 							this.user = user;
 						})
@@ -48,6 +50,15 @@ export class AppComponent {
 				})
 			)
 			.subscribe();
+	}
+
+	ngOnInit() {
+		this.profilePictureSubscription = this.authService.profilePic.subscribe(
+			(url) => {
+				console.log("next?", url);
+				this.profilePictureUrl = url;
+			}
+		);
 	}
 
 	async initializeApp() {
@@ -85,5 +96,6 @@ export class AppComponent {
 
 	ngOnDestroy() {
 		this.userSubscription.unsubscribe();
+		this.profilePictureSubscription.unsubscribe();
 	}
 }

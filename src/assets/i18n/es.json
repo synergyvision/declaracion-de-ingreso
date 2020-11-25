@@ -78,6 +78,9 @@
 	},
 	"profile": {
 		"PROFILE": "Perfil",
+		"PICTURE": "Foto de perfil",
+		"CHANGE_PIC": "Cambiar foto",
+		"UPLOADING": "Subiendo imagen...",
 		"PERSONAL_INFO": "Información personal",
 		"ALMOST": "Ya casi, sólo unas preguntas más...",
 		"CREATING": "Guardando Información personal...",

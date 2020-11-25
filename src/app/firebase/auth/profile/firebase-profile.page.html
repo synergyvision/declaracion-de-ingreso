@@ -15,19 +15,13 @@
 <ion-content class="user-content">
 	<ion-list lines="none">
 		<ion-item class="image-item">
-			<ion-avatar class="image-avatar" (click)="getPicture()">
+			<ion-avatar class="image-avatar" (click)="showPictureModal()">
 				<img
-					src="..\..\..\assets\profile\no-profile.jpg"
-					alt="..\..\..\assets\profile\no-profile.jpg"
+					[src]="profilePicUrl"
+					onerror="this.onerror=null; this.src='\\assets\\profile\\no-profile.jpg'"
 					class="image-tag"
 				/>
 			</ion-avatar>
-			<input
-				type="file"
-				#filePicker
-				(change)="onFileChosen($event)"
-				accept="image/jpeg"
-			/>
 		</ion-item>
 	</ion-list>
 	<ion-list>
