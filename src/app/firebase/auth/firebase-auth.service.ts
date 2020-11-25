@@ -59,7 +59,12 @@ export class FirebaseAuthService {
 							this.profilePicSubject.next(url);
 						})
 					)
-					.subscribe();
+					.subscribe(
+						() => {},
+						(error) => {
+							console.log("no picture");
+						}
+					);
 			} else {
 				// No user is signed in.
 				this.currentUser = null;

@@ -136,8 +136,4 @@ export class PictureModalComponent implements OnInit {
 				);
 			});
 	}
-
-	doThing() {
-		this.authService.newProfilePic("help");
-	}
 }
