@@ -15,12 +15,20 @@
 <ion-content class="user-content">
 	<ion-list lines="none">
 		<ion-item class="image-item">
-			<ion-avatar class="image-avatar" (click)="showPictureModal()">
+			<ion-avatar class="image-avatar" style="position: relative">
 				<img
 					[src]="profilePicUrl"
 					onerror="this.onerror=null; this.src='\\assets\\profile\\no-profile.jpg'"
 					class="image-tag"
 				/>
+				<ion-button
+					fill="clear"
+					color="light"
+					class="inner"
+					(click)="showPictureModal()"
+				>
+					<ion-icon name="camera-outline"></ion-icon>
+				</ion-button>
 			</ion-avatar>
 		</ion-item>
 	</ion-list>
