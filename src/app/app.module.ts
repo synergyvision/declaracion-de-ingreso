@@ -20,7 +20,6 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AuthGuard } from "./firebase/auth/auth.guard";
 
 import { appInitializerFactory } from "./app-initializer.factory";
-import { FirebaseAuthService } from "./firebase/auth/firebase-auth.service";
 
 export function createTranslateLoader(http: HttpClient) {
 	return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -48,7 +47,6 @@ export function createTranslateLoader(http: HttpClient) {
 		}),
 	],
 	providers: [
-		FirebaseAuthService,
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 		{
 			provide: APP_INITIALIZER,

@@ -18,8 +18,6 @@ import { Plugins } from "@capacitor/core";
 import { TranslateService } from "@ngx-translate/core";
 import { Reference } from "@angular/fire/firestore";
 
-// import { AngularFireStorage } from "@angular/fire/storage";
-
 @Injectable({ providedIn: "root" })
 export class FirebaseAuthService {
 	currentUser: User;
