@@ -265,4 +265,11 @@ export class FirebaseAuthService {
 	get profilePic() {
 		return this.profilePicSubject.asObservable();
 	}
+
+	getUserCredential(password: string) {
+		return firebase.auth.EmailAuthProvider.credential(
+			this.currentUser.email,
+			password
+		);
+	}
 }

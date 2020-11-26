@@ -55,7 +55,6 @@ export class AppComponent {
 	ngOnInit() {
 		this.profilePictureSubscription = this.authService.profilePic.subscribe(
 			(url) => {
-				console.log("next?", url);
 				this.profilePictureUrl = url;
 			}
 		);

@@ -36,6 +36,8 @@
 	"fields": {
 		"EMAIL": "Correo electrónico",
 		"PW": "Contraseña",
+		"CURRENT_PW": "Contraseña actual",
+		"NEW_PW": "Contraseña nueva",
 		"CONFIRM_PW": "Confirme la contraseña",
 		"NAME": "Nombre",
 		"LAST_NAME": "Apellido",
@@ -59,7 +61,7 @@
 		"WELCOME": "¡Bienvenido!",
 		"FORGOT_PW": "¿Olvidó su contraseña?",
 		"SIGN_UP": "¡Regístrese!",
-		"REMEMBER_ME": "Recuerdame",
+		"REMEMBER_ME": "Recuérdame",
 		"SIGNING_IN": "Iniciando sesión..."
 	},
 	"signUp": {
@@ -86,7 +88,7 @@
 		"CREATING": "Guardando Información personal...",
 		"EDIT": "Editar perfil",
 		"CHANGE_PW": "Cambiar contraseña",
-		"CHANGE_PW_MSG": "¿Está seguro que desea cambiar su contraseña?",
+		"CHANGE_PW_MSG": "Ingrese su contraseña actual y la contraseña nueva",
 		"RETRIEVING": "Buscando su información...",
 		"SELECT_COUNTRY": "Seleccione un país",
 		"SAVE": "Guardar cambios",
@@ -106,9 +108,10 @@
 		"NO_USER": "Error de usuario y contraseña.",
 		"IN_USE": "El email ya se encuentra en uso.",
 		"NOT_ALLOWED": "Acceso denegado.",
+		"WEAK_PW": "Ingrese una contraseña nueva más segura.",
 		"DELETE_SIGN_OUT": "Esta acción requiere que haya iniciado sesión recientemente, inicie sesión e intentelo nuevamente.",
-		"CHANGE_PW": "Correo enviado",
-		"CHANGE_PW_SIGN_OUT": "El correo para cambiar contraseña ha sido enviado, revise su buzón.",
+		"CHANGE_PW": "Cambio exitoso",
+		"CHANGE_PW_SIGN_OUT": "Su contraseña ha sido cambiada exitosamente, inicie sesión nuevamente.",
 		"UNEXPECTED": "Ha ocurrido un error inesperado, inténtelo nuevamente más tarde.",
 		"UNKNOWN": "Ha ocurrido un error desconocido."
 	},

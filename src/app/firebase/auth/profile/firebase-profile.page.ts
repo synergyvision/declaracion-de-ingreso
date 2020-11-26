@@ -220,26 +220,8 @@ export class FirebaseProfilePage implements OnInit {
 						})
 						.then((modalResultData) => {
 							if (modalResultData.role == "changePassword") {
-								this.authService
-									.getAuthState()
-									.pipe(
-										take(1),
-										switchMap((authState) => {
-											console.log(authState);
-											return this.authService.resetPassword(
-												authState.email
-											);
-										})
-									)
-									.subscribe(
-										() => {
-											console.log("ok");
-											this.signOutChangePw();
-										},
-										(err) => {
-											console.log(err);
-										}
-									);
+								console.log("ok");
+								this.signOutChangePw();
 							}
 						});
 				}
