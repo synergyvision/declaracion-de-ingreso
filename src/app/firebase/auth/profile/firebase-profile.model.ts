@@ -5,6 +5,7 @@ export class FirebaseProfileModel extends ShellModel {
 	lastName: string;
 	dob: string;
 	sex: string;
+	idType: string;
 	id: string;
 	passport: string;
 	nationality: string;

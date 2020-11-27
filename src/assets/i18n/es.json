@@ -98,8 +98,12 @@
 		"DELETE_MSG": "Borrar tu cuenta removerá toda tu información guardada en nuestra base de datos. Esta acción es irreversible.",
 		"DELETING": "Borrando..."
 	},
+	"trips": {
+		"TRIPS": "Viajes"
+	},
 	"menu": {
 		"MENU": "Menú",
+		"TRIPS": "Viajes",
 		"SIGN_OUT": "Cerrar sesión",
 		"SETTINGS": "Ajustes"
 	},

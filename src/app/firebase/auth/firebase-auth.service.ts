@@ -266,6 +266,10 @@ export class FirebaseAuthService {
 		return this.profilePicSubject.asObservable();
 	}
 
+	deleteProfilePic() {
+		return from(this.profilePicRef.delete());
+	}
+
 	getUserCredential(password: string) {
 		return firebase.auth.EmailAuthProvider.credential(
 			this.currentUser.email,

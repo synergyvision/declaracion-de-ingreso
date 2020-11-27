@@ -32,7 +32,7 @@ export class NoProfileGuard implements CanActivate {
 						if (profile == null) {
 							return true;
 						} else {
-							this.router.navigate(["app/categories"]);
+							this.router.navigate(["trips"]);
 							return false;
 						}
 					})

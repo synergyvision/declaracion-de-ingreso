@@ -114,19 +114,41 @@
 			<hr />
 			<hr />
 			<hr />
-			<ion-item class="input-item">
-				<ion-label position="floating"
-					>{{ 'fields.ID' | translate }}</ion-label
-				>
-				<ion-input
-					type="number"
-					formControlName="id"
-					clearInput
-					autocapitalize="off"
-					inputmode="numeric"
-					(keypress)="noDecimals($event)"
-				></ion-input>
-			</ion-item>
+			<ion-grid>
+				<ion-row>
+					<ion-col size="1">
+						<ion-item class="input-item">
+							<ion-select
+								formControlName="idType"
+								placeholder="-"
+								[cancelText]="'fields.CANCEL' | translate"
+								[okText]="'fields.DONE' | translate"
+								interface="alert"
+							>
+								<ion-select-option value="V"
+									>V</ion-select-option
+								>
+								<ion-select-option value="E"
+									>E</ion-select-option
+								>
+							</ion-select>
+						</ion-item>
+					</ion-col>
+					<ion-col size="11">
+						<ion-item class="input-item">
+							<ion-input
+								type="text"
+								formControlName="id"
+								clearInput
+								autocapitalize="off"
+								inputmode="numeric"
+								maxlength="9"
+								(keypress)="noDecimals($event)"
+							></ion-input>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
 			<div class="error-container">
 				<ng-container *ngFor="let validation of validation_messages.id">
 					<div

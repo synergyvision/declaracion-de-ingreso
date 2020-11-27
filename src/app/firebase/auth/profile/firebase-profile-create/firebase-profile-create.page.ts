@@ -63,6 +63,10 @@ export class FirebaseProfileCreatePage implements OnInit {
 					Validators.pattern(validation.pattern.numbers),
 				])
 			),
+			idType: new FormControl(
+				"",
+				Validators.compose([Validators.required])
+			),
 			passport: new FormControl(
 				"",
 				Validators.compose([
@@ -127,17 +131,17 @@ export class FirebaseProfileCreatePage implements OnInit {
 					},
 					complete: () => {
 						loadEl.dismiss();
-						this.router.navigate(["app/categories"]);
+						this.router.navigate(["trips"]);
 					},
 				});
 			});
 	}
 
 	noDecimals(event: any) {
-		const pattern = /[.,]/;
+		const pattern = /[0-9]/;
 		let inputChar = String.fromCharCode(event.charCode);
 
-		if (pattern.test(inputChar)) {
+		if (!pattern.test(inputChar)) {
 			event.preventDefault();
 		}
 	}

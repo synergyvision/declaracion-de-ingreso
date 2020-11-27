@@ -98,6 +98,9 @@
 		"DELETE_MSG": "Deleting your account will erase all your information stored in our database. This action is irreversible.",
 		"DELETING": "Deleting..."
 	},
+	"trips": {
+		"TRIPS": "Trips"
+	},
 	"menu": {
 		"MENU": "Menu",
 		"SIGN_OUT": "Sign out",
