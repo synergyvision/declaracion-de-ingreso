@@ -5,7 +5,7 @@
 			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
 		<ion-buttons slot="end">
-			<ion-button (click)="onAddTrip()"
+			<ion-button [routerLink]="'./create'"
 				><ion-icon slot="icon-only" name="add-outline"></ion-icon
 			></ion-button>
 			<ion-button (click)="onChangeFilter()"
@@ -26,10 +26,15 @@
 			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
-						<ion-label>{{ getDestinations(trip) }}</ion-label>
+						<ion-label class="item-destinations"
+							>{{ getDestinations(trip) }}</ion-label
+						>
 					</ion-row>
 					<ion-row>
-						<ion-label style="text-transform: capitalize"
+						<ion-label>{{ getLengthOfTrip(trip) }}</ion-label>
+					</ion-row>
+					<ion-row>
+						<ion-label class="item-state"
 							>{{ trip.state }}</ion-label
 						>
 					</ion-row>

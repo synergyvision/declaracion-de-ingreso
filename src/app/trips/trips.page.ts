@@ -22,57 +22,104 @@ export class TripsPage implements OnInit {
 	trips: TripsModel[] = [
 		{
 			id: 1,
-			return: {
-				arrival: new Date("11-01-2020"),
-				airline: "Copa Airlines",
-				flightNumber: "VEN-001",
-			},
+			flights: [
+				{
+					from: {
+						country: "usa",
+						city: "Miami",
+						date: new Date("11-01-2020"),
+					},
+					to: {
+						country: "ven",
+						city: "Caracas",
+						date: new Date("11-01-2020"),
+					},
+					airline: "Copa Airlines",
+					flightNumber: "VEN-001",
+				},
+			],
 			state: "finalizado",
 		},
 		{
 			id: 2,
-			destinations: [
+			flights: [
 				{
-					country: "usa",
-					city: "Miami",
-					arrival: new Date(),
-					departure: new Date("12-01-2020"),
+					from: {
+						country: "ven",
+						city: "Caracas",
+						date: new Date(),
+					},
+					to: {
+						country: "usa",
+						city: "Miami",
+						date: new Date(),
+					},
 					airline: "Copa Airlines",
 					flightNumber: "MIA-001",
 				},
+				{
+					from: {
+						country: "usa",
+						city: "Miami",
+						date: new Date("12-01-2020"),
+					},
+					to: {
+						country: "ven",
+						city: "Caracas",
+						date: new Date("12-01-2020"),
+					},
+					airline: "Copa Airlines",
+					flightNumber: "VEN-002",
+				},
 			],
-			return: {
-				arrival: new Date("12-01-2020"),
-				airline: "Copa Airlines",
-				flightNumber: "VEN-001",
-			},
 			state: "pendiente",
 		},
 		{
 			id: 3,
-			destinations: [
+			flights: [
 				{
-					country: "usa",
-					city: "Houston",
-					arrival: new Date("01-10-2019"),
-					departure: new Date("01-12-2019"),
+					from: {
+						country: "ven",
+						city: "Caracas",
+						date: new Date("01-10-2019"),
+					},
+					to: {
+						country: "usa",
+						city: "Houston",
+						date: new Date("01-10-2019"),
+					},
 					airline: "America Airlines",
 					flightNumber: "HOU-001",
 				},
 				{
-					country: "can",
-					city: "Montreal",
-					arrival: new Date("01-12-2019"),
-					departure: new Date("01-15-2019"),
-					airline: "Canada Airlines",
+					from: {
+						country: "usa",
+						city: "Houston",
+						date: new Date("01-12-2019"),
+					},
+					to: {
+						country: "can",
+						city: "Montreal",
+						date: new Date("01-12-2019"),
+					},
+					airline: "Copa Airlines",
 					flightNumber: "MON-001",
 				},
+				{
+					from: {
+						country: "can",
+						city: "Montreal",
+						date: new Date("01-15-2020"),
+					},
+					to: {
+						country: "ven",
+						city: "Caracas",
+						date: new Date("01-15-2020"),
+					},
+					airline: "Copa Airlines",
+					flightNumber: "VEN-003",
+				},
 			],
-			return: {
-				arrival: new Date("01-15-2020"),
-				airline: "Copa Airlines",
-				flightNumber: "VEN-001",
-			},
 			state: "pendiente",
 		},
 	];
@@ -81,27 +128,59 @@ export class TripsPage implements OnInit {
 		console.log(this.trips);
 	}
 
-	onAddTrip() {}
-
 	onChangeFilter() {}
 
 	getDestinations(trip: TripsModel) {
-		if (!trip.destinations || trip.destinations.length == 0) {
-			return "Venezuela";
-		}
-		let destinationsString: string = "";
-		trip.destinations.forEach((destination, index) => {
+		let flightString: string = "";
+		trip.flights.forEach((flight, index) => {
 			if (index > 0) {
-				destinationsString += ", ";
+				flightString += ", ";
 			}
-			destinationsString += `${this.countryService.getCountryName(
-				destination.country
-			)} (${destination.city})`;
+			flightString += `${this.countryService.getCountryName(
+				flight.to.country
+			)} (${flight.to.city})`;
 		});
-		return destinationsString;
+		return flightString;
 	}
 
 	getLengthOfTrip(trip: TripsModel) {
-		let tripLengthString = "";
+		let firstDate = this.getFirstDate(trip);
+		let lastDate = this.getLastDate(trip);
+
+		if (
+			firstDate.getDate() === lastDate.getDate() &&
+			firstDate.getMonth() === lastDate.getMonth() &&
+			firstDate.getFullYear() === lastDate.getFullYear()
+		) {
+			return `${this.shared.formatDateShort(firstDate.toString())}`;
+		} else {
+			return `${this.shared.formatDateShort(
+				firstDate.toString()
+			)} - ${this.shared.formatDateShort(lastDate.toString())}`;
+		}
+	}
+
+	getFirstDate(trip: TripsModel) {
+		let firstDate: Date;
+		trip.flights.forEach((flight, index) => {
+			if (index === 0) {
+				firstDate = flight.from.date;
+			} else if (flight.from.date < firstDate) {
+				firstDate = flight.from.date;
+			}
+		});
+		return firstDate;
+	}
+
+	getLastDate(trip: TripsModel) {
+		let lastDate: Date;
+		trip.flights.forEach((flight, index) => {
+			if (index === 0) {
+				lastDate = flight.to.date;
+			} else if (flight.to.date > lastDate) {
+				lastDate = flight.to.date;
+			}
+		});
+		return lastDate;
 	}
 }

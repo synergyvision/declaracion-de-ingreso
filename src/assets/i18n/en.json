@@ -1,7 +1,8 @@
 {
 	"AND": "and",
 	"LOADING": "Loading...",
-	"FORMATTED_DOB": "{{ month }} {{ day }}, {{ year }}",
+	"FORMATTED_DATE": "{{ month }} {{ day }}, {{ year }}",
+	"FORMATTED_DATE_SHORT": "{{ month }} {{ day }}, {{ year }}",
 	"MONTH": [
 		"January",
 		"February",
@@ -15,6 +16,20 @@
 		"October",
 		"November",
 		"December"
+	],
+	"MONTH_SHORT": [
+		"Jan.",
+		"Feb.",
+		"Mar.",
+		"Apr.",
+		"May",
+		"Jun.",
+		"Jul.",
+		"Aug.",
+		"Sep.",
+		"Oct.",
+		"Nov.",
+		"Dic."
 	],
 	"validation": {
 		"REQUIRED": "{{ text }} is required.",
@@ -41,6 +56,7 @@
 		"NEW_PW": "New password",
 		"NAME": "Name",
 		"LAST_NAME": "Last name",
+		"DATE": "Date",
 		"DOB": "Date of birth",
 		"ID": "Venezuelan ID number",
 		"PASSPORT": "Passport number",
@@ -51,8 +67,12 @@
 		"MALE": "Male",
 		"FEMALE": "Female",
 		"PROFESSION": "Profession",
+		"CITY": "City",
+		"COUNTRY": "Country",
 		"COUNTRY_OF_ORIGIN": "Country of origin",
 		"COUNTRY_OF_RESIDENCE": "Country of residence",
+		"AIRLINE": "Airline",
+		"FLIGHT_NUMBER": "Flight number",
 		"DONE": "Done",
 		"CANCEL": "Cancel"
 	},
@@ -99,7 +119,11 @@
 		"DELETING": "Deleting..."
 	},
 	"trips": {
-		"TRIPS": "Trips"
+		"TRIPS": "Trips",
+		"CREATE": "Add trip",
+		"FROM": "From:",
+		"TO": "To:",
+		"ADD_FLIGHT": "Add flight"
 	},
 	"menu": {
 		"MENU": "Menu",

@@ -1,7 +1,8 @@
 {
 	"AND": "y",
 	"LOADING": "Cargando...",
-	"FORMATTED_DOB": "{{ day }} de {{ month }} de {{ year }}",
+	"FORMATTED_DATE": "{{ day }} de {{ month }} de {{ year }}",
+	"FORMATTED_DATE_SHORT": "{{ day }} {{ month }} {{ year }}",
 	"MONTH": [
 		"Enero",
 		"Febrero",
@@ -15,6 +16,20 @@
 		"Octubre",
 		"Noviembre",
 		"Diciembre"
+	],
+	"MONTH_SHORT": [
+		"en.",
+		"feb.",
+		"mar.",
+		"abr.",
+		"may.",
+		"jun.",
+		"jul.",
+		"ago.",
+		"sept.",
+		"oct.",
+		"nov.",
+		"dic."
 	],
 	"validation": {
 		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
@@ -41,6 +56,7 @@
 		"CONFIRM_PW": "Confirme la contraseña",
 		"NAME": "Nombre",
 		"LAST_NAME": "Apellido",
+		"DATE": "Fecha",
 		"DOB": "Fecha de nacimiento",
 		"ID": "Cédula",
 		"PASSPORT": "Número de pasaporte",
@@ -51,8 +67,12 @@
 		"MALE": "Masculino",
 		"FEMALE": "Femenino",
 		"PROFESSION": "Profesión",
-		"COUNTRY_OF_ORIGIN": "Pais de origen",
-		"COUNTRY_OF_RESIDENCE": "Pais de residencia",
+		"CITY": "Ciudad",
+		"COUNTRY": "País",
+		"COUNTRY_OF_ORIGIN": "País de origen",
+		"COUNTRY_OF_RESIDENCE": "País de residencia",
+		"AIRLINE": "Aerolínea",
+		"FLIGHT_NUMBER": "Número de vuelo",
 		"DONE": "Listo",
 		"CANCEL": "Cancelar"
 	},
@@ -99,7 +119,11 @@
 		"DELETING": "Borrando..."
 	},
 	"trips": {
-		"TRIPS": "Viajes"
+		"TRIPS": "Viajes",
+		"CREATE": "Añadir viaje",
+		"FROM": "Desde:",
+		"TO": "Hacia:",
+		"ADD_FLIGHT": "Añadir vuelo"
 	},
 	"menu": {
 		"MENU": "Menú",

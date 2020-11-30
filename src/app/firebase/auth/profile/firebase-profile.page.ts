@@ -181,14 +181,7 @@ export class FirebaseProfilePage implements OnInit {
 	}
 
 	getUserDOB() {
-		const day = new Date(this.user.dob).getDate().toString();
-		const month = new Date(this.user.dob).getMonth().toString();
-		const year = new Date(this.user.dob).getFullYear().toString();
-		return this.shared.translateText("FORMATTED_DOB", {
-			day,
-			month: this.shared.translateText("MONTH")[month],
-			year,
-		});
+		return this.shared.formatDate(this.user.dob);
 	}
 
 	getUserLength(): Array<number> {

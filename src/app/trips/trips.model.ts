@@ -1,19 +1,18 @@
 export interface TripsModel {
 	id: number;
-	destinations?: {
-		country: string;
-		city: string;
-		arrival: Date;
-		departure: Date;
+	flights: {
+		from: Destination;
+		to: Destination;
 		airline: string;
 		flightNumber: string;
 	}[];
-	return: {
-		airline: string;
-		flightNumber: string;
-		arrival: Date;
-	};
 	state: string;
+}
+
+interface Destination {
+	country: string;
+	city: string;
+	date: Date;
 }
 
 export enum States {
