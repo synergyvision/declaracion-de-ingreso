@@ -121,9 +121,10 @@
 	"trips": {
 		"TRIPS": "Trips",
 		"CREATE": "Add trip",
+		"FLIGHT": "Flight",
 		"FROM": "From:",
 		"TO": "To:",
-		"ADD_FLIGHT": "Add flight"
+		"ADD_FLIGHT": "Add another flight"
 	},
 	"menu": {
 		"MENU": "Menu",

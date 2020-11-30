@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { SharedService } from "../../shared/shared.service";
+import { CountryService } from "../../country/country.service";
+import { TripsService } from "../trips.service";
 
 @Component({
 	selector: "app-trips-create",
@@ -53,11 +55,22 @@ export class TripsCreatePage implements OnInit {
 		],
 	};
 
-	constructor(private shared: SharedService) {
+	countries = [];
+
+	constructor(
+		private shared: SharedService,
+		private countryService: CountryService,
+		private tripsService: TripsService
+	) {
 		this.tripsForm = new FormGroup({
 			flights: new FormArray([]),
 		});
 		this.addFlight();
+		this.countries = countryService.getCountries();
+	}
+
+	ionViewWillEnter() {
+		this.countries = this.countryService.getCountries();
 	}
 
 	ngOnInit() {}
@@ -91,5 +104,8 @@ export class TripsCreatePage implements OnInit {
 		this.flightArray.removeAt(index);
 	}
 
-	doCreateTrip() {}
+	doCreateTrip() {
+		console.log(this.tripsForm.value);
+		this.tripsService.addTrip(this.tripsForm.value);
+	}
 }
