@@ -3,6 +3,9 @@ import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { SharedService } from "../../shared/shared.service";
 import { CountryService } from "../../country/country.service";
 import { TripsService } from "../trips.service";
+import { States } from "../trips.model";
+import { LoadingController } from "@ionic/angular";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: "app-trips-create",
@@ -60,6 +63,8 @@ export class TripsCreatePage implements OnInit {
 	constructor(
 		private shared: SharedService,
 		private countryService: CountryService,
+		private loadCtrl: LoadingController,
+		private router: Router,
 		private tripsService: TripsService
 	) {
 		this.tripsForm = new FormGroup({
@@ -105,7 +110,22 @@ export class TripsCreatePage implements OnInit {
 	}
 
 	doCreateTrip() {
-		console.log(this.tripsForm.value);
-		this.tripsService.addTrip(this.tripsForm.value);
+		this.loadCtrl
+			.create({
+				keyboardClose: true,
+				message: this.shared.translateText("trips.CREATING"),
+			})
+			.then((loadEl) => {
+				loadEl.present();
+				this.tripsService
+					.addTrip({
+						...this.tripsForm.value,
+						state: States.PENDIENTE,
+					})
+					.subscribe(() => {
+						loadEl.dismiss();
+						this.router.navigate(["/trips"], { replaceUrl: true });
+					});
+			});
 	}
 }

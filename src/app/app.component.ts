@@ -7,8 +7,9 @@ import { FirebaseAuthService } from "./firebase/auth/firebase-auth.service";
 import { Router } from "@angular/router";
 import { SharedService } from "./shared/shared.service";
 import { FirebaseProfileModel } from "./firebase/auth/profile/firebase-profile.model";
-import { switchMap, tap } from "rxjs/operators";
-import { Subscription } from "rxjs";
+import { delay, switchMap, tap } from "rxjs/operators";
+import { Subscription, from } from "rxjs";
+import { LoadingController, MenuController } from "@ionic/angular";
 
 @Component({
 	selector: "app-root",
@@ -33,6 +34,8 @@ export class AppComponent {
 		public translate: TranslateService,
 		public historyHelper: HistoryHelperService,
 		private authService: FirebaseAuthService,
+		private loadCtrl: LoadingController,
+		private menu: MenuController,
 		private router: Router,
 		private shared: SharedService
 	) {
@@ -83,14 +86,22 @@ export class AppComponent {
 	}
 
 	signOut() {
-		this.authService.signOut().subscribe(
-			() => {
-				this.router.navigate(["auth/login"], { replaceUrl: true });
-			},
-			(error) => {
-				console.log("signout error", error);
-			}
-		);
+		from(this.menu.close())
+			.pipe(
+				switchMap(() => {
+					return this.authService.signOut();
+				})
+			)
+			.subscribe(
+				() => {
+					this.router.navigate(["auth/login"], {
+						replaceUrl: true,
+					});
+				},
+				(error) => {
+					console.log("signout error", error);
+				}
+			);
 	}
 
 	ngOnDestroy() {

@@ -3,7 +3,12 @@
 		<!-- when=false means that the split pane will never expand automatically -->
 		<!-- For more info check https://ionicframework.com/docs/api/split-pane -->
 		<!-- our side menu  -->
-		<ion-menu contentId="menu-content" class="app-sidemenu">
+		<ion-menu
+			side="start"
+			contentId="menu-content"
+			class="app-sidemenu"
+			menuId="sidemenu"
+		>
 			<ion-header>
 				<ion-toolbar color="primary">
 					<ion-row class="user-details-wrapper">
@@ -69,6 +74,9 @@
 			</ion-content>
 		</ion-menu>
 		<!-- Main app content get's rendered in this router-outlet -->
-		<ion-router-outlet id="menu-content"></ion-router-outlet>
+		<ion-router-outlet
+			id="menu-content"
+			class="ion-page"
+		></ion-router-outlet>
 	</ion-split-pane>
 </ion-app>

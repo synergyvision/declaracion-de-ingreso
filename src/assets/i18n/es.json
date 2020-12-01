@@ -109,6 +109,7 @@
 		"EDIT": "Editar perfil",
 		"CHANGE_PW": "Cambiar contraseña",
 		"CHANGE_PW_MSG": "Ingrese su contraseña actual y la contraseña nueva",
+		"CHANGING_PASSWORDS": "Cambiando su contraseña...",
 		"RETRIEVING": "Buscando su información...",
 		"SELECT_COUNTRY": "Seleccione un país",
 		"SAVE": "Guardar cambios",
@@ -121,6 +122,7 @@
 	"trips": {
 		"TRIPS": "Viajes",
 		"CREATE": "Añadir viaje",
+		"CREATING": "Añadiendo viaje...",
 		"FLIGHT": "Vuelo",
 		"FROM": "Desde:",
 		"TO": "Hacia:",
@@ -130,6 +132,7 @@
 		"MENU": "Menú",
 		"TRIPS": "Viajes",
 		"SIGN_OUT": "Cerrar sesión",
+		"SIGNING_OUT": "Cerrando sesión...",
 		"SETTINGS": "Ajustes"
 	},
 	"error": {

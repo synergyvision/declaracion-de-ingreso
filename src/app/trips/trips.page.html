@@ -2,15 +2,15 @@
 	<ion-toolbar color="primary">
 		<ion-title>{{ 'trips.TRIPS' | translate }}</ion-title>
 		<ion-buttons slot="start">
-			<ion-menu-button></ion-menu-button>
+			<ion-menu-button auto-hide="false"></ion-menu-button>
 		</ion-buttons>
 		<ion-buttons slot="end">
-			<ion-button [routerLink]="'./create'"
-				><ion-icon slot="icon-only" name="add-outline"></ion-icon
-			></ion-button>
-			<ion-button (click)="onChangeFilter()"
-				><ion-icon slot="icon-only" name="filter-outline"></ion-icon
-			></ion-button>
+			<ion-button [routerLink]="'./create'">
+				<ion-icon slot="icon-only" name="add-outline"></ion-icon>
+			</ion-button>
+			<ion-button (click)="onChangeFilter()">
+				<ion-icon slot="icon-only" name="filter-outline"></ion-icon>
+			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>

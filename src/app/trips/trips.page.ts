@@ -1,8 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { SharedService } from "../shared/shared.service";
-import { LoadingController, ModalController } from "@ionic/angular";
+import {
+	LoadingController,
+	MenuController,
+	ModalController,
+} from "@ionic/angular";
 import { TripsModel, States } from "./trips.model";
 import { CountryService } from "../country/country.service";
+import { Subscription } from "rxjs";
+import { TripsService } from "./trips.service";
 
 @Component({
 	selector: "app-trips",
@@ -13,15 +19,22 @@ export class TripsPage implements OnInit {
 	constructor(
 		private shared: SharedService,
 		private countryService: CountryService,
+		private tripsService: TripsService,
 		private modalCtrl: ModalController,
+		private menuController: MenuController,
 		private loadCtrl: LoadingController
-	) {}
+	) {
+		this.tripsSubscription = this.tripsService.trips.subscribe((trips) => {
+			this.trips = trips;
+		});
+	}
 
 	statesEnum = States;
 
+	tripsSubscription: Subscription;
 	trips: TripsModel[] = [
 		{
-			id: 1,
+			id: "a",
 			flights: [
 				{
 					from: {
@@ -41,7 +54,7 @@ export class TripsPage implements OnInit {
 			state: "finalizado",
 		},
 		{
-			id: 2,
+			id: "b",
 			flights: [
 				{
 					from: {
@@ -75,7 +88,7 @@ export class TripsPage implements OnInit {
 			state: "pendiente",
 		},
 		{
-			id: 3,
+			id: "c",
 			flights: [
 				{
 					from: {
@@ -124,8 +137,10 @@ export class TripsPage implements OnInit {
 		},
 	];
 
-	ngOnInit() {
-		console.log(this.trips);
+	ngOnInit() {}
+
+	ionViewWillEnter() {
+		this.menuController.enable(true);
 	}
 
 	onChangeFilter() {}
@@ -164,9 +179,9 @@ export class TripsPage implements OnInit {
 		let firstDate: Date;
 		trip.flights.forEach((flight, index) => {
 			if (index === 0) {
-				firstDate = flight.from.date;
-			} else if (flight.from.date < firstDate) {
-				firstDate = flight.from.date;
+				firstDate = new Date(flight.from.date);
+			} else if (new Date(flight.from.date) < firstDate) {
+				firstDate = new Date(flight.from.date);
 			}
 		});
 		return firstDate;
@@ -176,9 +191,9 @@ export class TripsPage implements OnInit {
 		let lastDate: Date;
 		trip.flights.forEach((flight, index) => {
 			if (index === 0) {
-				lastDate = flight.to.date;
-			} else if (flight.to.date > lastDate) {
-				lastDate = flight.to.date;
+				lastDate = new Date(flight.to.date);
+			} else if (new Date(flight.to.date) > lastDate) {
+				lastDate = new Date(flight.to.date);
 			}
 		});
 		return lastDate;

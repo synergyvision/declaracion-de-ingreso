@@ -5,7 +5,10 @@
 			<ion-back-button defaultHref="/trips"></ion-back-button>
 		</ion-buttons>
 		<ion-buttons slot="end">
-			<ion-button type="submit" (click)="tripsFormElement.ngSubmit.emit()"
+			<ion-button
+				type="submit"
+				(click)="tripsFormElement.ngSubmit.emit()"
+				[disabled]="tripsForm.invalid"
 				><ion-icon slot="icon-only" name="checkmark-outline"></ion-icon
 			></ion-button>
 		</ion-buttons>

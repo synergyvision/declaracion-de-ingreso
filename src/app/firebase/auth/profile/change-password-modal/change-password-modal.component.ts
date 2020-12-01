@@ -4,8 +4,9 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { PasswordValidator } from "../../../../validators/password.validator";
 import { SharedService } from "../../../../shared/shared.service";
 import { FirebaseAuthService } from "../../firebase-auth.service";
-import { from } from "rxjs";
+import { Subscription, from } from "rxjs";
 import { switchMap } from "rxjs/operators";
+import { User } from "firebase";
 
 @Component({
 	selector: "app-change-password-modal",
@@ -15,6 +16,8 @@ import { switchMap } from "rxjs/operators";
 export class ChangePasswordModalComponent implements OnInit {
 	changePasswordForm: FormGroup;
 	matchingPasswordForm: FormGroup;
+	currentUser: User;
+	subscriptions: Subscription;
 
 	validation_messages = {
 		currentPassword: [
@@ -101,6 +104,10 @@ export class ChangePasswordModalComponent implements OnInit {
 			),
 			matchingPasswords: this.matchingPasswordForm,
 		});
+
+		this.subscriptions = this.authService.currentUser.subscribe((user) => {
+			this.currentUser = user;
+		});
 	}
 
 	onCancel() {
@@ -115,19 +122,23 @@ export class ChangePasswordModalComponent implements OnInit {
 		this.loadCtrl
 			.create({
 				keyboardClose: true,
-				message: this.shared.translateText("profile.RETRIEVING"),
+				message: this.shared.translateText("profile.CHANGING_PW"),
 			})
 			.then((loadEl) => {
 				loadEl.present();
-				from(
-					this.authService.currentUser.reauthenticateWithCredential(
-						credential
-					)
-				)
+				this.authService
+					.getUserCredential(values.currentPassword)
 					.pipe(
+						switchMap((credential) => {
+							return from(
+								this.currentUser.reauthenticateWithCredential(
+									credential
+								)
+							);
+						}),
 						switchMap((user) => {
 							return from(
-								this.authService.currentUser.updatePassword(
+								this.currentUser.updatePassword(
 									values.matchingPasswords.newPassword
 								)
 							);

@@ -1,5 +1,5 @@
 export interface TripsModel {
-	id: number;
+	id: string;
 	flights: {
 		from: Destination;
 		to: Destination;
@@ -12,7 +12,7 @@ export interface TripsModel {
 interface Destination {
 	country: string;
 	city: string;
-	date: Date;
+	date: Date | string;
 }
 
 export enum States {

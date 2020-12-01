@@ -108,6 +108,7 @@
 		"CREATING": "Saving personal information...",
 		"EDIT": "Edit",
 		"CHANGE_PW": "Change password",
+		"CHANGING_PASSWORDS": "Changing your password...",
 		"CHANGE_PW_MSG": "Type in your current password and the new password",
 		"RETRIEVING": "Retrieving your information...",
 		"SELECT_COUNTRY": "Select a country",
@@ -121,6 +122,7 @@
 	"trips": {
 		"TRIPS": "Trips",
 		"CREATE": "Add trip",
+		"CREATING": "Adding trip...",
 		"FLIGHT": "Flight",
 		"FROM": "From:",
 		"TO": "To:",
@@ -128,7 +130,9 @@
 	},
 	"menu": {
 		"MENU": "Menu",
+		"TRIPS": "Trips",
 		"SIGN_OUT": "Sign out",
+		"SIGNING_OUT": "Signing out...",
 		"SETTINGS": "Settings"
 	},
 	"error": {

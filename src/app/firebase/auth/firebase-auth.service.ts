@@ -20,7 +20,7 @@ import { Reference } from "@angular/fire/firestore";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseAuthService {
-	currentUser: User;
+	_currentUser = new BehaviorSubject<User>(null);
 	profile: AngularFireObject<FirebaseProfileModel>;
 	profilePicRef: firebase.storage.Reference;
 	userProviderAdditionalInfo: any;
@@ -43,14 +43,12 @@ export class FirebaseAuthService {
 		this.angularFire.onAuthStateChanged((user) => {
 			if (user) {
 				// User is signed in.
-				this.currentUser = user;
+				this._currentUser.next(user);
 				this.profile = db.object<FirebaseProfileModel>(
 					user.uid + "/profile"
 				);
 				const storageRef = firebase.storage().ref();
-				this.profilePicRef = storageRef.child(
-					"profile/" + this.currentUser.uid
-				);
+				this.profilePicRef = storageRef.child("profile/" + user.uid);
 				this.getProfilePic()
 					.pipe(
 						tap((url) => {
@@ -65,7 +63,7 @@ export class FirebaseAuthService {
 					);
 			} else {
 				// No user is signed in.
-				this.currentUser = null;
+				this._currentUser.next(null);
 				this.profile = null;
 				this.profilePicRef = null;
 				this.profilePicSubject.next(null);
@@ -88,6 +86,10 @@ export class FirebaseAuthService {
 				}
 			);
 		}
+	}
+
+	get currentUser() {
+		return this._currentUser.asObservable();
 	}
 
 	getRedirectResult(): Observable<any> {
@@ -243,11 +245,13 @@ export class FirebaseAuthService {
 	}
 
 	uploadImage(imageFile: File | Blob) {
-		const storageRef = firebase.storage().ref();
-		const imageProfileRef = storageRef.child(
-			"profile/" + this.currentUser.uid
-		);
-		return from(imageProfileRef.put(imageFile)).pipe(
+		return this.currentUser.pipe(
+			take(1),
+			switchMap((user) => {
+				const storageRef = firebase.storage().ref();
+				const imageProfileRef = storageRef.child("profile/" + user.uid);
+				return from(imageProfileRef.put(imageFile));
+			}),
 			switchMap((url) => {
 				return this.getProfilePic();
 			})
@@ -271,9 +275,16 @@ export class FirebaseAuthService {
 	}
 
 	getUserCredential(password: string) {
-		return firebase.auth.EmailAuthProvider.credential(
-			this.currentUser.email,
-			password
+		return this.currentUser.pipe(
+			take(1),
+			switchMap((user) => {
+				return of(
+					firebase.auth.EmailAuthProvider.credential(
+						user.email,
+						password
+					)
+				);
+			})
 		);
 	}
 }

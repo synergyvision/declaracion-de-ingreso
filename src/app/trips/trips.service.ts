@@ -2,38 +2,61 @@ import { Injectable } from "@angular/core";
 import { FirebaseAuthService } from "../firebase/auth/firebase-auth.service";
 import { TripsModel } from "./trips.model";
 import { AngularFireDatabase, AngularFireList } from "@angular/fire/database";
-import { BehaviorSubject, Subscription } from "rxjs";
-import { tap } from "rxjs/operators";
+import { BehaviorSubject, Observable, Subscription, from } from "rxjs";
+import { map, tap } from "rxjs/operators";
 
 @Injectable({
 	providedIn: "root",
 })
 export class TripsService {
 	subscriptions: Subscription;
-	trips = new BehaviorSubject<TripsModel[]>(null);
-	tripsRef: AngularFireList<TripsModel>;
+	tripsRef: AngularFireList<TripsModel> = null;
+	_trips = new BehaviorSubject<TripsModel[]>(null);
 
 	constructor(
 		private authService: FirebaseAuthService,
 		private db: AngularFireDatabase
 	) {
-		this.subscriptions = authService
-			.getAuthState()
+		let childSubscription: Subscription;
+		this.subscriptions = authService.currentUser
 			.pipe(
 				tap((user) => {
-					console.log("trip service user", user);
 					if (user == null) {
 						this.tripsRef = null;
+						this._trips.next(null);
+					} else {
+						this.tripsRef = db.list<TripsModel>(
+							user.uid + "/trips"
+						);
+						childSubscription = this.tripsRef
+							.snapshotChanges()
+							.pipe(
+								map((changes) => {
+									return changes.map((c) => ({
+										id: c.payload.key,
+										...c.payload.val(),
+									}));
+								})
+							)
+							.subscribe((trips) => {
+								this._trips.next(trips);
+							});
 					}
-					this.tripsRef = db.list<TripsModel>(user.uid + "/trips");
 				})
 			)
 			.subscribe();
+		this.subscriptions.add(childSubscription);
 	}
 
 	addTrip(trip: TripsModel) {
-		this.tripsRef.push(trip);
+		return from(this.tripsRef.push(trip));
 	}
 
-	ngOnDestroy() {}
+	get trips(): Observable<TripsModel[]> {
+		return this._trips.asObservable();
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.unsubscribe();
+	}
 }
