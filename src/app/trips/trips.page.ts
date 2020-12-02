@@ -9,6 +9,7 @@ import { TripsModel, States } from "./trips.model";
 import { CountryService } from "../country/country.service";
 import { Subscription } from "rxjs";
 import { TripsService } from "./trips.service";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: "app-trips",
@@ -20,6 +21,7 @@ export class TripsPage implements OnInit {
 		private shared: SharedService,
 		private countryService: CountryService,
 		private tripsService: TripsService,
+		private router: Router,
 		private modalCtrl: ModalController,
 		private menuController: MenuController,
 		private loadCtrl: LoadingController

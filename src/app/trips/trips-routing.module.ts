@@ -15,6 +15,13 @@ const routes: Routes = [
 				(m) => m.TripsCreatePageModule
 			),
 	},
+	{
+		path: "detail",
+		loadChildren: () =>
+			import("./trips-detail/trips-detail.module").then(
+				(m) => m.TripsDetailPageModule
+			),
+	},
 ];
 
 @NgModule({

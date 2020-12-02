@@ -38,6 +38,7 @@
 		"NAMES": "{{ text }} cannot contain special characters.",
 		"NUMBERS": "{{ text }} can only contain numbers.",
 		"SPECIAL_CHAR": "{{ text }} cannot contain special characters.",
+		"INCONGRUENT_DATES": "Flights have to be in chronological order.",
 		"passport": {
 			"PATTERN": "Enter a valid passport."
 		},
@@ -123,9 +124,11 @@
 		"TRIPS": "Trips",
 		"CREATE": "Add trip",
 		"CREATING": "Adding trip...",
+		"DETAIL": "Detail",
+		"DETAIL_MSG": "Trip information",
 		"FLIGHT": "Flight",
-		"FROM": "From:",
-		"TO": "To:",
+		"FROM": "From",
+		"TO": "To",
 		"ADD_FLIGHT": "Add another flight"
 	},
 	"menu": {

@@ -367,6 +367,21 @@
 							</ion-row>
 						</ng-container>
 						<!-- ngFor array -->
+						<div class="error-container">
+							<ng-container
+								*ngFor="let validation of validation_messages.flights"
+							>
+								<div
+									class="error-message"
+									*ngIf="tripsForm.get('flights').hasError(validation.type) && (tripsForm.get('flights').dirty || tripsForm.get('flights').touched)"
+								>
+									<ion-icon
+										name="information-circle-outline"
+									></ion-icon>
+									<span>{{ validation.message }}</span>
+								</div>
+							</ng-container>
+						</div>
 						<ion-row class="ion-text-center">
 							<ion-col>
 								<ion-button

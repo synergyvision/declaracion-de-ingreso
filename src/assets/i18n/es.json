@@ -38,6 +38,7 @@
 		"NAMES": "El campo \"{{ text }}\" no puede contener caracteres especiales.",
 		"NUMBERS": "El campo \"{{ text }}\" sólo admite números.",
 		"SPECIAL_CHAR": "El campo \"{{ text }}\" no puede contener caracteres especiales.",
+		"INCONGRUENT_DATES": "Los vuelos tienen que ir en orden cronológico.",
 		"passport": {
 			"PATTERN": "Ingrese un pasaporte válido."
 		},
@@ -123,9 +124,11 @@
 		"TRIPS": "Viajes",
 		"CREATE": "Añadir viaje",
 		"CREATING": "Añadiendo viaje...",
+		"DETAIL": "Detalle",
+		"DETAIL_MSG": "Información del viaje",
 		"FLIGHT": "Vuelo",
-		"FROM": "Desde:",
-		"TO": "Hacia:",
+		"FROM": "Desde",
+		"TO": "Hacia",
 		"ADD_FLIGHT": "Añadir otro vuelo"
 	},
 	"menu": {

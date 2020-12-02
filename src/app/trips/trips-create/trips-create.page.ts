@@ -7,6 +7,8 @@ import { States } from "../trips.model";
 import { LoadingController } from "@ionic/angular";
 import { Router } from "@angular/router";
 
+import { FlightDatesValidator } from "../../validators/flight-dates.validator";
+
 @Component({
 	selector: "app-trips-create",
 	templateUrl: "./trips-create.page.html",
@@ -56,6 +58,14 @@ export class TripsCreatePage implements OnInit {
 				}),
 			},
 		],
+		flights: [
+			{
+				type: "incongruentDate",
+				message: this.shared.translateText(
+					"validation.INCONGRUENT_DATES"
+				),
+			},
+		],
 	};
 
 	countries = [];
@@ -68,7 +78,7 @@ export class TripsCreatePage implements OnInit {
 		private tripsService: TripsService
 	) {
 		this.tripsForm = new FormGroup({
-			flights: new FormArray([]),
+			flights: new FormArray([], [FlightDatesValidator.checkDates()]),
 		});
 		this.addFlight();
 		this.countries = countryService.getCountries();

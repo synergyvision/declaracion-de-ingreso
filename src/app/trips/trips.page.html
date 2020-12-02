@@ -19,7 +19,11 @@
 	<ion-list>
 		<ion-item-sliding *ngFor="let trip of trips">
 			<ion-item-options side="start">
-				<ion-item-option color="secondary">
+				<ion-item-option
+					color="secondary"
+					[routerLink]="['./detail']"
+					[queryParams]="{ id: trip.id }"
+				>
 					<ion-icon name="list-outline"></ion-icon>
 				</ion-item-option>
 			</ion-item-options>
