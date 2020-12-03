@@ -222,6 +222,7 @@ export class FirebaseSignInPage implements OnInit {
 						};
 						const data = JSON.stringify(dataObj);
 						Plugins.Storage.set({ key: "rememberMe", value: data });
+						this.loginForm.reset();
 						loadEl.dismiss();
 						this.redirectLoggedUserToProfilePage();
 					})

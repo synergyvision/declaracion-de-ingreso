@@ -147,17 +147,30 @@ export class TripsPage implements OnInit {
 
 	onChangeFilter() {}
 
-	getDestinations(trip: TripsModel) {
-		let flightString: string = "";
-		trip.flights.forEach((flight, index) => {
-			if (index > 0) {
-				flightString += ", ";
-			}
-			flightString += `${this.countryService.getCountryName(
-				flight.to.country
-			)} (${flight.to.city})`;
-		});
-		return flightString;
+	getOriginFlag(trip: TripsModel) {
+		return this.getCountryFlag(trip.flights[0].from.country);
+	}
+
+	getDestinationFlag(trip: TripsModel) {
+		return this.getCountryFlag(
+			trip.flights[trip.flights.length - 1].to.country
+		);
+	}
+
+	getCountryFlag(alpha3: string) {
+		const src = "\\assets\\flags\\";
+		return `${src}${this.countryService.getCountryAlpha2(alpha3)}.png`;
+	}
+
+	getTripString(trip: TripsModel) {
+		const lastFlight = trip.flights.length - 1;
+		const originCountry = this.countryService.getCountryName(
+			trip.flights[0].from.country
+		);
+		const destinationCountry = this.countryService.getCountryName(
+			trip.flights[lastFlight].to.country
+		);
+		return `${originCountry} (${trip.flights[0].from.city}) &#8594; ${destinationCountry} (${trip.flights[lastFlight].to.city})`;
 	}
 
 	getLengthOfTrip(trip: TripsModel) {

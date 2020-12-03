@@ -10,4 +10,22 @@ ion-item ion-label {
 
 .item-destinations {
 	margin-bottom: 10px;
+	font-size: 1.05em !important;
+}
+
+.origin-flag {
+	margin-left: 5px;
+}
+
+.destination-flag {
+	margin-top: 15px;
+	margin-left: -12px;
+}
+
+.flag-row {
+	height: 100%;
+}
+
+.flag-col {
+	padding: 0;
 }

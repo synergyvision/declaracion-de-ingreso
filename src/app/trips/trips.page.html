@@ -30,17 +30,39 @@
 			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
-						<ion-label class="item-destinations"
-							>{{ getDestinations(trip) }}</ion-label
-						>
-					</ion-row>
-					<ion-row>
-						<ion-label>{{ getLengthOfTrip(trip) }}</ion-label>
-					</ion-row>
-					<ion-row>
-						<ion-label class="item-state"
-							>{{ trip.state }}</ion-label
-						>
+						<ion-col size="3" class="flag-col">
+							<ion-row class="ion-align-items-center flag-row">
+								<ion-col class="flag-col">
+									<img
+										class="origin-flag"
+										[src]="getOriginFlag(trip)"
+									/>
+								</ion-col>
+								<ion-col class="flag-col">
+									<img
+										class="destination-flag"
+										[src]="getDestinationFlag(trip)"
+								/></ion-col>
+							</ion-row>
+						</ion-col>
+						<ion-col>
+							<ion-row>
+								<ion-label
+									class="item-destinations"
+									[innerHTML]="getTripString(trip)"
+								></ion-label>
+							</ion-row>
+							<ion-row>
+								<ion-label
+									>{{ getLengthOfTrip(trip) }}</ion-label
+								>
+							</ion-row>
+							<ion-row>
+								<ion-label class="item-state"
+									>{{ trip.state }}</ion-label
+								>
+							</ion-row>
+						</ion-col>
 					</ion-row>
 				</ion-grid>
 			</ion-item>

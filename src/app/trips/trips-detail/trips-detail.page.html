@@ -2,7 +2,10 @@
 	<ion-toolbar>
 		<ion-title>{{ 'trips.DETAIL' | translate }}</ion-title>
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/trips"></ion-back-button>
+			<ion-back-button
+				defaultHref="/trips"
+				[text]="'menu.BACK' | translate"
+			></ion-back-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>

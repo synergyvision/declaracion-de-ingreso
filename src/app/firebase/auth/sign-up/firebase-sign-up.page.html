@@ -1,7 +1,10 @@
 <ion-header class="ion-no-border">
 	<ion-toolbar>
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="/auth/login"></ion-back-button>
+			<ion-back-button
+				defaultHref="/auth/login"
+				[text]="'menu.BACK' | translate"
+			></ion-back-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
