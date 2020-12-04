@@ -1,5 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+	AbstractControl,
+	FormArray,
+	FormControl,
+	FormGroup,
+	Validators,
+} from "@angular/forms";
 import { SharedService } from "../../shared/shared.service";
 import { CountryService } from "../../country/country.service";
 import { TripsService } from "../trips.service";
@@ -80,7 +86,7 @@ export class TripsCreatePage implements OnInit {
 		this.tripsForm = new FormGroup({
 			flights: new FormArray([], [FlightDatesValidator.checkDates()]),
 		});
-		this.addFlight();
+		this.addFlight(false);
 		this.countries = countryService.getCountries();
 	}
 
@@ -90,7 +96,7 @@ export class TripsCreatePage implements OnInit {
 
 	ngOnInit() {}
 
-	newFlight() {
+	newFlight(returnFlight: boolean) {
 		return new FormGroup({
 			to: new FormGroup({
 				country: new FormControl("", Validators.required),
@@ -104,6 +110,7 @@ export class TripsCreatePage implements OnInit {
 			}),
 			airline: new FormControl("", Validators.required),
 			flightNumber: new FormControl("", Validators.required),
+			returnFlight: new FormControl(returnFlight),
 		});
 	}
 
@@ -111,12 +118,30 @@ export class TripsCreatePage implements OnInit {
 		return this.tripsForm.controls.flights as FormArray;
 	}
 
-	addFlight() {
-		this.flightArray.push(this.newFlight());
+	addFlight(returnFlight: boolean) {
+		this.flightArray.push(this.newFlight(returnFlight));
 	}
 
 	removeFlight(index: number) {
 		this.flightArray.removeAt(index);
+	}
+
+	hasReturnFlight() {
+		return this.flightArray.value.some((flight) => flight.returnFlight);
+	}
+
+	getFlightLength() {
+		return this.flightArray.value.some((flight) => flight.returnFlight)
+			? this.flightArray.length - 1
+			: this.flightArray.length;
+	}
+
+	isRemovingDisabled(flight: AbstractControl): boolean {
+		if (flight.get("returnFlight").value) {
+			return false;
+		} else {
+			return this.getFlightLength() <= 1;
+		}
 	}
 
 	doCreateTrip() {

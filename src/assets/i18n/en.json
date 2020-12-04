@@ -127,9 +127,12 @@
 		"DETAIL": "Detail",
 		"DETAIL_MSG": "Trip information",
 		"FLIGHT": "Flight",
+		"FLIGHT_LIST": "Flight #{{i}}",
+		"RETURN_FLIGHT": "Return flight",
 		"FROM": "From",
 		"TO": "To",
-		"ADD_FLIGHT": "Add another flight"
+		"ADD_FLIGHT": "Add another flight",
+		"ADD_RETURN_FLIGHT": "Add return flight"
 	},
 	"menu": {
 		"MENU": "Menu",

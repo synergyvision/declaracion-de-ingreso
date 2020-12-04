@@ -35,14 +35,16 @@
 							<ion-row>
 								<ion-col>
 									<h5>
-										{{ 'trips.FLIGHT' | translate }} #{{ i +
-										1 }}
+										{{ flight?.get('returnFlight').value ?
+										('trips.RETURN_FLIGHT' | translate) :
+										'trips.FLIGHT_LIST' | translate: {i:
+										i+1} }}
 									</h5>
 								</ion-col>
 								<ion-col size="3">
 									<ion-button
 										(click)="removeFlight(i)"
-										[disabled]="flightArray.length <= 1"
+										[disabled]="isRemovingDisabled(flight)"
 										color="danger"
 										fill="clear"
 										><ion-icon
@@ -385,17 +387,33 @@
 								</div>
 							</ng-container>
 						</div>
-						<ion-row class="ion-text-center">
+						<ion-row
+							class="ion-text-center"
+							*ngIf="!hasReturnFlight()"
+						>
 							<ion-col>
 								<ion-button
 									color="secondary"
-									(click)="addFlight()"
+									(click)="addFlight(false)"
 								>
 									<ion-icon
 										slot="start"
 										name="airplane-outline"
 									></ion-icon
 									>{{ 'trips.ADD_FLIGHT' | translate
+									}}</ion-button
+								>
+							</ion-col>
+							<ion-col>
+								<ion-button
+									color="secondary"
+									(click)="addFlight(true)"
+								>
+									<ion-icon
+										slot="start"
+										name="arrow-undo-outline"
+									></ion-icon
+									>{{ 'trips.ADD_RETURN_FLIGHT' | translate
 									}}</ion-button
 								>
 							</ion-col>

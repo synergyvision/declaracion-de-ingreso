@@ -5,6 +5,7 @@ export interface TripsModel {
 		to: Destination;
 		airline: string;
 		flightNumber: string;
+		returnFlight?: boolean;
 	}[];
 	state: string;
 }
