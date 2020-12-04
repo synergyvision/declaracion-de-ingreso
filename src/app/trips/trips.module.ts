@@ -9,6 +9,8 @@ import { TripsPageRoutingModule } from "./trips-routing.module";
 import { TripsPage } from "./trips.page";
 import { SharedModule } from "../shared/shared.module";
 
+import { TripsDeleteModalComponent } from "./trips-delete-modal/trips-delete-modal.component";
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -17,6 +19,7 @@ import { SharedModule } from "../shared/shared.module";
 		SharedModule,
 		TripsPageRoutingModule,
 	],
-	declarations: [TripsPage],
+	entryComponents: [TripsDeleteModalComponent],
+	declarations: [TripsPage, TripsDeleteModalComponent],
 })
 export class TripsPageModule {}

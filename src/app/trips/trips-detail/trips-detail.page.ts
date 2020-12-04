@@ -6,6 +6,9 @@ import { TripsService } from "../trips.service";
 import { TripsModel } from "../trips.model";
 import { CountryService } from "../../country/country.service";
 import { SharedService } from "../../shared/shared.service";
+import { LoadingController, ModalController } from "@ionic/angular";
+
+import { TripsDeleteModalComponent } from "../trips-delete-modal/trips-delete-modal.component";
 
 @Component({
 	selector: "app-trips-detail",
@@ -22,7 +25,9 @@ export class TripsDetailPage implements OnInit {
 		private router: Router,
 		private tripsService: TripsService,
 		private countryService: CountryService,
-		private shared: SharedService
+		private shared: SharedService,
+		private modalCtrl: ModalController,
+		private loadCtrl: LoadingController
 	) {
 		let id: string;
 		this.subscriptions = route.queryParams
@@ -63,6 +68,45 @@ export class TripsDetailPage implements OnInit {
 				dateFrom.toString()
 			)} - ${this.shared.formatDate(dateTo.toString())}`;
 		}
+	}
+
+	deleteTrip() {
+		this.modalCtrl
+			.create({
+				component: TripsDeleteModalComponent,
+			})
+			.then((modalEl) => {
+				modalEl.present();
+				return modalEl.onDidDismiss();
+			})
+			.then((resultData) => {
+				if (resultData.role === "delete") {
+					this.loadCtrl
+						.create({
+							keyboardClose: true,
+							message: this.shared.translateText(
+								"trips.DELETING"
+							),
+						})
+						.then((loadEl) => {
+							loadEl.present();
+							this.tripsService
+								.deleteTrip(this.trip.id)
+								.subscribe(
+									() => {
+										loadEl.dismiss();
+										this.router.navigate(["trips"], {
+											replaceUrl: true,
+										});
+									},
+									(err) => {
+										loadEl.dismiss();
+										console.log(err);
+									}
+								);
+						});
+				}
+			});
 	}
 
 	ngOnDestroy() {

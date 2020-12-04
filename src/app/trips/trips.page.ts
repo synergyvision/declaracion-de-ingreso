@@ -9,7 +9,7 @@ import { TripsModel, States } from "./trips.model";
 import { CountryService } from "../country/country.service";
 import { Subscription } from "rxjs";
 import { TripsService } from "./trips.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
 	selector: "app-trips",
@@ -22,6 +22,7 @@ export class TripsPage implements OnInit {
 		private countryService: CountryService,
 		private tripsService: TripsService,
 		private router: Router,
+		private route: ActivatedRoute,
 		private modalCtrl: ModalController,
 		private menuController: MenuController,
 		private loadCtrl: LoadingController
@@ -212,5 +213,39 @@ export class TripsPage implements OnInit {
 			}
 		});
 		return lastDate;
+	}
+
+	getChipColor(state: string) {
+		let color: string;
+		switch (state) {
+			case States.PENDIENTE:
+				color = "tertiary";
+				break;
+
+			case States.CALCULADO:
+				color = "secondary";
+				break;
+
+			case States.FINALIZADO:
+				color = "success";
+				break;
+
+			case States.CANCELADO:
+				color = "danger";
+				break;
+
+			default:
+				color = "tertiary";
+				break;
+		}
+		return color;
+	}
+
+	doTripDetail(el: any, id: string) {
+		el.closeSlidingItems();
+		this.router.navigate(["detail"], {
+			relativeTo: this.route,
+			queryParams: { id },
+		});
 	}
 }

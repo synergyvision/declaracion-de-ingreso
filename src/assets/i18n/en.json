@@ -132,7 +132,12 @@
 		"FROM": "From",
 		"TO": "To",
 		"ADD_FLIGHT": "Add another flight",
-		"ADD_RETURN_FLIGHT": "Add return flight"
+		"ADD_RETURN_FLIGHT": "Add return flight",
+		"CALCULATE": "Calculate",
+		"DELETE": "Delete trip",
+		"DELETE_WARNING": "WARNING",
+		"DELETE_MSG": "If you delete this trip, all the relevant information will be eliminated. This action is irreversible.",
+		"DELETING": "Deleting trip..."
 	},
 	"menu": {
 		"MENU": "Menu",

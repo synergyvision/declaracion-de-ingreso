@@ -132,7 +132,12 @@
 		"FROM": "Desde",
 		"TO": "Hacia",
 		"ADD_FLIGHT": "Añadir otro vuelo",
-		"ADD_RETURN_FLIGHT": "Añadir vuelo de retorno"
+		"ADD_RETURN_FLIGHT": "Añadir vuelo de retorno",
+		"CALCULATE": "Calcular",
+		"DELETE": "Borrar viaje",
+		"DELETE_WARNING": "ADVERTENCIA",
+		"DELETE_MSG": "Si borras este viaje, toda la información relevante sera eliminada de la base de datos y será irrecuperable.",
+		"DELETING": "Borrando viaje..."
 	},
 	"menu": {
 		"MENU": "Menú",

@@ -56,6 +56,10 @@ export class TripsService {
 		return this._trips.asObservable();
 	}
 
+	deleteTrip(id: string) {
+		return from(this.tripsRef.remove(id));
+	}
+
 	ngOnDestroy() {
 		this.subscriptions.unsubscribe();
 	}
