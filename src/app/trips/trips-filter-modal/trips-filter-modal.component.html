@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ "trips.FILTER" | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="onCancel()"
+				><ion-icon slot="icon-only" name="close-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="change-pw-content">
+	<div class="ion-text-center ion-margin-top ion-margin-bottom">
+		<ion-text>
+			<ion-label>{{ "profile.CHANGE_PW_MSG" | translate }}</ion-label>
+		</ion-text>
+	</div>
+	<form [formGroup]="filterForm" (ngSubmit)="onChangeFilter()">
+		<ion-button
+			class="ion-margin-top"
+			expand="block"
+			fill="solid"
+			color="primary"
+			[disabled]="!filterForm.valid"
+			type="submit"
+		>
+			{{ "trips.APPLY_FILTERS" | translate }}</ion-button
+		>
+	</form>
+</ion-content>

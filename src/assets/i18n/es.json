@@ -128,7 +128,7 @@
 		"DETAIL_MSG": "Información del viaje",
 		"FLIGHT": "Vuelo",
 		"FLIGHT_LIST": "Vuelo #{{i}}",
-		"RETURN_FLIGHT": "Vuelo de retorno",
+		"RETURN_FLIGHT": "Vuelo de retorno #{{i}}",
 		"FROM": "Desde",
 		"TO": "Hacia",
 		"ADD_FLIGHT": "Añadir otro vuelo",
@@ -137,7 +137,12 @@
 		"DELETE": "Borrar viaje",
 		"DELETE_WARNING": "ADVERTENCIA",
 		"DELETE_MSG": "Si borras este viaje, toda la información relevante sera eliminada de la base de datos y será irrecuperable.",
-		"DELETING": "Borrando viaje..."
+		"DELETING": "Borrando viaje...",
+		"EDIT": "Editar viaje",
+		"GETTING": "Obteniendo información del viaje...",
+		"EDITTING": "Guardando cambios...",
+		"FILTER": "Filtrar viajes",
+		"APPLY_FILTERS": "Aplicar filtros"
 	},
 	"menu": {
 		"MENU": "Menú",

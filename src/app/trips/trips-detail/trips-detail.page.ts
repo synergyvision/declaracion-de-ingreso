@@ -46,6 +46,13 @@ export class TripsDetailPage implements OnInit {
 
 	ngOnInit() {}
 
+	doEditTrip(id: string) {
+		this.router.navigate(["../../edit"], {
+			relativeTo: this.route,
+			queryParams: { id },
+		});
+	}
+
 	getTripLength(): Array<number> {
 		return Array(10).fill(1);
 	}
@@ -68,6 +75,13 @@ export class TripsDetailPage implements OnInit {
 				dateFrom.toString()
 			)} - ${this.shared.formatDate(dateTo.toString())}`;
 		}
+	}
+
+	getFlightLengthWithoutReturn() {
+		const flights = this.trip.flights.filter(
+			(flight) => !flight.returnFlight
+		);
+		return flights.length;
 	}
 
 	deleteTrip() {

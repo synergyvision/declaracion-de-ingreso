@@ -128,7 +128,7 @@
 		"DETAIL_MSG": "Trip information",
 		"FLIGHT": "Flight",
 		"FLIGHT_LIST": "Flight #{{i}}",
-		"RETURN_FLIGHT": "Return flight",
+		"RETURN_FLIGHT": "Return flight #{{i}}",
 		"FROM": "From",
 		"TO": "To",
 		"ADD_FLIGHT": "Add another flight",
@@ -137,7 +137,12 @@
 		"DELETE": "Delete trip",
 		"DELETE_WARNING": "WARNING",
 		"DELETE_MSG": "If you delete this trip, all the relevant information will be eliminated. This action is irreversible.",
-		"DELETING": "Deleting trip..."
+		"DELETING": "Deleting trip...",
+		"EDIT": "Edit trip",
+		"GETTING": "Obtaining trip information...",
+		"EDITTING": "Saving changes...",
+		"FILTER": "Filter trips",
+		"APPLY_FILTERS": "Apply filters"
 	},
 	"menu": {
 		"MENU": "Menu",

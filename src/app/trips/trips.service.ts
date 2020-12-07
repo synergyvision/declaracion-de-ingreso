@@ -48,12 +48,16 @@ export class TripsService {
 		this.subscriptions.add(childSubscription);
 	}
 
+	get trips(): Observable<TripsModel[]> {
+		return this._trips.asObservable();
+	}
+
 	addTrip(trip: TripsModel) {
 		return from(this.tripsRef.push(trip));
 	}
 
-	get trips(): Observable<TripsModel[]> {
-		return this._trips.asObservable();
+	updateTrip(id: string, trip: TripsModel) {
+		return from(this.tripsRef.update(id, trip));
 	}
 
 	deleteTrip(id: string) {

@@ -5,11 +5,13 @@ import {
 	MenuController,
 	ModalController,
 } from "@ionic/angular";
-import { TripsModel, States } from "./trips.model";
+import { TripsModel, FlightModel, States } from "./trips.model";
 import { CountryService } from "../country/country.service";
 import { Subscription } from "rxjs";
 import { TripsService } from "./trips.service";
 import { ActivatedRoute, Router } from "@angular/router";
+
+import { TripsFilterModalComponent } from "./trips-filter-modal/trips-filter-modal.component";
 
 @Component({
 	selector: "app-trips",
@@ -146,16 +148,36 @@ export class TripsPage implements OnInit {
 		this.menuController.enable(true);
 	}
 
-	onChangeFilter() {}
+	onOpenFilterModal() {
+		this.modalCtrl
+			.create({
+				component: TripsFilterModalComponent,
+			})
+			.then((modalEl) => {
+				modalEl.present();
+				return modalEl.onDidDismiss();
+			})
+			.then((resultData) => {
+				console.log(resultData);
+			});
+	}
+
+	getLastFlight(trip: TripsModel) {
+		let lastFlight: FlightModel;
+		trip.flights.forEach((flight) => {
+			if (!flight.returnFlight) {
+				lastFlight = flight;
+			}
+		});
+		return lastFlight;
+	}
 
 	getOriginFlag(trip: TripsModel) {
 		return this.getCountryFlag(trip.flights[0].from.country);
 	}
 
 	getDestinationFlag(trip: TripsModel) {
-		return this.getCountryFlag(
-			trip.flights[trip.flights.length - 1].to.country
-		);
+		return this.getCountryFlag(this.getLastFlight(trip).to.country);
 	}
 
 	getCountryFlag(alpha3: string) {
@@ -164,14 +186,15 @@ export class TripsPage implements OnInit {
 	}
 
 	getTripString(trip: TripsModel) {
-		const lastFlight = trip.flights.length - 1;
+		const originFlight = trip.flights[0];
 		const originCountry = this.countryService.getCountryName(
-			trip.flights[0].from.country
+			originFlight.from.country
 		);
+		const destinationFlight = this.getLastFlight(trip);
 		const destinationCountry = this.countryService.getCountryName(
-			trip.flights[lastFlight].to.country
+			destinationFlight.to.country
 		);
-		return `${originCountry} (${trip.flights[0].from.city}) &#8594; ${destinationCountry} (${trip.flights[lastFlight].to.city})`;
+		return `${originCountry} (${originFlight.from.city}) &#8594; ${destinationCountry} (${destinationFlight.to.city})`;
 	}
 
 	getLengthOfTrip(trip: TripsModel) {

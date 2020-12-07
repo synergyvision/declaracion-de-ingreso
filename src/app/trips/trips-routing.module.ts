@@ -22,6 +22,13 @@ const routes: Routes = [
 				(m) => m.TripsDetailPageModule
 			),
 	},
+	{
+		path: "edit",
+		loadChildren: () =>
+			import("./trips-edit/trips-edit.module").then(
+				(m) => m.TripsEditPageModule
+			),
+	},
 ];
 
 @NgModule({

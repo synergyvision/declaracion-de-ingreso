@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-title>{{ 'trips.CREATE' | translate }}</ion-title>
+		<ion-title>{{ 'trips.EDIT' | translate }}</ion-title>
 		<ion-buttons slot="start">
 			<ion-back-button
 				defaultHref="/trips"
@@ -11,7 +11,7 @@
 			<ion-button
 				type="submit"
 				(click)="tripsFormElement.ngSubmit.emit()"
-				[disabled]="tripsForm.invalid"
+				[disabled]="tripsEditForm.invalid"
 				><ion-icon slot="icon-only" name="checkmark-outline"></ion-icon
 			></ion-button>
 		</ion-buttons>
@@ -20,8 +20,8 @@
 
 <ion-content class="trips-content">
 	<form
-		[formGroup]="tripsForm"
-		(ngSubmit)="doCreateTrip()"
+		[formGroup]="tripsEditForm"
+		(ngSubmit)="doEditTrip()"
 		#tripsFormElement="ngForm"
 	>
 		<ion-list class="inputs-list" lines="full">
@@ -379,7 +379,7 @@
 							>
 								<div
 									class="error-message"
-									*ngIf="tripsForm.get('flights').hasError(validation.type) && (tripsForm.get('flights').dirty || tripsForm.get('flights').touched)"
+									*ngIf="tripsEditForm.get('flights').hasError(validation.type) && (tripsEditForm.get('flights').dirty || tripsEditForm.get('flights').touched)"
 								>
 									<ion-icon
 										name="information-circle-outline"

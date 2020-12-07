@@ -7,6 +7,11 @@
 				[text]="'menu.BACK' | translate"
 			></ion-back-button>
 		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button type="submit" (click)="doEditTrip(trip?.id)"
+				><ion-icon slot="icon-only" name="create-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
@@ -46,8 +51,10 @@
 						<ion-row>
 							<ion-col>
 								<h4>
-									{{ 'trips.FLIGHT' | translate }} #{{ i + 1
-									}}
+									{{ flight.returnFlight ?
+									('trips.RETURN_FLIGHT' | translate: {i:
+									i-getFlightLengthWithoutReturn()+1}) :
+									'trips.FLIGHT_LIST' | translate: {i: i+1} }}
 								</h4>
 							</ion-col>
 						</ion-row>

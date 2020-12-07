@@ -8,20 +8,23 @@ import {
 } from "@angular/forms";
 import { SharedService } from "../../shared/shared.service";
 import { CountryService } from "../../country/country.service";
-import { TripsService } from "../trips.service";
-import { States } from "../trips.model";
 import { LoadingController } from "@ionic/angular";
-import { Router } from "@angular/router";
-
+import { ActivatedRoute, Router } from "@angular/router";
+import { TripsService } from "../trips.service";
 import { FlightDatesValidator } from "../../validators/flight-dates.validator";
+import { States, TripsModel, FlightModel } from "../trips.model";
+import { Subscription } from "rxjs";
+import { map, skipWhile, switchMap, tap } from "rxjs/operators";
 
 @Component({
-	selector: "app-trips-create",
-	templateUrl: "./trips-create.page.html",
-	styleUrls: ["./trips-create.page.scss"],
+	selector: "app-trips-edit",
+	templateUrl: "./trips-edit.page.html",
+	styleUrls: ["./trips-edit.page.scss"],
 })
-export class TripsCreatePage implements OnInit {
-	tripsForm: FormGroup;
+export class TripsEditPage implements OnInit {
+	tripsEditForm: FormGroup;
+	subscriptions: Subscription;
+	oldTrip: TripsModel;
 
 	validation_messages = {
 		country: [
@@ -81,12 +84,28 @@ export class TripsCreatePage implements OnInit {
 		private countryService: CountryService,
 		private loadCtrl: LoadingController,
 		private router: Router,
+		private route: ActivatedRoute,
 		private tripsService: TripsService
 	) {
-		this.tripsForm = new FormGroup({
+		this.tripsEditForm = new FormGroup({
 			flights: new FormArray([], [FlightDatesValidator.checkDates()]),
 		});
-		this.addFlight(false);
+		this.loadCtrl
+			.create({
+				keyboardClose: true,
+				message: this.shared.translateText("trips.GETTING"),
+			})
+			.then((loadEl) => {
+				loadEl.present();
+				this.subscriptions = this.initForm().subscribe((trip) => {
+					trip.flights.forEach((flight) => {
+						this.flightArray.push(
+							this.newFlight(flight.returnFlight, flight)
+						);
+					});
+					loadEl.dismiss();
+				});
+			});
 		this.countries = countryService.getCountries();
 	}
 
@@ -94,28 +113,59 @@ export class TripsCreatePage implements OnInit {
 		this.countries = this.countryService.getCountries();
 	}
 
+	initForm() {
+		let id: string;
+		return this.route.queryParams.pipe(
+			switchMap((params) => {
+				id = params["id"];
+				return this.tripsService.trips;
+			}),
+			skipWhile((trips) => trips === null),
+			map((trips) => {
+				const trip = trips.find((trip) => trip.id === id);
+				this.oldTrip = trip;
+				return trip;
+			})
+		);
+	}
+
 	ngOnInit() {}
 
-	newFlight(returnFlight: boolean) {
+	newFlight(returnFlight: boolean, oldFlight?: FlightModel) {
 		return new FormGroup({
 			to: new FormGroup({
-				country: new FormControl("", Validators.required),
-				city: new FormControl("", Validators.required),
-				date: new FormControl("", Validators.required),
+				country: new FormControl(
+					oldFlight?.to.country,
+					Validators.required
+				),
+				city: new FormControl(oldFlight?.to.city, Validators.required),
+				date: new FormControl(oldFlight?.to.date, Validators.required),
 			}),
 			from: new FormGroup({
-				country: new FormControl("", Validators.required),
-				city: new FormControl("", Validators.required),
-				date: new FormControl("", Validators.required),
+				country: new FormControl(
+					oldFlight?.from.country,
+					Validators.required
+				),
+				city: new FormControl(
+					oldFlight?.from.city,
+					Validators.required
+				),
+				date: new FormControl(
+					oldFlight?.from.date,
+					Validators.required
+				),
 			}),
-			airline: new FormControl("", Validators.required),
-			flightNumber: new FormControl("", Validators.required),
+			airline: new FormControl(oldFlight?.airline, Validators.required),
+			flightNumber: new FormControl(
+				oldFlight?.flightNumber,
+				Validators.required
+			),
 			returnFlight: new FormControl(returnFlight),
 		});
 	}
 
 	get flightArray() {
-		return this.tripsForm.controls.flights as FormArray;
+		return this.tripsEditForm.controls.flights as FormArray;
 	}
 
 	getFlightLengthWithoutReturn() {
@@ -151,22 +201,22 @@ export class TripsCreatePage implements OnInit {
 		}
 	}
 
-	doCreateTrip() {
+	doEditTrip() {
 		this.loadCtrl
 			.create({
 				keyboardClose: true,
-				message: this.shared.translateText("trips.CREATING"),
+				message: this.shared.translateText("trips.EDITTING"),
 			})
 			.then((loadEl) => {
 				loadEl.present();
 				this.tripsService
-					.addTrip({
-						...this.tripsForm.value,
-						state: States.PENDIENTE,
-					})
+					.updateTrip(this.oldTrip.id, this.tripsEditForm.value)
 					.subscribe(() => {
 						loadEl.dismiss();
-						this.router.navigate(["/trips"], { replaceUrl: true });
+						this.router.navigate(["/trips/detail"], {
+							replaceUrl: true,
+							queryParams: { id: this.oldTrip.id },
+						});
 					});
 			});
 	}
