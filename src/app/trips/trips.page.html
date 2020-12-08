@@ -17,7 +17,7 @@
 
 <ion-content>
 	<ion-list #tripList>
-		<ion-item-sliding *ngFor="let trip of trips">
+		<ion-item-sliding *ngFor="let trip of filteredTrips">
 			<ion-item-options side="start">
 				<ion-item-option
 					color="secondary"
@@ -67,7 +67,8 @@
 										[color]="getChipColor(trip.state)"
 									>
 										<ion-label class="item-state"
-											>{{ trip.state }}</ion-label
+											>{{ getState(trip.state) | translate
+											}}</ion-label
 										>
 									</ion-chip>
 								</ion-col>

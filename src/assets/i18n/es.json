@@ -31,6 +31,13 @@
 		"nov.",
 		"dic."
 	],
+	"state": {
+		"STATE": "Estados",
+		"PENDIENTE": "Pendiente",
+		"CALCULADO": "Calculado",
+		"FINALIZADO": "Finalizado",
+		"CANCELADO": "Cancelado"
+	},
 	"validation": {
 		"REQUIRED": "El campo \"{{ text }}\" es requerido.",
 		"MIN_LEN": "El campo \"{{ text }}\" debe ser de al menos {{ value }} caracteres.",
@@ -58,6 +65,7 @@
 		"NAME": "Nombre",
 		"LAST_NAME": "Apellido",
 		"DATE": "Fecha",
+		"DATE_RANGE": "Rango de fechas",
 		"DOB": "Fecha de nacimiento",
 		"ID": "Cédula",
 		"PASSPORT": "Número de pasaporte",
@@ -74,6 +82,7 @@
 		"COUNTRY_OF_RESIDENCE": "País de residencia",
 		"AIRLINE": "Aerolínea",
 		"FLIGHT_NUMBER": "Número de vuelo",
+		"FILTER_TYPE": "Filtro avanzado",
 		"DONE": "Listo",
 		"CANCEL": "Cancelar"
 	},
@@ -142,6 +151,11 @@
 		"GETTING": "Obteniendo información del viaje...",
 		"EDITTING": "Guardando cambios...",
 		"FILTER": "Filtrar viajes",
+		"SELECT_FILTER_TYPE": "Seleccionar filtro avanzado",
+		"ORIGIN": "País de origen",
+		"DESTINATION": "País de destino",
+		"CONNECTING_FLIGHT": "Escala",
+		"ANY": "Cualquiera de las anteriores",
 		"APPLY_FILTERS": "Aplicar filtros"
 	},
 	"menu": {

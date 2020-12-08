@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { skipWhile, switchMap } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { TripsService } from "../trips.service";
-import { TripsModel } from "../trips.model";
+import { TripsModel, States } from "../trips.model";
 import { CountryService } from "../../country/country.service";
 import { SharedService } from "../../shared/shared.service";
 import { LoadingController, ModalController } from "@ionic/angular";
@@ -19,6 +19,8 @@ export class TripsDetailPage implements OnInit {
 	subscriptions: Subscription;
 	trip: TripsModel;
 	isLoading = true;
+
+	states = States;
 
 	constructor(
 		private route: ActivatedRoute,

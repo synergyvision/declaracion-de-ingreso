@@ -8,7 +8,10 @@
 			></ion-back-button>
 		</ion-buttons>
 		<ion-buttons slot="end">
-			<ion-button type="submit" (click)="doEditTrip(trip?.id)"
+			<ion-button
+				type="submit"
+				(click)="doEditTrip(trip?.id)"
+				[disabled]="trip?.state === states.CANCELADO || trip?.state === states.FINALIZADO"
 				><ion-icon slot="icon-only" name="create-outline"></ion-icon
 			></ion-button>
 		</ion-buttons>

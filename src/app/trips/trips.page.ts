@@ -6,6 +6,7 @@ import {
 	ModalController,
 } from "@ionic/angular";
 import { TripsModel, FlightModel, States } from "./trips.model";
+import { FilterModel } from "./trips-filter-modal/filter.model";
 import { CountryService } from "../country/country.service";
 import { Subscription } from "rxjs";
 import { TripsService } from "./trips.service";
@@ -264,11 +265,41 @@ export class TripsPage implements OnInit {
 		return color;
 	}
 
+	getState(state: string) {
+		let stateString = "state.";
+		switch (state) {
+			case "pendiente":
+				stateString += States.PENDIENTE.toUpperCase();
+				break;
+
+			case "calculado":
+				stateString += States.CALCULADO.toUpperCase();
+				break;
+
+			case "finalizado":
+				stateString += States.FINALIZADO.toUpperCase();
+				break;
+
+			case "cancelado":
+				stateString += States.CANCELADO.toUpperCase();
+				break;
+
+			default:
+				stateString += "error";
+				break;
+		}
+		return stateString;
+	}
+
 	doTripDetail(el: any, id: string) {
 		el.closeSlidingItems();
 		this.router.navigate(["detail"], {
 			relativeTo: this.route,
 			queryParams: { id },
 		});
+	}
+
+	get filteredTrips() {
+		return this.trips;
 	}
 }

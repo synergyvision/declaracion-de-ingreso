@@ -31,6 +31,13 @@
 		"Nov.",
 		"Dic."
 	],
+	"state": {
+		"STATE": "States",
+		"PENDIENTE": "Pending",
+		"CALCULADO": "Calculated",
+		"FINALIZADO": "Done",
+		"CANCELADO": "Cancelled"
+	},
 	"validation": {
 		"REQUIRED": "{{ text }} is required.",
 		"MIN_LEN": "{{ text }} must be at least {{ value }} characters long.",
@@ -58,6 +65,7 @@
 		"NAME": "Name",
 		"LAST_NAME": "Last name",
 		"DATE": "Date",
+		"DATE_RANGE": "Date range",
 		"DOB": "Date of birth",
 		"ID": "Venezuelan ID number",
 		"PASSPORT": "Passport number",
@@ -74,6 +82,12 @@
 		"COUNTRY_OF_RESIDENCE": "Country of residence",
 		"AIRLINE": "Airline",
 		"FLIGHT_NUMBER": "Flight number",
+		"FILTER_TYPE": "Advanced filter",
+		"SELECT_FILTER_TYPE": "Select advanced filter",
+		"ORIGIN": "Origin country",
+		"DESTINATION": "Destination country",
+		"CONNECTING_FLIGHT": "Connecting flight",
+		"ANY": "Any of the above",
 		"DONE": "Done",
 		"CANCEL": "Cancel"
 	},
