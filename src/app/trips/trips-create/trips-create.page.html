@@ -1,0 +1,445 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ 'trips.CREATE' | translate }}</ion-title>
+		<ion-buttons slot="start">
+			<ion-back-button
+				defaultHref="/trips"
+				[text]="'menu.BACK' | translate"
+			></ion-back-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button
+				type="submit"
+				(click)="tripsFormElement.ngSubmit.emit()"
+				[disabled]="tripsForm.invalid"
+				><ion-icon slot="icon-only" name="checkmark-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="trips-content">
+	<form
+		[formGroup]="tripsForm"
+		(ngSubmit)="doCreateTrip()"
+		#tripsFormElement="ngForm"
+	>
+		<ion-list class="inputs-list" lines="full">
+			<div formArrayName="flights">
+				<ion-card>
+					<ion-grid>
+						<ng-container
+							*ngFor="let flight of flightArray.controls; index as i;"
+							[formGroupName]="i"
+						>
+							<ion-row>
+								<ion-col>
+									<h5>
+										{{ flight?.get('returnFlight').value ?
+										('trips.RETURN_FLIGHT' | translate: {i:
+										i-getFlightLengthWithoutReturn()+1}) :
+										'trips.FLIGHT_LIST' | translate: {i:
+										i+1} }}
+									</h5>
+								</ion-col>
+								<ion-col size="3">
+									<ion-button
+										(click)="removeFlight(i)"
+										[disabled]="isRemovingDisabled(flight)"
+										color="danger"
+										fill="clear"
+										><ion-icon
+											slot="icon-only"
+											name="close-outline"
+										></ion-icon
+									></ion-button>
+								</ion-col>
+							</ion-row>
+							<ion-row>
+								<ion-col size="12" formGroupName="from">
+									<ion-label class="input-label"
+										>{{ 'trips.FROM' |
+										translate}}</ion-label
+									>
+									<!-- ################## COUNTRY ################## -->
+
+									<ion-item class="input-item">
+										<ion-label position="floating"
+											>{{ 'fields.COUNTRY' | translate
+											}}</ion-label
+										>
+										<ion-select
+											formControlName="country"
+											[placeholder]="'profile.SELECT_COUNTRY' | translate"
+											[cancelText]="'fields.CANCEL' | translate"
+											[okText]="'fields.DONE' | translate"
+											interface="action-sheet"
+										>
+											<ion-select-option
+												*ngFor="let country of countries"
+												[value]="country.alpha3"
+												>{{ country.name
+												}}</ion-select-option
+											>
+										</ion-select>
+									</ion-item>
+									<div class="error-container">
+										<ng-container
+											*ngFor="let validation of validation_messages.country"
+										>
+											<div
+												class="error-message"
+												*ngIf="flight.get('from').get('country').hasError(validation.type) && (flight.get('from').get('country').dirty || flight.get('from').get('country').touched)"
+											>
+												<ion-icon
+													name="information-circle-outline"
+												></ion-icon>
+												<span
+													>{{ validation.message
+													}}</span
+												>
+											</div>
+										</ng-container>
+									</div>
+
+									<!-- ################## CITY ################## -->
+
+									<ion-item class="input-item">
+										<ion-label position="floating"
+											>{{ 'fields.CITY' | translate
+											}}</ion-label
+										>
+										<ion-input
+											type="text"
+											formControlName="city"
+											clearInput
+											autocapitalize="off"
+											inputmode="text"
+										></ion-input>
+									</ion-item>
+									<div class="error-container">
+										<ng-container
+											*ngFor="let validation of validation_messages.city"
+										>
+											<div
+												class="error-message"
+												*ngIf="flight.get('from').get('city').hasError(validation.type) && (flight.get('from').get('city').dirty || flight.get('from').get('city').touched)"
+											>
+												<ion-icon
+													name="information-circle-outline"
+												></ion-icon>
+												<span
+													>{{ validation.message
+													}}</span
+												>
+											</div>
+										</ng-container>
+									</div>
+
+									<!-- ################## DATE ################## -->
+
+									<ion-item class="input-item">
+										<ion-label position="floating"
+											>{{ 'fields.DATE' | translate
+											}}</ion-label
+										>
+										<ion-datetime
+											[doneText]="'fields.DONE' | translate"
+											[cancelText]="'fields.CANCEL' | translate"
+											formControlName="date"
+											clearInput
+											displayFormat="DD/MM/YYYY"
+											max="2099-12-31"
+										></ion-datetime>
+									</ion-item>
+									<div class="error-container">
+										<ng-container
+											*ngFor="let validation of validation_messages.date"
+										>
+											<div
+												class="error-message"
+												*ngIf="flight.get('from').get('date').hasError(validation.type) && (flight.get('from').get('date').dirty || flight.get('from').get('date').touched)"
+											>
+												<ion-icon
+													name="information-circle-outline"
+												></ion-icon>
+												<span
+													>{{ validation.message
+													}}</span
+												>
+											</div>
+										</ng-container>
+									</div>
+								</ion-col>
+								<!-- Form group: from -->
+								<ion-col formGroupName="to">
+									<ion-label class="input-label"
+										>{{ 'trips.TO' | translate}}</ion-label
+									>
+									<!-- ################## COUNTRY ################## -->
+
+									<ion-item class="input-item">
+										<ion-label position="floating"
+											>{{ 'fields.COUNTRY' | translate
+											}}</ion-label
+										>
+
+										<ion-select
+											formControlName="country"
+											[placeholder]="'profile.SELECT_COUNTRY' | translate"
+											[cancelText]="'fields.CANCEL' | translate"
+											[okText]="'fields.DONE' | translate"
+											interface="action-sheet"
+										>
+											<ion-select-option
+												*ngFor="let country of countries"
+												[value]="country.alpha3"
+												>{{ country.name
+												}}</ion-select-option
+											>
+										</ion-select>
+									</ion-item>
+									<div class="error-container">
+										<ng-container
+											*ngFor="let validation of validation_messages.country"
+										>
+											<div
+												class="error-message"
+												*ngIf="flight.get('to').get('country').hasError(validation.type) && (flight.get('to').get('country').dirty || flight.get('to').get('country').touched)"
+											>
+												<ion-icon
+													name="information-circle-outline"
+												></ion-icon>
+												<span
+													>{{ validation.message
+													}}</span
+												>
+											</div>
+										</ng-container>
+									</div>
+
+									<!-- ################## CITY ################## -->
+
+									<ion-item class="input-item">
+										<ion-label position="floating"
+											>{{ 'fields.CITY' | translate
+											}}</ion-label
+										>
+										<ion-input
+											type="text"
+											formControlName="city"
+											clearInput
+											autocapitalize="off"
+											inputmode="text"
+										></ion-input>
+									</ion-item>
+									<div class="error-container">
+										<ng-container
+											*ngFor="let validation of validation_messages.city"
+										>
+											<div
+												class="error-message"
+												*ngIf="flight.get('to').get('city').hasError(validation.type) && (flight.get('to').get('city').dirty || flight.get('to').get('city').touched)"
+											>
+												<ion-icon
+													name="information-circle-outline"
+												></ion-icon>
+												<span
+													>{{ validation.message
+													}}</span
+												>
+											</div>
+										</ng-container>
+									</div>
+
+									<!-- ################## DATE ################## -->
+
+									<ion-item class="input-item">
+										<ion-label position="floating"
+											>{{ 'fields.DATE' | translate
+											}}</ion-label
+										>
+										<ion-datetime
+											[doneText]="'fields.DONE' | translate"
+											[cancelText]="'fields.CANCEL' | translate"
+											formControlName="date"
+											clearInput
+											displayFormat="DD/MM/YYYY"
+											max="2099-12-31"
+										></ion-datetime>
+									</ion-item>
+									<div class="error-container">
+										<ng-container
+											*ngFor="let validation of validation_messages.date"
+										>
+											<div
+												class="error-message"
+												*ngIf="flight.get('to').get('date').hasError(validation.type) && (flight.get('to').get('date').dirty || flight.get('to').get('date').touched)"
+											>
+												<ion-icon
+													name="information-circle-outline"
+												></ion-icon>
+												<span
+													>{{ validation.message
+													}}</span
+												>
+											</div>
+										</ng-container>
+									</div>
+								</ion-col>
+							</ion-row>
+							<!-- Form group: to -->
+							<ion-row>
+								<ion-col>
+									<!-- ################## AIRLINE ################## -->
+
+									<ion-item class="input-item">
+										<ion-label position="floating"
+											>{{ 'fields.AIRLINE' | translate
+											}}</ion-label
+										>
+										<ion-input
+											type="text"
+											formControlName="airline"
+											clearInput
+											autocapitalize="off"
+											inputmode="text"
+										></ion-input>
+									</ion-item>
+									<div class="error-container">
+										<ng-container
+											*ngFor="let validation of validation_messages.airline"
+										>
+											<div
+												class="error-message"
+												*ngIf="flight.get('airline').hasError(validation.type) && (flight.get('airline').dirty || flight.get('airline').touched)"
+											>
+												<ion-icon
+													name="information-circle-outline"
+												></ion-icon>
+												<span
+													>{{ validation.message
+													}}</span
+												>
+											</div>
+										</ng-container>
+									</div>
+								</ion-col>
+							</ion-row>
+							<ion-row>
+								<ion-col>
+									<!-- ################## FLIGHT NUMBER ################## -->
+
+									<ion-item class="input-item">
+										<ion-label position="floating"
+											>{{ 'fields.FLIGHT_NUMBER' |
+											translate }}</ion-label
+										>
+										<ion-input
+											type="text"
+											formControlName="flightNumber"
+											clearInput
+											autocapitalize="off"
+											inputmode="text"
+										></ion-input>
+									</ion-item>
+									<div class="error-container">
+										<ng-container
+											*ngFor="let validation of validation_messages.flightNumber"
+										>
+											<div
+												class="error-message"
+												*ngIf="flight.get('flightNumber').hasError(validation.type) && (flight.get('flightNumber').dirty || flight.get('flightNumber').touched)"
+											>
+												<ion-icon
+													name="information-circle-outline"
+												></ion-icon>
+												<span
+													>{{ validation.message
+													}}</span
+												>
+											</div>
+										</ng-container>
+									</div>
+								</ion-col>
+							</ion-row>
+							<ion-row>
+								<ion-col>
+									<hr
+										style="background: #a0a0a0"
+										*ngIf="flightArray.length > 1 && i != flightArray.length - 1"
+									/>
+								</ion-col>
+							</ion-row>
+						</ng-container>
+						<!-- ngFor array -->
+						<div class="error-container">
+							<ng-container
+								*ngFor="let validation of validation_messages.flights"
+							>
+								<div
+									class="error-message"
+									*ngIf="tripsForm.get('flights').hasError(validation.type) && (tripsForm.get('flights').dirty || tripsForm.get('flights').touched)"
+								>
+									<ion-icon
+										name="information-circle-outline"
+									></ion-icon>
+									<span>{{ validation.message }}</span>
+								</div>
+							</ng-container>
+						</div>
+						<ion-row
+							class="ion-text-center"
+							*ngIf="!hasReturnFlight(); else returnFlights"
+						>
+							<ion-col>
+								<ion-button
+									color="secondary"
+									(click)="addFlight(false)"
+								>
+									<ion-icon
+										slot="start"
+										name="airplane-outline"
+									></ion-icon
+									>{{ 'trips.ADD_FLIGHT' | translate
+									}}</ion-button
+								>
+							</ion-col>
+							<ion-col>
+								<ion-button
+									color="secondary"
+									(click)="addFlight(true)"
+								>
+									<ion-icon
+										slot="start"
+										name="arrow-undo-outline"
+									></ion-icon
+									>{{ 'trips.ADD_RETURN_FLIGHT' | translate
+									}}</ion-button
+								>
+							</ion-col>
+						</ion-row>
+						<ng-template #returnFlights>
+							<ion-row class="ion-text-center">
+								<ion-col>
+									<ion-button
+										color="secondary"
+										(click)="addFlight(true)"
+									>
+										<ion-icon
+											slot="start"
+											name="arrow-undo-outline"
+										></ion-icon
+										>{{ 'trips.ADD_RETURN_FLIGHT' |
+										translate }}</ion-button
+									>
+								</ion-col>
+							</ion-row>
+						</ng-template>
+					</ion-grid>
+				</ion-card>
+			</div>
+			<!-- Form array: flightArray -->
+		</ion-list>
+	</form>
+</ion-content>

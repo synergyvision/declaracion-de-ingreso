@@ -49,6 +49,5 @@ const routes: Routes = [
 		AngularFireAuthModule,
 		TranslateModule,
 	],
-	providers: [FirebaseAuthService],
 })
 export class FirebaseAuthModule {}

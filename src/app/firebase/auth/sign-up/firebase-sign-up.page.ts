@@ -221,15 +221,21 @@ export class FirebaseSignUpPage implements OnInit {
 						let message: string;
 						switch (error.code) {
 							case "auth/email-already-in-use":
-								message = "error.IN_USE";
+								message = this.shared.translateText(
+									"error.IN_USE"
+								);
 								break;
 
 							case "auth/operation-not-allowed":
-								message = "error.NOT_ALLOWED";
+								message = this.shared.translateText(
+									"error.NOT_ALLOWED"
+								);
 								break;
 
 							default:
-								message = "error.UNKNOWN";
+								message = this.shared.translateText(
+									"error.UNKNOWN"
+								);
 								break;
 						}
 						this.submitError = message;

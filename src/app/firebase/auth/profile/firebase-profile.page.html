@@ -1,8 +1,8 @@
 <ion-header>
-	<ion-toolbar>
+	<ion-toolbar color="primary">
 		<ion-title>{{ 'profile.PROFILE' | translate }}</ion-title>
 		<ion-buttons slot="start">
-			<ion-back-button defaultHref="app/categories"></ion-back-button>
+			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
 		<ion-buttons slot="end">
 			<ion-button (click)="editPopoverMenu($event)"
@@ -15,31 +15,30 @@
 <ion-content class="user-content">
 	<ion-list lines="none">
 		<ion-item class="image-item">
-			<ion-avatar
-				class="image-avatar"
-				(click)="showProfilePictureModal()"
-			>
+			<ion-avatar class="image-avatar" style="position: relative">
 				<img
-					src="..\..\..\assets\profile\no-profile.jpg"
-					alt="..\..\..\assets\profile\no-profile.jpg"
+					[src]="profilePicUrl"
+					onerror="this.onerror=null; this.src='\\assets\\profile\\no-profile.jpg'"
 					class="image-tag"
 				/>
+				<ion-button
+					fill="clear"
+					color="light"
+					class="inner"
+					(click)="showPictureModal()"
+				>
+					<ion-icon name="camera-outline"></ion-icon>
+				</ion-button>
 			</ion-avatar>
-			<input
-				type="file"
-				*ngIf="false"
-				#filePicker
-				(change)="onFileChosen($event)"
-				accept="image/jpeg"
-			/>
 		</ion-item>
 	</ion-list>
 	<ion-list>
-		<ion-list-header style="font-size: 1.5em"
+		<ion-list-header
+			style="font-size: 1.5em; padding-left: 7px; margin-bottom: 10px"
 			>{{ 'profile.PERSONAL_INFO' | translate }}</ion-list-header
 		>
 		<ng-container *ngIf="user.isShell else profileList">
-			<ion-item *ngFor="let n of getUserLength()">
+			<ion-item *ngFor="let n of getUserLength()" class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -62,7 +61,7 @@
 			</ion-item>
 		</ng-container>
 		<ng-template #profileList>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -81,7 +80,7 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -101,7 +100,7 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -117,7 +116,7 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -128,12 +127,14 @@
 					</ion-row>
 					<ion-row class="field-content">
 						<ion-col>
-							<ion-label>{{ user?.id }}</ion-label>
+							<ion-label
+								>{{ user?.idType }}- {{ user?.id }}</ion-label
+							>
 						</ion-col>
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -149,7 +150,7 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -166,7 +167,7 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -186,7 +187,7 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -206,7 +207,7 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>
@@ -223,7 +224,7 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			<ion-item>
+			<ion-item class="ion-no-padding">
 				<ion-grid>
 					<ion-row>
 						<ion-col>

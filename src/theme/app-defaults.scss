@@ -6,3 +6,11 @@ ion-title {
 ion-button {
 	text-transform: none;
 }
+
+form ion-label {
+	color: #a0a0a0 !important;
+}
+
+ion-radio-group ion-label {
+	color: var(--ion-color-dark) !important;
+}

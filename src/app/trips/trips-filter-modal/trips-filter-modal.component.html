@@ -1,0 +1,151 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ "trips.FILTER" | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="onCancel()"
+				><ion-icon slot="icon-only" name="close-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="trips-content">
+	<form
+		[formGroup]="filterForm"
+		(ngSubmit)="onChangeFilter()"
+		class="inputs-list"
+	>
+		<ion-grid>
+			<div formGroupName="states">
+				<ion-row>
+					<h4>{{ "state.STATE" | translate }}:</h4>
+				</ion-row>
+				<ion-row class="ion-align-items-center state-row">
+					<ion-checkbox formControlName="pendiente"></ion-checkbox>
+					<ion-label class="ion-margin-start">{{
+						"state.PENDIENTE" | translate
+					}}</ion-label>
+				</ion-row>
+				<ion-row class="ion-align-items-center state-row">
+					<ion-checkbox formControlName="calculado"></ion-checkbox>
+					<ion-label class="ion-margin-start">{{
+						"state.CALCULADO" | translate
+					}}</ion-label>
+				</ion-row>
+				<ion-row class="ion-align-items-center state-row">
+					<ion-checkbox formControlName="finalizado"></ion-checkbox>
+					<ion-label class="ion-margin-start">{{
+						"state.FINALIZADO" | translate
+					}}</ion-label>
+				</ion-row>
+				<ion-row class="ion-align-items-center state-row">
+					<ion-checkbox formControlName="cancelado"></ion-checkbox>
+					<ion-label class="ion-margin-start">{{
+						"state.CANCELADO" | translate
+					}}</ion-label>
+				</ion-row>
+			</div>
+			<hr />
+			<div formGroupName="country">
+				<ion-row>
+					<h4>{{ "fields.COUNTRY" | translate }}:</h4>
+				</ion-row>
+				<ion-row>
+					<ion-item class="input-item">
+						<ion-label position="floating">{{
+							"fields.COUNTRY" | translate
+						}}</ion-label>
+						<ion-select
+							formControlName="alpha3"
+							[placeholder]="'profile.SELECT_COUNTRY' | translate"
+							[cancelText]="'fields.CANCEL' | translate"
+							[okText]="'fields.DONE' | translate"
+							interface="action-sheet"
+						>
+							<ion-select-option
+								*ngFor="let country of countries"
+								[value]="country.alpha3"
+								>{{ country.name }}</ion-select-option
+							>
+						</ion-select>
+					</ion-item>
+				</ion-row>
+				<ion-row>
+					<ion-item class="input-item">
+						<ion-label position="floating">{{
+							"fields.FILTER_TYPE" | translate
+						}}</ion-label>
+						<ion-select
+							formControlName="type"
+							[placeholder]="
+								'trips.SELECT_FILTER_TYPE' | translate
+							"
+							[cancelText]="'fields.CANCEL' | translate"
+							[okText]="'fields.DONE' | translate"
+							interface="action-sheet"
+						>
+							<ion-select-option value="origin">{{
+								"trips.ORIGIN" | translate
+							}}</ion-select-option
+							><ion-select-option value="destination">{{
+								"trips.DESTINATION" | translate
+							}}</ion-select-option
+							><ion-select-option value="connecting">{{
+								"trips.CONNECTING_FLIGHT" | translate
+							}}</ion-select-option
+							><ion-select-option value="all">{{
+								"trips.ANY" | translate
+							}}</ion-select-option>
+						</ion-select>
+					</ion-item>
+				</ion-row>
+			</div>
+			<hr />
+			<div formGroupName="dates">
+				<ion-row>
+					<h4>{{ "fields.DATE_RANGE" | translate }}:</h4>
+				</ion-row>
+				<ion-row>
+					<ion-item class="input-item">
+						<ion-label position="floating">{{
+							"trips.FROM" | translate
+						}}</ion-label>
+						<ion-datetime
+							[doneText]="'fields.DONE' | translate"
+							[cancelText]="'fields.CANCEL' | translate"
+							formControlName="from"
+							clearInput
+							displayFormat="DD/MM/YYYY"
+							max="2099-12-31"
+						></ion-datetime>
+					</ion-item>
+				</ion-row>
+				<ion-row>
+					<ion-item class="input-item">
+						<ion-label position="floating">{{
+							"trips.TO" | translate
+						}}</ion-label>
+						<ion-datetime
+							[doneText]="'fields.DONE' | translate"
+							[cancelText]="'fields.CANCEL' | translate"
+							formControlName="to"
+							clearInput
+							displayFormat="DD/MM/YYYY"
+							max="2099-12-31"
+						></ion-datetime>
+					</ion-item>
+				</ion-row>
+			</div>
+		</ion-grid>
+		<ion-button
+			class="ion-margin-top"
+			expand="block"
+			fill="solid"
+			color="primary"
+			[disabled]="!filterForm.valid"
+			type="submit"
+		>
+			{{ "trips.APPLY_FILTERS" | translate }}</ion-button
+		>
+	</form>
+</ion-content>

@@ -23,7 +23,6 @@ export class ProfileGuard implements CanActivate {
 		| Promise<boolean | UrlTree>
 		| boolean
 		| UrlTree {
-		console.log("guard");
 		return this.firebaseAuthService.getAuthState().pipe(
 			switchMap(() => {
 				return this.firebaseAuthService.getProfileDataSource().pipe(

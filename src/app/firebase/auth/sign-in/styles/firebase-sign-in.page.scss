@@ -60,6 +60,9 @@ ion-toolbar {
     .signup-btn {
       --color: var(--ion-color-secondary);
       margin: 0px;
+      font-size: 0.8em;
+      margin-right: -20px;
+      text-align: right;
 
       &:focus {
         outline: none;
@@ -82,4 +85,14 @@ ion-toolbar {
       }
     }
   }
+}
+
+.translation-space {
+  white-space: pre-wrap;
+}
+
+.forgot-btn {
+  font-size: 0.8em;
+  margin-left: -10px;
+  text-align: left;
 }

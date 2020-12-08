@@ -7,6 +7,12 @@
 
 1. PRÓXIMAMENTE
 
+# Listado de paises y sus traducciones
+
+Se utilizo la herramienta World Countries en https://stefangabos.github.io/world_countries/ para implementar el servicio de paises, el cual produce una lista con todos los nombres de los paises, como a su vez los codigos numericos, alpha-2 y alpha-3 definidos en la regla ISO 3166.
+
+Se guardan los valores alpha-3 en la base de datos.
+
 # Ionic 5 Full App PRO Version
 
 The most advanced and complete Mobile & PWA starter app template

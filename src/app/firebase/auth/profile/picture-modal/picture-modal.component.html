@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ "profile.PICTURE" | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="onCancel()"
+				><ion-icon slot="icon-only" name="close-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<img
+			[src]="url"
+			onerror="this.onerror=null; this.src='\\assets\\profile\\no-profile.jpg'"
+			class="profile-img"
+		/>
+	</ion-card>
+	<ion-button class="change-pic-button" (click)="getPicture()">{{
+		"profile.CHANGE_PIC" | translate
+	}}</ion-button>
+	<input
+		type="file"
+		#filePicker
+		*ngIf="usePicker"
+		(change)="onFileChosen($event)"
+		accept="image/jpeg"
+	/>
+</ion-content>

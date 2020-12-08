@@ -1,0 +1,19 @@
+.state-row {
+	margin: 5px 0 5px 0;
+}
+
+.input-item {
+	--padding-start: 0px;
+	--padding-end: 0px;
+	--inner-padding-end: 0px;
+	width: 100%;
+}
+.trips-content {
+	--background: var(--page-background);
+	--padding-start: 5px;
+	--padding-end: 5px;
+}
+
+.inputs-list {
+	--ion-item-background: var(--page-background);
+}

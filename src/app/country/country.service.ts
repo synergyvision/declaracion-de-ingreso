@@ -36,4 +36,14 @@ export class CountryService {
 		}
 		return country.name;
 	}
+
+	getCountryAlpha2(alpha3: string): string {
+		const country = this.getCountries().find(
+			(country) => country.alpha3 === alpha3
+		);
+		if (country === undefined) {
+			return "N/A";
+		}
+		return country.alpha2;
+	}
 }

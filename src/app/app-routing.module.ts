@@ -7,7 +7,7 @@ import { AutoSignOutGuard } from "./firebase/auth/auto-sign-out.guard";
 const routes: Routes = [
 	{
 		path: "",
-		redirectTo: "/app/categories",
+		redirectTo: "trips",
 		pathMatch: "full",
 	},
 	{
@@ -104,6 +104,12 @@ const routes: Routes = [
 			import("./video-playlist/video-playlist.module").then(
 				(m) => m.VideoPlaylistPageModule
 			),
+	},
+	{
+		path: "trips",
+		loadChildren: () =>
+			import("./trips/trips.module").then((m) => m.TripsPageModule),
+		canActivate: [AuthGuard, ProfileGuard, AutoSignOutGuard],
 	},
 	{
 		path: "**",

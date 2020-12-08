@@ -5,6 +5,11 @@ import { TranslateService, LangChangeEvent } from "@ngx-translate/core";
 import { HistoryHelperService } from "./utils/history-helper.service";
 import { FirebaseAuthService } from "./firebase/auth/firebase-auth.service";
 import { Router } from "@angular/router";
+import { SharedService } from "./shared/shared.service";
+import { FirebaseProfileModel } from "./firebase/auth/profile/firebase-profile.model";
+import { delay, switchMap, tap } from "rxjs/operators";
+import { Subscription, from } from "rxjs";
+import { LoadingController, MenuController } from "@ionic/angular";
 
 @Component({
 	selector: "app-root",
@@ -16,72 +21,46 @@ import { Router } from "@angular/router";
 	],
 })
 export class AppComponent {
-	appPages = [
-		{
-			title: "Categories",
-			url: "/app/categories",
-			ionicIcon: "list-outline",
-		},
-		{
-			title: "Profile",
-			url: "/auth/profile",
-			ionicIcon: "person-outline",
-		},
-		{
-			title: "Contact Card",
-			url: "/contact-card",
-			customIcon: "./assets/custom-icons/side-menu/contact-card.svg",
-		},
-		{
-			title: "Notifications",
-			url: "/app/notifications",
-			ionicIcon: "notifications-outline",
-		},
-	];
-	accountPages: {
-		title: string;
-		url: string;
-		ionicIcon: string;
-		customIcon?: string;
-	}[] = [
-		{
-			title: "Log In",
-			url: "/auth/login",
-			ionicIcon: "log-in-outline",
-		},
-		{
-			title: "Sign Up",
-			url: "/auth/signup",
-			ionicIcon: "person-add-outline",
-		},
-		{
-			title: "Tutorial",
-			url: "/walkthrough",
-			ionicIcon: "school-outline",
-		},
-		{
-			title: "Getting Started",
-			url: "/getting-started",
-			ionicIcon: "rocket-outline",
-		},
-		{
-			title: "404 page",
-			url: "/page-not-found",
-			ionicIcon: "alert-circle-outline",
-		},
-	];
-
 	textDir = "ltr";
+
+	userSubscription: Subscription;
+	user: FirebaseProfileModel;
+
+	profilePictureSubscription: Subscription;
+	profilePictureUrl: string;
 
 	// Inject HistoryHelperService in the app.components.ts so its available app-wide
 	constructor(
 		public translate: TranslateService,
 		public historyHelper: HistoryHelperService,
 		private authService: FirebaseAuthService,
-		private router: Router
+		private loadCtrl: LoadingController,
+		private menu: MenuController,
+		private router: Router,
+		private shared: SharedService
 	) {
-		this.initializeApp();
 		this.setLanguage();
+		this.initializeApp();
+		this.userSubscription = authService
+			.getAuthState()
+			.pipe(
+				switchMap(() => {
+					return this.authService.getProfileDataSource().pipe(
+						tap((user) => {
+							this.user = user;
+						})
+					);
+				})
+			)
+			.subscribe();
+	}
+
+	ngOnInit() {
+		this.profilePictureSubscription = this.authService.profilePic.subscribe(
+			(url) => {
+				this.profilePictureUrl = url;
+			}
+		);
 	}
 
 	async initializeApp() {
@@ -107,13 +86,26 @@ export class AppComponent {
 	}
 
 	signOut() {
-		this.authService.signOut().subscribe(
-			() => {
-				this.router.navigate(["auth/login"], { replaceUrl: true });
-			},
-			(error) => {
-				console.log("signout error", error);
-			}
-		);
+		from(this.menu.close())
+			.pipe(
+				switchMap(() => {
+					return this.authService.signOut();
+				})
+			)
+			.subscribe(
+				() => {
+					this.router.navigate(["auth/login"], {
+						replaceUrl: true,
+					});
+				},
+				(error) => {
+					console.log("signout error", error);
+				}
+			);
+	}
+
+	ngOnDestroy() {
+		this.userSubscription.unsubscribe();
+		this.profilePictureSubscription.unsubscribe();
 	}
 }

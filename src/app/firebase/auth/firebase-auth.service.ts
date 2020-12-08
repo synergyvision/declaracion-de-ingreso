@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { Observable, of, Subject, from } from "rxjs";
+import { BehaviorSubject, Observable, of, Subject, from } from "rxjs";
 import { DataStore } from "../../shell/data-store";
 import { FirebaseProfileModel } from "./profile/firebase-profile.model";
 import { Platform } from "@ionic/angular";
 
 import firebase, { User, auth } from "firebase/app";
+import "firebase/storage";
 import {
 	cfaSignIn,
 	cfaSignOut,
@@ -15,21 +16,25 @@ import { AngularFireDatabase, AngularFireObject } from "@angular/fire/database";
 import { finalize, map, switchMap, take, tap } from "rxjs/operators";
 import { Plugins } from "@capacitor/core";
 import { TranslateService } from "@ngx-translate/core";
-import { AngularFireStorage } from "@angular/fire/storage";
+import { Reference } from "@angular/fire/firestore";
 
 @Injectable({ providedIn: "root" })
 export class FirebaseAuthService {
-	currentUser: User;
+	_currentUser = new BehaviorSubject<User>(null);
 	profile: AngularFireObject<FirebaseProfileModel>;
+	profilePicRef: firebase.storage.Reference;
 	userProviderAdditionalInfo: any;
 	profileDataStore: DataStore<FirebaseProfileModel>;
 	redirectResult: Subject<any> = new Subject<any>();
+
+	profilePicSubject: BehaviorSubject<string> = new BehaviorSubject<string>(
+		null
+	);
 
 	constructor(
 		public angularFire: AngularFireAuth,
 		public platform: Platform,
 		private db: AngularFireDatabase,
-		private storage: AngularFireStorage,
 		private translate: TranslateService
 	) {
 		this.angularFire.languageCode = new Promise(() => {
@@ -38,14 +43,30 @@ export class FirebaseAuthService {
 		this.angularFire.onAuthStateChanged((user) => {
 			if (user) {
 				// User is signed in.
-				this.currentUser = user;
+				this._currentUser.next(user);
 				this.profile = db.object<FirebaseProfileModel>(
 					user.uid + "/profile"
 				);
+				const storageRef = firebase.storage().ref();
+				this.profilePicRef = storageRef.child("profile/" + user.uid);
+				this.getProfilePic()
+					.pipe(
+						tap((url) => {
+							this.profilePicSubject.next(url);
+						})
+					)
+					.subscribe(
+						() => {},
+						(error) => {
+							console.log("no picture");
+						}
+					);
 			} else {
 				// No user is signed in.
-				this.currentUser = null;
+				this._currentUser.next(null);
 				this.profile = null;
+				this.profilePicRef = null;
+				this.profilePicSubject.next(null);
 			}
 		});
 
@@ -65,6 +86,10 @@ export class FirebaseAuthService {
 				}
 			);
 		}
+	}
+
+	get currentUser() {
+		return this._currentUser.asObservable();
 	}
 
 	getRedirectResult(): Observable<any> {
@@ -220,19 +245,46 @@ export class FirebaseAuthService {
 	}
 
 	uploadImage(imageFile: File | Blob) {
-		const filePath = "profile/" + this.currentUser.uid;
-		const fileRef = this.storage
-			.upload("profile" + this.currentUser.uid, imageFile)
-			.snapshotChanges()
-			.pipe(
-				finalize(() => {
-					console.log("hello");
-				})
-			)
-			.subscribe((url) => {
-				if (url) {
-					console.log(url);
-				}
-			});
+		return this.currentUser.pipe(
+			take(1),
+			switchMap((user) => {
+				const storageRef = firebase.storage().ref();
+				const imageProfileRef = storageRef.child("profile/" + user.uid);
+				return from(imageProfileRef.put(imageFile));
+			}),
+			switchMap((url) => {
+				return this.getProfilePic();
+			})
+		);
+	}
+
+	getProfilePic() {
+		return from(this.profilePicRef.getDownloadURL());
+	}
+
+	newProfilePic(url: string) {
+		this.profilePicSubject.next(url);
+	}
+
+	get profilePic() {
+		return this.profilePicSubject.asObservable();
+	}
+
+	deleteProfilePic() {
+		return from(this.profilePicRef.delete());
+	}
+
+	getUserCredential(password: string) {
+		return this.currentUser.pipe(
+			take(1),
+			switchMap((user) => {
+				return of(
+					firebase.auth.EmailAuthProvider.credential(
+						user.email,
+						password
+					)
+				);
+			})
+		);
 	}
 }

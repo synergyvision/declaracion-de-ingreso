@@ -250,4 +250,26 @@ export class SharedService {
 				alertEl.present();
 			});
 	}
+
+	formatDate(date: string) {
+		const day = new Date(date).getDate().toString();
+		const month = new Date(date).getMonth().toString();
+		const year = new Date(date).getFullYear().toString();
+		return this.translateText("FORMATTED_DATE", {
+			day,
+			month: this.translateText("MONTH")[month],
+			year,
+		});
+	}
+
+	formatDateShort(date: string) {
+		const day = new Date(date).getDate().toString();
+		const month = new Date(date).getMonth().toString();
+		const year = new Date(date).getFullYear().toString();
+		return this.translateText("FORMATTED_DATE_SHORT", {
+			day,
+			month: this.translateText("MONTH_SHORT")[month],
+			year,
+		});
+	}
 }

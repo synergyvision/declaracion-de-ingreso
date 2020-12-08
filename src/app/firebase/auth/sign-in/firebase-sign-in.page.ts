@@ -131,6 +131,11 @@ export class FirebaseSignInPage implements OnInit {
 					this.shared.translateText("error.ERROR"),
 					this.shared.translateText("error.DELETE_SIGN_OUT")
 				);
+			} else if (params.changePwSignOut) {
+				this.shared.showAlert(
+					this.shared.translateText("error.CHANGE_PW"),
+					this.shared.translateText("error.CHANGE_PW_SIGN_OUT")
+				);
 			}
 		});
 	}
@@ -146,7 +151,7 @@ export class FirebaseSignInPage implements OnInit {
 			// Get previous URL from our custom History Helper
 			// If there's no previous page, then redirect to profile
 			// const previousUrl = this.historyHelper.previousUrl || 'firebase/auth/profile';
-			const previousUrl = "app/categories";
+			const previousUrl = "trips";
 
 			// No need to store in the navigation history the sign-in page with redirect params (it's justa a mandatory mid-step)
 			// Navigate to profile and replace current url with profile
@@ -217,6 +222,7 @@ export class FirebaseSignInPage implements OnInit {
 						};
 						const data = JSON.stringify(dataObj);
 						Plugins.Storage.set({ key: "rememberMe", value: data });
+						this.loginForm.reset();
 						loadEl.dismiss();
 						this.redirectLoggedUserToProfilePage();
 					})

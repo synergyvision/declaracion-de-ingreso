@@ -122,6 +122,7 @@
 .image-item {
 	text-align: center;
 	height: 160px;
+	margin-top: 15px;
 }
 
 .image-avatar {
@@ -134,4 +135,14 @@
 
 .image-tag {
 	height: 160px;
+}
+
+.inner {
+	background-color: var(--ion-color-secondary);
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
