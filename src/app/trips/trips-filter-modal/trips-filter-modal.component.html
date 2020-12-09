@@ -18,7 +18,7 @@
 		<ion-grid>
 			<div formGroupName="states">
 				<ion-row>
-					<h4>{{ "state.STATE" | translate }}:</h4>
+					<h4>{{ "state.STATE" | translate }}</h4>
 				</ion-row>
 				<ion-row class="ion-align-items-center state-row">
 					<ion-checkbox formControlName="pendiente"></ion-checkbox>
@@ -48,7 +48,7 @@
 			<hr />
 			<div formGroupName="country">
 				<ion-row>
-					<h4>{{ "fields.COUNTRY" | translate }}:</h4>
+					<h4>{{ "fields.COUNTRY" | translate }}</h4>
 				</ion-row>
 				<ion-row>
 					<ion-item class="input-item">
@@ -93,7 +93,7 @@
 							><ion-select-option value="connecting">{{
 								"trips.CONNECTING_FLIGHT" | translate
 							}}</ion-select-option
-							><ion-select-option value="all">{{
+							><ion-select-option value="any">{{
 								"trips.ANY" | translate
 							}}</ion-select-option>
 						</ion-select>
@@ -103,7 +103,7 @@
 			<hr />
 			<div formGroupName="dates">
 				<ion-row>
-					<h4>{{ "fields.DATE_RANGE" | translate }}:</h4>
+					<h4>{{ "fields.DATE_RANGE" | translate }}</h4>
 				</ion-row>
 				<ion-row>
 					<ion-item class="input-item">
@@ -123,7 +123,7 @@
 				<ion-row>
 					<ion-item class="input-item">
 						<ion-label position="floating">{{
-							"trips.TO" | translate
+							"trips.UNTIL" | translate
 						}}</ion-label>
 						<ion-datetime
 							[doneText]="'fields.DONE' | translate"

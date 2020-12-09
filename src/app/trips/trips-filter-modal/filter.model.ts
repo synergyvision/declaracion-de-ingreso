@@ -7,7 +7,7 @@ export interface FilterModel {
 	};
 	country: {
 		alpha3: string;
-		type: string;
+		type: "origin" | "destination" | "connecting" | "any" | "";
 	};
 	dates: {
 		from: Date;

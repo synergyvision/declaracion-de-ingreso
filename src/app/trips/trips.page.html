@@ -62,6 +62,21 @@
 						</ion-col>
 						<ion-col>
 							<ion-row>
+								<ion-label class="item-destinations">
+									{{ getOriginString(trip) }}
+									<ion-icon
+										class="item-destinations-icon"
+										name="chevron-forward-outline"
+									></ion-icon>
+									{{ getDestinationString(trip)}}
+								</ion-label>
+							</ion-row>
+							<ion-row class="ion-align-items-center">
+								<ion-col>
+									<ion-label
+										>{{ getLengthOfTrip(trip) }}</ion-label
+									>
+								</ion-col>
 								<ion-col class="ion-text-right state-col">
 									<ion-chip
 										[color]="getChipColor(trip.state)"
@@ -72,17 +87,6 @@
 										>
 									</ion-chip>
 								</ion-col>
-							</ion-row>
-							<ion-row>
-								<ion-label
-									class="item-destinations"
-									[innerHTML]="getTripString(trip)"
-								></ion-label>
-							</ion-row>
-							<ion-row>
-								<ion-label
-									>{{ getLengthOfTrip(trip) }}</ion-label
-								>
 							</ion-row>
 						</ion-col>
 					</ion-row>

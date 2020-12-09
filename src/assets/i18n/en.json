@@ -145,6 +145,7 @@
 		"RETURN_FLIGHT": "Return flight #{{i}}",
 		"FROM": "From",
 		"TO": "To",
+		"UNTIL": "Until",
 		"ADD_FLIGHT": "Add another flight",
 		"ADD_RETURN_FLIGHT": "Add return flight",
 		"CALCULATE": "Calculate",

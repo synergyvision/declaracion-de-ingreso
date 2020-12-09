@@ -101,7 +101,7 @@
 			<hr />
 			<hr />
 			<hr />
-			<ion-label position="floating"
+			<ion-label position="floating" class="input-label"
 				>{{ 'fields.SEX' | translate }}</ion-label
 			>
 			<ion-radio-group formControlName="sex">
@@ -120,12 +120,12 @@
 			<hr />
 			<hr />
 			<hr />
-			<ion-label position="floating"
+			<ion-label position="floating" class="input-label"
 				>{{ 'fields.ID' | translate }}</ion-label
 			>
-			<ion-grid>
+			<ion-grid style="padding: 0">
 				<ion-row>
-					<ion-col size="1">
+					<ion-col size="2" class="id-type-col">
 						<ion-item class="input-item">
 							<ion-select
 								formControlName="idType"
@@ -143,7 +143,7 @@
 							</ion-select>
 						</ion-item>
 					</ion-col>
-					<ion-col size="11">
+					<ion-col size="10" class="id-col">
 						<ion-item class="input-item">
 							<ion-input
 								type="text"

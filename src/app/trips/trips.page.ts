@@ -37,6 +37,23 @@ export class TripsPage implements OnInit {
 
 	statesEnum = States;
 
+	filterValues: FilterModel = {
+		states: {
+			pendiente: true,
+			calculado: true,
+			finalizado: true,
+			cancelado: false,
+		},
+		country: {
+			alpha3: "",
+			type: "",
+		},
+		dates: {
+			from: null,
+			to: null,
+		},
+	};
+
 	tripsSubscription: Subscription;
 	trips: TripsModel[] = [
 		{
@@ -153,13 +170,14 @@ export class TripsPage implements OnInit {
 		this.modalCtrl
 			.create({
 				component: TripsFilterModalComponent,
+				componentProps: { currentFilter: this.filterValues },
 			})
 			.then((modalEl) => {
 				modalEl.present();
 				return modalEl.onDidDismiss();
 			})
 			.then((resultData) => {
-				console.log(resultData);
+				this.filterValues = resultData.data;
 			});
 	}
 
@@ -195,7 +213,25 @@ export class TripsPage implements OnInit {
 		const destinationCountry = this.countryService.getCountryName(
 			destinationFlight.to.country
 		);
-		return `${originCountry} (${originFlight.from.city}) &#8594; ${destinationCountry} (${destinationFlight.to.city})`;
+		const chevronIcon =
+			'<ion-icon name="chevron-forward-outline"></ion-icon>';
+		return `${originCountry} (${originFlight.from.city}) ${chevronIcon} ${destinationCountry} (${destinationFlight.to.city})`;
+	}
+
+	getOriginString(trip: TripsModel) {
+		const originFlight = trip.flights[0];
+		const originCountry = this.countryService.getCountryName(
+			originFlight.from.country
+		);
+		return `${originCountry} (${originFlight.from.city})`;
+	}
+
+	getDestinationString(trip: TripsModel) {
+		const destinationFlight = this.getLastFlight(trip);
+		const destinationCountry = this.countryService.getCountryName(
+			destinationFlight.to.country
+		);
+		return `${destinationCountry} (${destinationFlight.to.city})`;
 	}
 
 	getLengthOfTrip(trip: TripsModel) {
@@ -300,6 +336,73 @@ export class TripsPage implements OnInit {
 	}
 
 	get filteredTrips() {
-		return this.trips;
+		if (this.trips == null) {
+			return [];
+		}
+		const { states, dates, country } = this.filterValues;
+		let filteredTrips = this.trips.filter((trip) => {
+			for (const state in states) {
+				if (states[state] && trip.state == state) {
+					if (
+						(dates.from < this.getFirstDate(trip) &&
+							dates.to > this.getLastDate(trip)) ||
+						dates.from == null ||
+						dates.to == null
+					) {
+						if (country.alpha3 == "") {
+							return true;
+						}
+						switch (country.type) {
+							case "origin":
+								return (
+									country.alpha3 ==
+									trip.flights[0].from.country
+								);
+								break;
+
+							case "destination":
+								return (
+									country.alpha3 ==
+									this.getLastFlight(trip).to.country
+								);
+								break;
+
+							case "connecting":
+								return trip.flights.some(
+									(flight, index, flights) => {
+										if (flights[index + 1].returnFlight) {
+											return false;
+										} else {
+											return (
+												flight.from.country ==
+													country.alpha3 ||
+												flight.to.country ==
+													country.alpha3
+											);
+										}
+									}
+								);
+								break;
+
+							case "any":
+							default:
+								return trip.flights.some((flight) => {
+									return (
+										flight.from.country == country.alpha3 ||
+										flight.to.country == country.alpha3
+									);
+								});
+								break;
+						}
+					}
+				}
+			}
+			return false;
+		});
+		return filteredTrips.sort((a, b) => {
+			return (
+				this.getFirstDate(b).getTime() - this.getFirstDate(a).getTime()
+			);
+		});
 	}
 }

@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { LoadingController, ModalController } from "@ionic/angular";
 import { SharedService } from "../../shared/shared.service";
 import { CountryService } from "../../country/country.service";
+import { FilterModel } from "./filter.model";
 
 @Component({
 	selector: "app-trips-filter-modal",
@@ -12,7 +13,7 @@ import { CountryService } from "../../country/country.service";
 })
 export class TripsFilterModalComponent implements OnInit {
 	filterForm: FormGroup;
-	currentFilter: any;
+	@Input("currentFilter") currentFilter: FilterModel;
 	subscriptions: Subscription;
 
 	countries = [];
@@ -51,6 +52,7 @@ export class TripsFilterModalComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.filterForm.setValue(this.currentFilter);
 		this.countries = this.countryService.getCountries();
 	}
 }
