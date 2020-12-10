@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { LoadingController, ModalController } from "@ionic/angular";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { PasswordValidator } from "../../../../validators/password.validator";
-import { SharedService } from "../../../../shared/shared.service";
-import { FirebaseAuthService } from "../../firebase-auth.service";
 import { Subscription, from } from "rxjs";
 import { switchMap } from "rxjs/operators";
 import { User } from "firebase";
+import { SharedService } from "../../shared/shared.service";
+import { FirebaseAuthService } from "../../firebase/auth/firebase-auth.service";
+import { PasswordValidator } from "../../validators/password.validator";
 
 @Component({
 	selector: "app-change-password-modal",

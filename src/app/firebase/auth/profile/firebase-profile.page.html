@@ -5,7 +5,7 @@
 			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
 		<ion-buttons slot="end">
-			<ion-button (click)="editPopoverMenu($event)"
+			<ion-button [routerLink]="['/auth/profile/edit']"
 				><ion-icon slot="icon-only" name="create-outline"></ion-icon
 			></ion-button>
 		</ion-buttons>

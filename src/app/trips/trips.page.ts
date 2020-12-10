@@ -177,7 +177,9 @@ export class TripsPage implements OnInit {
 				return modalEl.onDidDismiss();
 			})
 			.then((resultData) => {
-				this.filterValues = resultData.data;
+				if (resultData.data != null) {
+					this.filterValues = resultData.data;
+				}
 			});
 	}
 

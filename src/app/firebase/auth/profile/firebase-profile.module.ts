@@ -11,9 +11,7 @@ import { ProfileEditPageModule } from "./profile-edit/profile-edit.module";
 import { FirebaseProfileResolver } from "./firebase-profile.resolver";
 import { SharedModule } from "../../../shared/shared.module";
 import { ProfileGuard } from "../profile.guard";
-import { PopoverComponent } from "./popover/popover.component";
 import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
-import { ChangePasswordModalComponent } from "./change-password-modal/change-password-modal.component";
 import { PictureModalComponent } from "./picture-modal/picture-modal.component";
 import { AutoSignOutGuard } from "../auto-sign-out.guard";
 
@@ -54,17 +52,10 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		ComponentsModule,
 	],
-	entryComponents: [
-		PopoverComponent,
-		DeleteModalComponent,
-		ChangePasswordModalComponent,
-		PictureModalComponent,
-	],
+	entryComponents: [DeleteModalComponent, PictureModalComponent],
 	declarations: [
 		FirebaseProfilePage,
-		PopoverComponent,
 		DeleteModalComponent,
-		ChangePasswordModalComponent,
 		PictureModalComponent,
 	],
 	providers: [AuthGuard, FirebaseProfileResolver],

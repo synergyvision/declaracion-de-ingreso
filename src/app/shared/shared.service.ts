@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { take } from "rxjs/operators";
-import { AlertController } from "@ionic/angular";
+import { ActionSheetController, AlertController } from "@ionic/angular";
 
 @Injectable({
 	providedIn: "root",
@@ -9,7 +9,8 @@ import { AlertController } from "@ionic/angular";
 export class SharedService {
 	constructor(
 		private translate: TranslateService,
-		private alertCtrl: AlertController
+		private alertCtrl: AlertController,
+		private actionCtrl: ActionSheetController
 	) {}
 
 	public validation = {
@@ -249,6 +250,31 @@ export class SharedService {
 			.then((alertEl) => {
 				alertEl.present();
 			});
+	}
+
+	showLangSheet() {
+		return this.actionCtrl.create({
+			header: this.translateText("lang.LANG"),
+			buttons: [
+				{
+					text: this.translateText("lang.ES"),
+					handler: () => {
+						this.translate.use("es");
+					},
+				},
+				{
+					text: this.translateText("lang.EN"),
+					handler: () => {
+						this.translate.use("en");
+					},
+				},
+				{
+					text: this.translateText("fields.CANCEL"),
+					icon: "close",
+					role: "cancel",
+				},
+			],
+		});
 	}
 
 	formatDate(date: string) {

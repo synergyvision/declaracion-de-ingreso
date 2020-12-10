@@ -112,6 +112,13 @@ const routes: Routes = [
 		canActivate: [AuthGuard, ProfileGuard, AutoSignOutGuard],
 	},
 	{
+		path: "settings",
+		loadChildren: () =>
+			import("./settings/settings.module").then(
+				(m) => m.SettingsPageModule
+			),
+	},
+	{
 		path: "**",
 		redirectTo: "page-not-found",
 	},

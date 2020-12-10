@@ -14,9 +14,7 @@ import {
 	Platform,
 	PopoverController,
 } from "@ionic/angular";
-import { PopoverComponent } from "./popover/popover.component";
 import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
-import { ChangePasswordModalComponent } from "./change-password-modal/change-password-modal.component";
 import { PictureModalComponent } from "./picture-modal/picture-modal.component";
 import { switchMap, take, tap } from "rxjs/operators";
 import { CountryService } from "../../../country/country.service";
@@ -44,7 +42,6 @@ export class FirebaseProfilePage implements OnInit {
 		private route: ActivatedRoute,
 		public authService: FirebaseAuthService,
 		private shared: SharedService,
-		private popoverCtrl: PopoverController,
 		private modalCtrl: ModalController,
 		private loadCtrl: LoadingController,
 		private countryService: CountryService
@@ -186,39 +183,6 @@ export class FirebaseProfilePage implements OnInit {
 
 	getUserLength(): Array<number> {
 		return Array(10).fill(1);
-	}
-
-	editPopoverMenu(event: any) {
-		this.popoverCtrl
-			.create({
-				component: PopoverComponent,
-				event,
-				translucent: true,
-			})
-			.then((popoverEl) => {
-				popoverEl.present();
-				return popoverEl.onDidDismiss();
-			})
-			.then((popoverResultData) => {
-				if (popoverResultData.role == "editProfile") {
-					this.router.navigate(["auth/profile/edit"]);
-				} else if (popoverResultData.role == "changePassword") {
-					this.modalCtrl
-						.create({
-							component: ChangePasswordModalComponent,
-						})
-						.then((modalEl) => {
-							modalEl.present();
-							return modalEl.onDidDismiss();
-						})
-						.then((modalResultData) => {
-							if (modalResultData.role == "changePassword") {
-								console.log("ok");
-								this.signOutChangePw();
-							}
-						});
-				}
-			});
 	}
 
 	getCountryName(alpha3: string): string {

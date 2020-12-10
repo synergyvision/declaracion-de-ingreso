@@ -2,6 +2,11 @@
 	<ion-toolbar color="primary">
 		<ion-title>{{ 'signIn.SIGN_IN' | translate }}</ion-title>
 	</ion-toolbar>
+	<ion-buttons slot="end">
+		<ion-button (click)="onChangeLanguage()"
+			><ion-icon slot="icon-only" name="language-outline"></ion-icon
+		></ion-button>
+	</ion-buttons>
 </ion-header>
 
 <ion-content class="login-content">

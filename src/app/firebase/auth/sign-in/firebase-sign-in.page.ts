@@ -235,53 +235,9 @@ export class FirebaseSignInPage implements OnInit {
 			});
 	}
 
-	doFacebookLogin(): void {
-		this.resetSubmitError();
-		this.prepareForAuthWithProvidersRedirection("facebook");
-
-		this.authService.signInWithFacebook().subscribe(
-			(result) => {
-				// This gives you a Facebook Access Token. You can use it to access the Facebook API.
-				// const token = result.credential.accessToken;
-				this.redirectLoggedUserToProfilePage();
-			},
-			(error) => {
-				this.manageAuthWithProvidersErrors(error.message);
-			}
-		);
-	}
-
-	doGoogleLogin(): void {
-		this.resetSubmitError();
-		this.prepareForAuthWithProvidersRedirection("google");
-
-		this.authService.signInWithGoogle().subscribe(
-			(result) => {
-				// This gives you a Google Access Token. You can use it to access the Google API.
-				// var token = result.credential.accessToken;
-				this.redirectLoggedUserToProfilePage();
-			},
-			(error) => {
-				console.log(error);
-				this.manageAuthWithProvidersErrors(error.message);
-			}
-		);
-	}
-
-	doTwitterLogin(): void {
-		this.resetSubmitError();
-		this.prepareForAuthWithProvidersRedirection("twitter");
-
-		this.authService.signInWithTwitter().subscribe(
-			(result) => {
-				// This gives you a Twitter Access Token. You can use it to access the Twitter API.
-				// var token = result.credential.accessToken;
-				this.redirectLoggedUserToProfilePage();
-			},
-			(error) => {
-				console.log(error);
-				this.manageAuthWithProvidersErrors(error.message);
-			}
-		);
+	onChangeLanguage() {
+		this.shared.showLangSheet().then((actionEl) => {
+			actionEl.present();
+		});
 	}
 }

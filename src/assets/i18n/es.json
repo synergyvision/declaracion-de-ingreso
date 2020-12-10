@@ -1,4 +1,9 @@
 {
+	"lang": {
+		"LANG": "Idioma",
+		"ES": "Español",
+		"EN": "Inglés"
+	},
 	"AND": "y",
 	"LOADING": "Cargando...",
 	"FORMATTED_DATE": "{{ day }} de {{ month }} de {{ year }}",
@@ -166,6 +171,12 @@
 		"SIGN_OUT": "Cerrar sesión",
 		"SIGNING_OUT": "Cerrando sesión...",
 		"SETTINGS": "Ajustes"
+	},
+	"settings": {
+		"SETTINGS": "Ajustes",
+		"CHANGE_LANG": "Cambiar idioma",
+		"CHANGE_PW": "Cambiar contraseña",
+		"CHANGE_DEFAULT_FILTER": "Cambiar filtros por defecto"
 	},
 	"error": {
 		"ERROR": "¡Ups!",
