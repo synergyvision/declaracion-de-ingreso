@@ -7,6 +7,9 @@ import { Router } from "@angular/router";
 import { ChangePasswordModalComponent } from "./change-password-modal/change-password-modal.component";
 import { TripsFilterModalComponent } from "../trips/trips-filter-modal/trips-filter-modal.component";
 import { FilterModel } from "../trips/trips-filter-modal/filter.model";
+import { Plugins } from "@capacitor/core";
+import { from } from "rxjs";
+import { take } from "rxjs/operators";
 
 @Component({
 	selector: "app-settings",
@@ -58,6 +61,8 @@ export class SettingsPage implements OnInit {
 			.then((resultData) => {
 				if (resultData.data != null) {
 					this.filterValues = resultData.data;
+					const data = JSON.stringify(resultData.data);
+					Plugins.Storage.set({ key: "defaultFilter", value: data });
 				}
 			});
 	}
@@ -78,5 +83,22 @@ export class SettingsPage implements OnInit {
 		);
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.getFilter();
+	}
+
+	ionViewWillEnter() {
+		this.getFilter();
+	}
+
+	getFilter() {
+		from(Plugins.Storage.get({ key: "defaultFilter" }))
+			.pipe(take(1))
+			.subscribe((data) => {
+				if (data.value != null) {
+					const defaultFilter = JSON.parse(data.value);
+					this.filterValues = defaultFilter;
+				}
+			});
+	}
 }

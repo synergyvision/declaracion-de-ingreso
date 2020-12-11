@@ -10,7 +10,7 @@ export interface FilterModel {
 		type: "origin" | "destination" | "connecting" | "any" | "";
 	};
 	dates: {
-		from: Date;
-		to: Date;
+		from: Date | string;
+		to: Date | string;
 	};
 }

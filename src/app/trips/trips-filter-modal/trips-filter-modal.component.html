@@ -62,6 +62,9 @@
 							[okText]="'fields.DONE' | translate"
 							interface="action-sheet"
 						>
+							<ion-select-option value="">
+								{{ "trips.ANY" | translate }}
+							</ion-select-option>
 							<ion-select-option
 								*ngFor="let country of countries"
 								[value]="country.alpha3"
@@ -94,7 +97,7 @@
 								"trips.CONNECTING_FLIGHT" | translate
 							}}</ion-select-option
 							><ion-select-option value="any">{{
-								"trips.ANY" | translate
+								"trips.ANY_ABOVE" | translate
 							}}</ion-select-option>
 						</ion-select>
 					</ion-item>
@@ -112,7 +115,8 @@
 						}}</ion-label>
 						<ion-datetime
 							[doneText]="'fields.DONE' | translate"
-							[cancelText]="'fields.CANCEL' | translate"
+							[cancelText]="'fields.CLEAR' | translate"
+							(ionCancel)="clearDate('from')"
 							formControlName="from"
 							clearInput
 							displayFormat="DD/MM/YYYY"
@@ -127,7 +131,8 @@
 						}}</ion-label>
 						<ion-datetime
 							[doneText]="'fields.DONE' | translate"
-							[cancelText]="'fields.CANCEL' | translate"
+							[cancelText]="'fields.CLEAR' | translate"
+							(ionCancel)="clearDate('to')"
 							formControlName="to"
 							clearInput
 							displayFormat="DD/MM/YYYY"

@@ -51,6 +51,12 @@ export class TripsFilterModalComponent implements OnInit {
 		this.modalCtrl.dismiss(this.filterForm.value, "changeFilter");
 	}
 
+	clearDate(name: string) {
+		(this.filterForm.controls["dates"] as FormGroup).controls[
+			name
+		].setValue(null);
+	}
+
 	ngOnInit() {
 		this.filterForm.setValue(this.currentFilter);
 		this.countries = this.countryService.getCountries();

@@ -88,13 +88,9 @@
 		"AIRLINE": "Airline",
 		"FLIGHT_NUMBER": "Flight number",
 		"FILTER_TYPE": "Advanced filter",
-		"SELECT_FILTER_TYPE": "Select advanced filter",
-		"ORIGIN": "Origin country",
-		"DESTINATION": "Destination country",
-		"CONNECTING_FLIGHT": "Connecting flight",
-		"ANY": "Any of the above",
 		"DONE": "Done",
-		"CANCEL": "Cancel"
+		"CANCEL": "Cancel",
+		"CLEAR": "Clear"
 	},
 	"signIn": {
 		"SIGN_IN": "Sign in",
@@ -161,6 +157,12 @@
 		"GETTING": "Obtaining trip information...",
 		"EDITTING": "Saving changes...",
 		"FILTER": "Filter trips",
+		"SELECT_FILTER_TYPE": "Select advanced filter",
+		"ORIGIN": "Origin country",
+		"DESTINATION": "Destination country",
+		"CONNECTING_FLIGHT": "Connecting flight",
+		"ANY_ABOVE": "Any of the above",
+		"ANY": "Any",
 		"APPLY_FILTERS": "Apply filters"
 	},
 	"menu": {

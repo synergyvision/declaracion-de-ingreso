@@ -8,11 +8,13 @@ import {
 import { TripsModel, FlightModel, States } from "./trips.model";
 import { FilterModel } from "./trips-filter-modal/filter.model";
 import { CountryService } from "../country/country.service";
-import { Subscription } from "rxjs";
+import { Subscription, from } from "rxjs";
 import { TripsService } from "./trips.service";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { TripsFilterModalComponent } from "./trips-filter-modal/trips-filter-modal.component";
+import { Plugins } from "@capacitor/core";
+import { take } from "rxjs/operators";
 
 @Component({
 	selector: "app-trips",
@@ -160,10 +162,24 @@ export class TripsPage implements OnInit {
 		},
 	];
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.getFilter();
+	}
 
 	ionViewWillEnter() {
 		this.menuController.enable(true);
+		this.getFilter();
+	}
+
+	getFilter() {
+		from(Plugins.Storage.get({ key: "defaultFilter" }))
+			.pipe(take(1))
+			.subscribe((data) => {
+				if (data.value != null) {
+					const defaultFilter = JSON.parse(data.value);
+					this.filterValues = defaultFilter;
+				}
+			});
 	}
 
 	onOpenFilterModal() {
@@ -344,12 +360,19 @@ export class TripsPage implements OnInit {
 		const { states, dates, country } = this.filterValues;
 		let filteredTrips = this.trips.filter((trip) => {
 			for (const state in states) {
-				if (states[state] && trip.state == state) {
+				if (
+					(states[state] && trip.state == state) ||
+					!this.anyStatesFiltered
+				) {
 					if (
-						(dates.from < this.getFirstDate(trip) &&
-							dates.to > this.getLastDate(trip)) ||
+						(new Date(dates.from).getTime() <
+							this.getFirstDate(trip).getTime() &&
+							new Date(dates.to).getTime() >
+								this.getLastDate(trip).getTime()) ||
 						dates.from == null ||
-						dates.to == null
+						dates.from == "" ||
+						dates.to == null ||
+						dates.to == ""
 					) {
 						if (country.alpha3 == "") {
 							return true;
@@ -406,5 +429,19 @@ export class TripsPage implements OnInit {
 				this.getFirstDate(b).getTime() - this.getFirstDate(a).getTime()
 			);
 		});
+	}
+
+	get anyStatesFiltered() {
+		const {
+			finalizado,
+			calculado,
+			cancelado,
+			pendiente,
+		} = this.filterValues.states;
+		if (finalizado || calculado || cancelado || pendiente) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

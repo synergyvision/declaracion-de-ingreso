@@ -89,7 +89,8 @@
 		"FLIGHT_NUMBER": "Número de vuelo",
 		"FILTER_TYPE": "Filtro avanzado",
 		"DONE": "Listo",
-		"CANCEL": "Cancelar"
+		"CANCEL": "Cancelar",
+		"CLEAR": "Borrar"
 	},
 	"signIn": {
 		"SIGN_IN": "Iniciar sesión",
@@ -161,7 +162,8 @@
 		"ORIGIN": "País de origen",
 		"DESTINATION": "País de destino",
 		"CONNECTING_FLIGHT": "Escala",
-		"ANY": "Cualquiera de las anteriores",
+		"ANY_ABOVE": "Cualquiera de las anteriores",
+		"ANY": "Cualquiera",
 		"APPLY_FILTERS": "Aplicar filtros"
 	},
 	"menu": {

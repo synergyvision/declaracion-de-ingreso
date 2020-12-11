@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { take } from "rxjs/operators";
 import { ActionSheetController, AlertController } from "@ionic/angular";
+import { Plugins } from "@capacitor/core";
 
 @Injectable({
 	providedIn: "root",
@@ -259,13 +260,13 @@ export class SharedService {
 				{
 					text: this.translateText("lang.ES"),
 					handler: () => {
-						this.translate.use("es");
+						this.changeDefaultLang("es");
 					},
 				},
 				{
 					text: this.translateText("lang.EN"),
 					handler: () => {
-						this.translate.use("en");
+						this.changeDefaultLang("en");
 					},
 				},
 				{
@@ -275,6 +276,12 @@ export class SharedService {
 				},
 			],
 		});
+	}
+
+	changeDefaultLang(lang: string) {
+		this.translate.use(lang);
+		const data = JSON.stringify({ lang });
+		Plugins.Storage.set({ key: "lang", value: data });
 	}
 
 	formatDate(date: string) {

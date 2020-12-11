@@ -7,7 +7,7 @@ import { FirebaseAuthService } from "./firebase/auth/firebase-auth.service";
 import { Router } from "@angular/router";
 import { SharedService } from "./shared/shared.service";
 import { FirebaseProfileModel } from "./firebase/auth/profile/firebase-profile.model";
-import { delay, switchMap, tap } from "rxjs/operators";
+import { delay, switchMap, take, tap } from "rxjs/operators";
 import { Subscription, from } from "rxjs";
 import { LoadingController, MenuController } from "@ionic/angular";
 
@@ -76,7 +76,19 @@ export class AppComponent {
 		this.translate.setDefaultLang("es");
 
 		// the lang to use, if the lang isn't available, it will use the current loader to get them
-		this.translate.use("es");
+		from(Plugins.Storage.get({ key: "lang" }))
+			.pipe(take(1))
+			.subscribe(
+				(data) => {
+					if (data.value != null) {
+						const { lang } = JSON.parse(data.value);
+						this.translate.use(lang);
+					}
+				},
+				(err) => {
+					console.warn(err);
+				}
+			);
 
 		// this is to determine the text direction depending on the selected language
 		// for the purpose of this example we determine that only arabic and hebrew are RTL.
