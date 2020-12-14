@@ -137,6 +137,10 @@
 	},
 	"trips": {
 		"TRIPS": "Viajes",
+		"SEARCH": "Buscar",
+		"START": "Comience a usar la aplicación agregando un viaje!",
+		"NOT_FOUND": "No encontramos viajes con los filtros seleccionados",
+		"RESTORE_FILTERS": "Reestablecer filtros por defecto",
 		"CREATE": "Añadir viaje",
 		"CREATING": "Añadiendo viaje...",
 		"DETAIL": "Detalle",

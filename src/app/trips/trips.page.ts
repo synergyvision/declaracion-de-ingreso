@@ -39,7 +39,10 @@ export class TripsPage implements OnInit {
 
 	statesEnum = States;
 
-	filterValues: FilterModel = {
+	filterValues: FilterModel;
+	_searchValue: string = "";
+
+	resetFilter: FilterModel = {
 		states: {
 			pendiente: true,
 			calculado: true,
@@ -57,110 +60,7 @@ export class TripsPage implements OnInit {
 	};
 
 	tripsSubscription: Subscription;
-	trips: TripsModel[] = [
-		{
-			id: "a",
-			flights: [
-				{
-					from: {
-						country: "usa",
-						city: "Miami",
-						date: new Date("11-01-2020"),
-					},
-					to: {
-						country: "ven",
-						city: "Caracas",
-						date: new Date("11-01-2020"),
-					},
-					airline: "Copa Airlines",
-					flightNumber: "VEN-001",
-				},
-			],
-			state: "finalizado",
-		},
-		{
-			id: "b",
-			flights: [
-				{
-					from: {
-						country: "ven",
-						city: "Caracas",
-						date: new Date(),
-					},
-					to: {
-						country: "usa",
-						city: "Miami",
-						date: new Date(),
-					},
-					airline: "Copa Airlines",
-					flightNumber: "MIA-001",
-				},
-				{
-					from: {
-						country: "usa",
-						city: "Miami",
-						date: new Date("12-01-2020"),
-					},
-					to: {
-						country: "ven",
-						city: "Caracas",
-						date: new Date("12-01-2020"),
-					},
-					airline: "Copa Airlines",
-					flightNumber: "VEN-002",
-				},
-			],
-			state: "pendiente",
-		},
-		{
-			id: "c",
-			flights: [
-				{
-					from: {
-						country: "ven",
-						city: "Caracas",
-						date: new Date("01-10-2019"),
-					},
-					to: {
-						country: "usa",
-						city: "Houston",
-						date: new Date("01-10-2019"),
-					},
-					airline: "America Airlines",
-					flightNumber: "HOU-001",
-				},
-				{
-					from: {
-						country: "usa",
-						city: "Houston",
-						date: new Date("01-12-2019"),
-					},
-					to: {
-						country: "can",
-						city: "Montreal",
-						date: new Date("01-12-2019"),
-					},
-					airline: "Copa Airlines",
-					flightNumber: "MON-001",
-				},
-				{
-					from: {
-						country: "can",
-						city: "Montreal",
-						date: new Date("01-15-2020"),
-					},
-					to: {
-						country: "ven",
-						city: "Caracas",
-						date: new Date("01-15-2020"),
-					},
-					airline: "Copa Airlines",
-					flightNumber: "VEN-003",
-				},
-			],
-			state: "pendiente",
-		},
-	];
+	trips: TripsModel[];
 
 	ngOnInit() {
 		this.getFilter();
@@ -353,76 +253,116 @@ export class TripsPage implements OnInit {
 		});
 	}
 
+	onResetFilters() {
+		this.filterValues = this.resetFilter;
+		this._searchValue = "";
+		const data = JSON.stringify(this.resetFilter);
+		Plugins.Storage.set({ key: "defaultFilter", value: data });
+	}
+
+	statesFilter(trip: TripsModel) {
+		const { states } = this.filterValues;
+		for (const state in states) {
+			if (
+				(states[state] && trip.state == state) ||
+				!this.anyStatesFiltered
+			) {
+				return true;
+				break;
+			}
+		}
+	}
+
+	datesFilter(trip: TripsModel) {
+		const { dates } = this.filterValues;
+		return (
+			(new Date(dates.from).getTime() <
+				this.getFirstDate(trip).getTime() &&
+				new Date(dates.to).getTime() >
+					this.getLastDate(trip).getTime()) ||
+			dates.from == null ||
+			dates.from == "" ||
+			dates.to == null ||
+			dates.to == ""
+		);
+	}
+
+	countryFilter(trip: TripsModel) {
+		const { country } = this.filterValues;
+		if (country.alpha3 == "") {
+			return true;
+		}
+		switch (country.type) {
+			case "origin":
+				return country.alpha3 == trip.flights[0].from.country;
+				break;
+
+			case "destination":
+				return country.alpha3 == this.getLastFlight(trip).to.country;
+				break;
+
+			case "connecting":
+				return trip.flights.some((flight, index, flights) => {
+					if (flights[index + 1].returnFlight) {
+						return false;
+					} else {
+						return (
+							flight.from.country == country.alpha3 ||
+							flight.to.country == country.alpha3
+						);
+					}
+				});
+				break;
+
+			case "any":
+			default:
+				return trip.flights.some((flight) => {
+					return (
+						flight.from.country == country.alpha3 ||
+						flight.to.country == country.alpha3
+					);
+				});
+				break;
+		}
+	}
+
+	searchFilter(trip: TripsModel) {
+		const search = this.search;
+		const { from } = trip.flights[0];
+		const { to } = this.getLastFlight(trip);
+		if (
+			this.compareStrings(
+				this.countryService.getCountryName(from.country),
+				search
+			) ||
+			this.compareStrings(from.city, search)
+		) {
+			return true;
+		}
+		if (
+			this.compareStrings(
+				this.countryService.getCountryName(to.country),
+				search
+			) ||
+			this.compareStrings(to.city, search)
+		) {
+			return true;
+		}
+		return false;
+	}
+
 	get filteredTrips() {
 		if (this.trips == null) {
 			return [];
 		}
 		const { states, dates, country } = this.filterValues;
 		let filteredTrips = this.trips.filter((trip) => {
-			for (const state in states) {
-				if (
-					(states[state] && trip.state == state) ||
-					!this.anyStatesFiltered
-				) {
-					if (
-						(new Date(dates.from).getTime() <
-							this.getFirstDate(trip).getTime() &&
-							new Date(dates.to).getTime() >
-								this.getLastDate(trip).getTime()) ||
-						dates.from == null ||
-						dates.from == "" ||
-						dates.to == null ||
-						dates.to == ""
-					) {
-						if (country.alpha3 == "") {
-							return true;
-						}
-						switch (country.type) {
-							case "origin":
-								return (
-									country.alpha3 ==
-									trip.flights[0].from.country
-								);
-								break;
-
-							case "destination":
-								return (
-									country.alpha3 ==
-									this.getLastFlight(trip).to.country
-								);
-								break;
-
-							case "connecting":
-								return trip.flights.some(
-									(flight, index, flights) => {
-										if (flights[index + 1].returnFlight) {
-											return false;
-										} else {
-											return (
-												flight.from.country ==
-													country.alpha3 ||
-												flight.to.country ==
-													country.alpha3
-											);
-										}
-									}
-								);
-								break;
-
-							case "any":
-							default:
-								return trip.flights.some((flight) => {
-									return (
-										flight.from.country == country.alpha3 ||
-										flight.to.country == country.alpha3
-									);
-								});
-								break;
-						}
-					}
-				}
-			}
-			return false;
+			return (
+				this.statesFilter(trip) &&
+				this.datesFilter(trip) &&
+				this.countryFilter(trip) &&
+				this.searchFilter(trip)
+			);
 		});
 		return filteredTrips.sort((a, b) => {
 			return (
@@ -443,5 +383,17 @@ export class TripsPage implements OnInit {
 		} else {
 			return false;
 		}
+	}
+
+	onSearch(event: any) {
+		this._searchValue = event.detail.value;
+	}
+
+	get search() {
+		return this._searchValue;
+	}
+
+	compareStrings(str1: string, str2: string) {
+		return str1.toLowerCase().includes(str2.toLowerCase());
 	}
 }

@@ -16,6 +16,32 @@
 </ion-header>
 
 <ion-content>
+	<ion-searchbar
+		[placeholder]="'trips.SEARCH' | translate"
+		(ionChange)="onSearch($event)"
+	></ion-searchbar>
+	<ng-container *ngIf="trips?.length == 0">
+		<h4 class="ion-text-center">{{ 'trips.START' | translate }}</h4>
+		<ion-button
+			fill="clear"
+			expand="full"
+			class="hidden-add-button"
+			[routerLink]="'./create'"
+		>
+			<ion-icon slot="icon-only" name="add-outline"></ion-icon>
+		</ion-button>
+	</ng-container>
+	<ng-container *ngIf="filteredTrips.length == 0 && trips?.length != 0">
+		<h4 class="ion-text-center">{{ 'trips.NOT_FOUND' | translate }}</h4>
+		<ion-button
+			expand="block"
+			color="secondary"
+			class="hidden-default-filter-button"
+			(click)="onResetFilters()"
+		>
+			<ion-label>{{ 'trips.RESTORE_FILTERS' | translate}}</ion-label>
+		</ion-button>
+	</ng-container>
 	<ion-list #tripList>
 		<ion-item-sliding *ngFor="let trip of filteredTrips">
 			<ion-item-options side="start">

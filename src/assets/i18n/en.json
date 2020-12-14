@@ -136,6 +136,10 @@
 	},
 	"trips": {
 		"TRIPS": "Trips",
+		"SEARCH": "Search",
+		"START": "Start using the app by adding a new trip!",
+		"NOT_FOUND": "No trips found with current filters",
+		"RESTORE_FILTERS": "Restore default filters",
 		"CREATE": "Add trip",
 		"CREATING": "Adding trip...",
 		"DETAIL": "Detail",
