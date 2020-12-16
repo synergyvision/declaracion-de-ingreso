@@ -23,6 +23,11 @@ const routes: Routes = [
 			),
 	},
 	{
+		path: "tax",
+		loadChildren: () =>
+			import("../tax/tax.module").then((m) => m.TaxPageModule),
+	},
+	{
 		path: "edit",
 		loadChildren: () =>
 			import("./trips-edit/trips-edit.module").then(

@@ -151,6 +151,43 @@ export class TripsCreatePage implements OnInit {
 		}
 	}
 
+	onCountryChange(
+		alpha3: string,
+		type: string,
+		index: number,
+		init: boolean = false
+	) {
+		const el = document.getElementById(type + "City" + index);
+		if (!init) {
+			((this.flightArray.controls[index] as FormGroup).controls[
+				type
+			] as FormGroup).controls["city"].reset();
+		}
+		el.innerHTML = "";
+		const cities = this.countryService.getCities(alpha3);
+		if (cities?.length > 0) {
+			let option: string = "";
+			cities.forEach((city) => {
+				option +=
+					"<ion-select-option value=" +
+					city +
+					">" +
+					city +
+					"</ion-select-option>";
+			});
+			el.insertAdjacentHTML("beforeend", option);
+		} else {
+			const country = this.countryService.getCountryName(alpha3);
+			const option =
+				"<ion-select-option value=" +
+				country +
+				">" +
+				country +
+				"</ion-select-option>";
+			el.insertAdjacentHTML("beforeend", option);
+		}
+	}
+
 	doCreateTrip() {
 		this.loadCtrl
 			.create({

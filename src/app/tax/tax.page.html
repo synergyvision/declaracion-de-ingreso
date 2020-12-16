@@ -1,0 +1,101 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ 'tax.TAX' | translate }}</ion-title>
+		<ion-buttons slot="start">
+			<ion-back-button
+				defaultHref="/trips"
+				[text]="'menu.BACK' | translate"
+			></ion-back-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button type="submit" (click)="taxFormElement.ngSubmit.emit()"
+				><ion-icon slot="icon-only" name="checkmark-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="tax-content">
+	<form
+		[formGroup]="taxForm"
+		(ngSubmit)="doCreateTaxDeclaration()"
+		#taxFormElement="ngForm"
+	>
+		<ion-list class="inputs-list" lines="full">
+			<ion-grid>
+				<ion-row>
+					<ion-col size="12">
+						<ion-label class="input-label"
+							>{{ 'tax.CASH' | translate }}</ion-label
+						>
+					</ion-col>
+					<ion-col>
+						<ion-item class="input-item">
+							<ion-label position="floating"
+								>{{ 'fields.TOTAL' | translate }}</ion-label
+							>
+							<ion-input
+								type="number"
+								formControlName="cash"
+								clearInput
+								autocapitalize="off"
+								inputmode="decimal"
+							>
+							</ion-input>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+			<div formGroupName="details">
+				<ion-grid>
+					<div
+						*ngFor="let detail of taxDetailKeys; index as i"
+						[formGroupName]="detail"
+					>
+						<ion-row>
+							<ion-col size="12">
+								<ion-label class="input-label"
+									>{{ 'TAX_OPTION.' + i | translate
+									}}</ion-label
+								>
+							</ion-col>
+							<ion-col size="6">
+								<ion-item class="input-item">
+									<ion-label position="floating"
+										>{{ 'fields.QUANTITY' | translate
+										}}</ion-label
+									>
+									<ion-input
+										type="number"
+										formControlName="quantity"
+										clearInput
+										autocapitalize="off"
+										inputmode="numeric"
+										(keypress)="noDecimals($event)"
+									>
+									</ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col size="6">
+								<ion-item class="input-item">
+									<ion-label position="floating"
+										>{{ 'fields.PRICE' | translate
+										}}</ion-label
+									>
+									<ion-input
+										type="number"
+										formControlName="price"
+										clearInput
+										autocapitalize="off"
+										inputmode="decimal"
+									>
+									</ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+					</div>
+				</ion-grid>
+			</div>
+		</ion-list>
+	</form>
+</ion-content>

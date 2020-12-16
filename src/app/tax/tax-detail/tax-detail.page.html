@@ -1,0 +1,80 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ 'trips.DETAIL' | translate }}</ion-title>
+		<ion-buttons slot="start">
+			<ion-back-button
+				defaultHref="/trips"
+				[text]="'menu.BACK' | translate"
+			></ion-back-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button
+				type="submit"
+				(click)="doEditTax(trip?.id)"
+				[disabled]="trip?.state === states.CANCELADO || trip?.state === states.FINALIZADO"
+				><ion-icon slot="icon-only" name="create-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<ion-list-header
+			style="font-size: 1.5em; padding-left: 7px; margin-bottom: 10px"
+			>{{ 'tax.TOTAL' | translate: { total: getTotal() }
+			}}</ion-list-header
+		>
+		<h4 style="padding-left: 7px" *ngIf="getTax() > 0">
+			{{ 'tax.CALCULATED_TAX' | translate: { tax: getTax() } }}
+		</h4>
+		<ng-container *ngIf="isLoading else taxDetail">
+			<ion-item *ngFor="let n of getTaxLength()" class="ion-no-padding">
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label
+								><ion-skeleton-text
+									animated
+									style="width: 50%"
+								></ion-skeleton-text
+							></ion-label>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col>
+							<ion-label
+								><ion-skeleton-text animated></ion-skeleton-text
+							></ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+		</ng-container>
+	</ion-list>
+	<ng-template #taxDetail>
+		<ng-container *ngFor="let detail of taxDetails | keyvalue; index as i">
+			<ion-item class="ion-no-padding" *ngIf="hasValue(detail.value)">
+				<ion-grid>
+					<ion-row>
+						<ion-col>
+							<ion-label class="field-name"
+								>{{ 'tax.TAX_OPTION.' + detail.key | translate
+								}}</ion-label
+							>
+						</ion-col>
+					</ion-row>
+					<ion-row class="field-content">
+						<ion-col>
+							<ion-label>
+								{{ 'tax.DETAIL_ITEM' | translate: { quantity:
+								detail?.value.quantity, price:
+								detail?.value.price } }}
+							</ion-label>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+		</ng-container>
+	</ng-template>
+</ion-content>

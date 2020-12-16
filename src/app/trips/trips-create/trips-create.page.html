@@ -74,6 +74,7 @@
 											[cancelText]="'fields.CANCEL' | translate"
 											[okText]="'fields.DONE' | translate"
 											interface="action-sheet"
+											(ionChange)="onCountryChange($event.detail.value, 'from', i)"
 										>
 											<ion-select-option
 												*ngFor="let country of countries"
@@ -109,13 +110,15 @@
 											>{{ 'fields.CITY' | translate
 											}}</ion-label
 										>
-										<ion-input
-											type="text"
+										<ion-select
+											id="{{ 'fromCity' + i }}"
 											formControlName="city"
-											clearInput
-											autocapitalize="off"
-											inputmode="text"
-										></ion-input>
+											[placeholder]="'trips.SELECT_CITY' | translate"
+											[cancelText]="'fields.CANCEL' | translate"
+											[okText]="'fields.DONE' | translate"
+											interface="action-sheet"
+										>
+										</ion-select>
 									</ion-item>
 									<div class="error-container">
 										<ng-container
@@ -190,6 +193,7 @@
 											[cancelText]="'fields.CANCEL' | translate"
 											[okText]="'fields.DONE' | translate"
 											interface="action-sheet"
+											(ionChange)="onCountryChange($event.detail.value, 'to', i)"
 										>
 											<ion-select-option
 												*ngFor="let country of countries"
@@ -225,13 +229,14 @@
 											>{{ 'fields.CITY' | translate
 											}}</ion-label
 										>
-										<ion-input
-											type="text"
+										<ion-select
+											id="{{ 'toCity' + i }}"
 											formControlName="city"
-											clearInput
-											autocapitalize="off"
-											inputmode="text"
-										></ion-input>
+											[placeholder]="'trips.SELECT_CITY' | translate"
+											[cancelText]="'fields.CANCEL' | translate"
+											[okText]="'fields.DONE' | translate"
+											interface="action-sheet"
+										></ion-select>
 									</ion-item>
 									<div class="error-container">
 										<ng-container

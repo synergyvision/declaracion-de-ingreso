@@ -39,7 +39,22 @@ export class TripsPage implements OnInit {
 
 	statesEnum = States;
 
-	filterValues: FilterModel;
+	filterValues: FilterModel = {
+		states: {
+			pendiente: true,
+			calculado: true,
+			finalizado: true,
+			cancelado: false,
+		},
+		country: {
+			alpha3: "",
+			type: "",
+		},
+		dates: {
+			from: null,
+			to: null,
+		},
+	};
 	_searchValue: string = "";
 
 	resetFilter: FilterModel = {
@@ -248,6 +263,18 @@ export class TripsPage implements OnInit {
 	doTripDetail(el: any, id: string) {
 		el.closeSlidingItems();
 		this.router.navigate(["detail"], {
+			relativeTo: this.route,
+			queryParams: { id },
+		});
+	}
+
+	doTripTax(el: any, id: string, state: States) {
+		el.closeSlidingItems();
+		const route =
+			state == States.CALCULADO || state == States.FINALIZADO
+				? "tax/detail"
+				: "tax";
+		this.router.navigate([route], {
 			relativeTo: this.route,
 			queryParams: { id },
 		});

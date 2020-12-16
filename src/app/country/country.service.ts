@@ -4,6 +4,8 @@ import { TranslateService } from "@ngx-translate/core";
 import es from "./world-countries/data/es/countries.json";
 import en from "./world-countries/data/en/countries.json";
 
+import cities from "./world-countries/cities/cities.json";
+
 @Injectable({
 	providedIn: "root",
 })
@@ -25,6 +27,10 @@ export class CountryService {
 				return es;
 				break;
 		}
+	}
+
+	getCities(alpha3: string): string[] {
+		return cities[alpha3];
 	}
 
 	getCountryName(alpha3: string): string {

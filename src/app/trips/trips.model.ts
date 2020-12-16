@@ -1,6 +1,9 @@
+import { TaxModel } from '../tax/tax.model';
+
 export interface TripsModel {
 	id: string;
 	flights: FlightModel[];
+	taxDeclaration?: TaxModel;
 	state: string;
 }
 

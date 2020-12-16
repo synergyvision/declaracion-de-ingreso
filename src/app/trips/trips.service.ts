@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { FirebaseAuthService } from "../firebase/auth/firebase-auth.service";
-import { TripsModel } from "./trips.model";
+import { States, TripsModel } from "./trips.model";
 import { AngularFireDatabase, AngularFireList } from "@angular/fire/database";
 import { BehaviorSubject, Observable, Subscription, from } from "rxjs";
 import { map, tap } from "rxjs/operators";
+import { TaxModel } from "../tax/tax.model";
 
 @Injectable({
 	providedIn: "root",
@@ -58,6 +59,11 @@ export class TripsService {
 
 	updateTrip(id: string, trip: TripsModel) {
 		return from(this.tripsRef.update(id, trip));
+	}
+
+	updateTaxDeclaration(id: string, taxDeclaration: TaxModel) {
+		const state = States.CALCULADO;
+		return from(this.tripsRef.update(id, { taxDeclaration, state }));
 	}
 
 	deleteTrip(id: string) {
