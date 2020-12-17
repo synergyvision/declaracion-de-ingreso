@@ -1,0 +1,75 @@
+<ng-container [formGroup]="parentForm" class="trips-content">
+	<ng-container class="input-list">
+		<!-- ################## COUNTRY ################## -->
+
+		<ion-item class="input-item">
+			<ion-label position="floating">{{
+				"fields.COUNTRY" | translate
+			}}</ion-label>
+			<ion-select
+				formControlName="country"
+				[placeholder]="'profile.SELECT_COUNTRY' | translate"
+				[cancelText]="'fields.CANCEL' | translate"
+				[okText]="'fields.DONE' | translate"
+				interface="action-sheet"
+				(ionChange)="parentForm.controls['city'].reset()"
+			>
+				<ion-select-option
+					*ngFor="let country of countries"
+					[value]="country.alpha3"
+					>{{ country.name }}</ion-select-option
+				>
+			</ion-select>
+		</ion-item>
+		<div class="error-container">
+			<ng-container
+				*ngFor="let validation of validation_messages.country"
+			>
+				<div
+					class="error-message"
+					*ngIf="
+						parentForm.get('country').hasError(validation.type) &&
+						(parentForm.get('country').dirty ||
+							parentForm.get('country').touched)
+					"
+				>
+					<ion-icon name="information-circle-outline"></ion-icon>
+					<span>{{ validation.message }}</span>
+				</div>
+			</ng-container>
+		</div>
+
+		<!-- ################## CITY ################## -->
+
+		<ion-item class="input-item">
+			<ion-label position="floating">{{
+				"fields.CITY" | translate
+			}}</ion-label>
+			<ion-select
+				formControlName="city"
+				[cancelText]="'fields.CANCEL' | translate"
+				[okText]="'fields.DONE' | translate"
+				interface="action-sheet"
+			>
+				<ion-select-option *ngFor="let city of cities" [value]="city">{{
+					city
+				}}</ion-select-option>
+			</ion-select>
+		</ion-item>
+		<div class="error-container">
+			<ng-container *ngFor="let validation of validation_messages.city">
+				<div
+					class="error-message"
+					*ngIf="
+						parentForm.get('city').hasError(validation.type) &&
+						(parentForm.get('city').dirty ||
+							parentForm.get('city').touched)
+					"
+				>
+					<ion-icon name="information-circle-outline"></ion-icon>
+					<span>{{ validation.message }}</span>
+				</div>
+			</ng-container>
+		</div>
+	</ng-container>
+</ng-container>

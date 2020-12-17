@@ -66,6 +66,11 @@ export class TripsService {
 		return from(this.tripsRef.update(id, { taxDeclaration, state }));
 	}
 
+	deleteTaxDeclaration(id: string) {
+		const state = States.PENDIENTE;
+		return from(this.tripsRef.update(id, { taxDeclaration: null, state }));
+	}
+
 	deleteTrip(id: string) {
 		return from(this.tripsRef.remove(id));
 	}

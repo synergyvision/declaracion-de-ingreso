@@ -13,6 +13,12 @@ Se utilizo la herramienta World Countries en https://stefangabos.github.io/world
 
 Se guardan los valores alpha-3 en la base de datos.
 
+# SENIAT
+
+http://declaraciones.seniat.gob.ve/portal/page/portal/MANEJADOR_CONTENIDO_SENIAT/04ADUANAS/4.5PREGUNTAS_FRECUENT/4.5.html#
+
+Se halló toda la informacion pertinente al cálculo de la declaración de impuestos en el portal del SENIAT
+
 # Ionic 5 Full App PRO Version
 
 The most advanced and complete Mobile & PWA starter app template

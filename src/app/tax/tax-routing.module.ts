@@ -15,6 +15,11 @@ const routes: Routes = [
         (m) => m.TaxDetailPageModule
       ),
   },
+  {
+    path: "edit",
+    loadChildren: () =>
+      import("./tax-edit/tax-edit.module").then((m) => m.TaxEditPageModule),
+  },
 ];
 
 @NgModule({

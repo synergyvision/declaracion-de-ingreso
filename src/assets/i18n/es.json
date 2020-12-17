@@ -59,7 +59,8 @@
 		},
 		"password": {
 			"NOT_EQUAL": "Las contraseñas no son iguales."
-		}
+		},
+		"BOTH": "Ambos campos son requeridos."
 	},
 	"fields": {
 		"EMAIL": "Correo electrónico",
@@ -181,8 +182,17 @@
 		"DECLARING": "Guardando su declaración...",
 		"DETAIL": "Detalle",
 		"TOTAL": "Total ${{ total }}",
-		"CALCULATED_TAX": "Impuestos a pagar: ${{ tax }}",
+		"CALCULATED_TAX": "Impuestos a pagar ${{ tax }}",
 		"DETAIL_ITEM": "{{ quantity }} artículo(s) (${{price}} en total)",
+		"EXEMPT": "Exento/a de pago de impuestos",
+		"OVER_2000": "Su total excede el monto permitido para el cálculo de impuesto de equipaje ($2000). Consulte con las autoridades aduaneras.",
+		"EDIT": "Editar",
+		"GETTING": "Obteniendo información de la declaración...",
+		"DELETE": "Borrar declaración",
+		"DELETE_TITLE": "Borrar",
+		"DELETE_WARNING": "ADVERTENCIA",
+		"DELETE_MSG": "Si borras esta declaración, toda la información relevante será eliminada de la base de datos y será irrecuperable.",
+		"DELETING": "Borrando declaración...",
 		"TAX_OPTION": {
 			"clothing": "Prendas de vestir",
 			"shoes": "Calzado en general",
@@ -214,36 +224,6 @@
 			"other": "Otros"
 		}
 	},
-	"TAX_OPTION": [
-		"Prendas de vestir",
-		"Calzado en general",
-		"Artículos de tocador",
-		"Medicamentos personales",
-		"Artículos de consumo",
-		"Artículos personales (Incluyendo joyas)",
-		"Libros, revistas y documentos en general",
-		"Herramientas y objetos manuales de la profesión",
-		"Coches para niños",
-		"Instrumentos musicales",
-		"Cámaras fotográficas y videograbadoras",
-		"Binoculares",
-		"Máquina de escribir portátil",
-		"Artículos para la práctica individual del deporte",
-		"Útiles para la jardinería y mascotas",
-		"Comestibles y alimentos empacados al vacío",
-		"Obras de arte, colección o antiguedades",
-		"Cigarrillos, tabacos y licores",
-		"Armas, municiones, explosivos o similares",
-		"Baúles, maletas, bolsos y similares",
-		"Radios",
-		"Aparatos reproductores de sonidos e imágenes",
-		"Televisores",
-		"Juguetes, video juegos",
-		"Computadoras personales y sus accesorios",
-		"Teléfonos celulares y sus accesorios",
-		"Equipos de economía doméstica",
-		"Otros"
-	],
 	"menu": {
 		"MENU": "Menú",
 		"BACK": "Atrás",

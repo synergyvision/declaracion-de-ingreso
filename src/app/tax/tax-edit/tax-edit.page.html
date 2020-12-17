@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-title>{{ 'tax.TAX' | translate }}</ion-title>
+		<ion-title>{{ 'tax.EDIT' | translate }}</ion-title>
 		<ion-buttons slot="start">
 			<ion-back-button
 				defaultHref="/trips"
@@ -21,10 +21,10 @@
 <ion-content class="tax-content">
 	<form
 		[formGroup]="taxForm"
-		(ngSubmit)="doCreateTaxDeclaration()"
+		(ngSubmit)="doEditTaxDeclaration()"
 		#taxFormElement="ngForm"
 	>
-		<ion-list class="inputs-list" lines="full">
+		<ion-list class="inputs-list" lines="full" *ngIf="!isLoading">
 			<ion-grid>
 				<ion-row>
 					<ion-col size="12">

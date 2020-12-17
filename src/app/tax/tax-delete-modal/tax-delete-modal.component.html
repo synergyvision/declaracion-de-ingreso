@@ -1,0 +1,35 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>{{ "tax.DELETE_TITLE" | translate }}</ion-title>
+		<ion-buttons slot="end">
+			<ion-button (click)="onCancel()"
+				><ion-icon slot="icon-only" name="close-outline"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<ion-card-header>
+			<ion-text color="danger" class="ion-text-center">
+				<h2>{{ "tax.DELETE_WARNING" | translate }}</h2>
+			</ion-text>
+		</ion-card-header>
+		<ion-card-content class="ion-margin-horizontal">
+			<ion-text color="danger" class="ion-text-center">
+				<ion-label>{{ "tax.DELETE_MSG" | translate }}</ion-label>
+			</ion-text>
+			<ion-button
+				class="ion-margin-top"
+				expand="block"
+				fill="solid"
+				color="danger"
+				(click)="onDelete()"
+			>
+				<ion-icon slot="start" name="trash-outline"></ion-icon>
+				{{ "tax.DELETE" | translate }}</ion-button
+			>
+		</ion-card-content>
+	</ion-card>
+</ion-content>

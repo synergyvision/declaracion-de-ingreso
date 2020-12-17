@@ -25,9 +25,19 @@
 			>{{ 'tax.TOTAL' | translate: { total: getTotal() }
 			}}</ion-list-header
 		>
-		<h4 style="padding-left: 7px" *ngIf="getTax() > 0">
-			{{ 'tax.CALCULATED_TAX' | translate: { tax: getTax() } }}
-		</h4>
+		<div *ngIf="getTax() > 0; else excempt">
+			<h4 style="padding-left: 7px" *ngIf="getTotal() < 2000; else over">
+				{{ 'tax.CALCULATED_TAX' | translate: { tax: getTax() } }}
+			</h4>
+			<ng-template #over>
+				<p style="padding-left: 7px; text-align: center">
+					{{ 'tax.OVER_2000' | translate }}
+				</p>
+			</ng-template>
+		</div>
+		<ng-template #excempt>
+			<h4 style="padding-left: 7px">{{ 'tax.EXEMPT' | translate }}</h4>
+		</ng-template>
 		<ng-container *ngIf="isLoading else taxDetail">
 			<ion-item *ngFor="let n of getTaxLength()" class="ion-no-padding">
 				<ion-grid>
@@ -53,6 +63,24 @@
 		</ng-container>
 	</ion-list>
 	<ng-template #taxDetail>
+		<ion-item class="ion-no-padding" *ngIf="taxCash > 0">
+			<ion-grid>
+				<ion-row>
+					<ion-col>
+						<ion-label class="field-name"
+							>{{ 'tax.CASH' | translate }}</ion-label
+						>
+					</ion-col>
+				</ion-row>
+				<ion-row class="field-content">
+					<ion-col>
+						<ion-label>
+							{{ 'tax.TOTAL' | translate: { total: taxCash } }}
+						</ion-label>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>
 		<ng-container *ngFor="let detail of taxDetails | keyvalue; index as i">
 			<ion-item class="ion-no-padding" *ngIf="hasValue(detail.value)">
 				<ion-grid>
@@ -77,4 +105,18 @@
 			</ion-item>
 		</ng-container>
 	</ng-template>
+	<ion-row>
+		<ion-col size="12">
+			<ion-button
+				class="sign-out-btn"
+				expand="block"
+				fill="solid"
+				color="danger"
+				(click)="deleteTaxDeclaration()"
+			>
+				<ion-icon slot="start" name="trash-outline"></ion-icon>
+				{{ 'tax.DELETE' | translate }}</ion-button
+			>
+		</ion-col>
+	</ion-row>
 </ion-content>

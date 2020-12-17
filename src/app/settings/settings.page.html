@@ -10,16 +10,22 @@
 <ion-content>
 	<ion-list>
 		<ion-item class="ion-no-padding" (click)="onChangeLanguage()">
+			<ion-icon name="language-outline" class="setting-icon"></ion-icon>
 			<ion-label style="margin-left: 10px; margin-top: 10px"
 				>{{ 'settings.CHANGE_LANG' | translate }}</ion-label
 			>
 		</ion-item>
 		<ion-item class="ion-no-padding" (click)="onChangePassword()">
+			<ion-icon
+				name="lock-closed-outline"
+				class="setting-icon"
+			></ion-icon>
 			<ion-label style="margin-left: 10px; margin-top: 10px"
 				>{{ 'settings.CHANGE_PW' | translate }}</ion-label
 			>
 		</ion-item>
 		<ion-item class="ion-no-padding" (click)="onChangeDefaultFilters()">
+			<ion-icon name="filter-outline" class="setting-icon"></ion-icon>
 			<ion-label style="margin-left: 10px; margin-top: 10px"
 				>{{ 'settings.CHANGE_DEFAULT_FILTER' | translate }}</ion-label
 			>

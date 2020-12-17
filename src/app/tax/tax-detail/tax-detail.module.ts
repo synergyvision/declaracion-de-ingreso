@@ -9,6 +9,8 @@ import { TaxDetailPageRoutingModule } from "./tax-detail-routing.module";
 import { TaxDetailPage } from "./tax-detail.page";
 import { SharedModule } from "../../shared/shared.module";
 
+import { TaxDeleteModalComponent } from "../tax-delete-modal/tax-delete-modal.component";
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -17,6 +19,7 @@ import { SharedModule } from "../../shared/shared.module";
 		IonicModule,
 		TaxDetailPageRoutingModule,
 	],
-	declarations: [TaxDetailPage],
+	entryComponents: [TaxDeleteModalComponent],
+	declarations: [TaxDetailPage, TaxDeleteModalComponent],
 })
 export class TaxDetailPageModule {}
