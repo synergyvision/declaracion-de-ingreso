@@ -31,6 +31,7 @@ export class CitySelectorComponent implements OnInit {
 	};
 
 	countries = [];
+	cities = [];
 
 	constructor(
 		private countryService: CountryService,
@@ -39,15 +40,22 @@ export class CitySelectorComponent implements OnInit {
 		this.countries = countryService.getCountries();
 	}
 
-	get cities() {
+	ngOnInit() {
+		this.cities = this.getCities();
+	}
+
+	countrySelected() {
+		this.parentForm.controls["city"].reset();
+		this.cities = this.getCities();
+	}
+
+	getCities() {
 		const alpha3 = this.parentForm.controls["country"].value;
 		const cities = this.countryService.getCities(alpha3);
-		if (cities != undefined) {
+		if (cities != undefined && cities.length != 0) {
 			return cities;
 		} else {
 			return [this.countryService.getCountryName(alpha3)];
 		}
 	}
-
-	ngOnInit() {}
 }

@@ -5,9 +5,17 @@ import { CitySelectorComponent } from "../trips/city-selector/city-selector.comp
 import { ReactiveFormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 
+import { IonicSelectableModule } from "ionic-selectable";
+
 @NgModule({
 	declarations: [CitySelectorComponent],
-	imports: [CommonModule, TranslateModule, ReactiveFormsModule, IonicModule],
+	imports: [
+		CommonModule,
+		TranslateModule,
+		ReactiveFormsModule,
+		IonicModule,
+		IonicSelectableModule,
+	],
 	exports: [TranslateModule, CitySelectorComponent],
 })
 export class SharedModule {}

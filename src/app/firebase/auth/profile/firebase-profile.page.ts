@@ -2,8 +2,9 @@ import { Component, ElementRef, OnInit, HostBinding } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FirebaseProfileModel } from "./firebase-profile.model";
 import { FirebaseAuthService } from "../firebase-auth.service";
-import { Subscription } from "rxjs";
+import { Subscription, of } from "rxjs";
 import { SharedService } from "../../../shared/shared.service";
+import { TripsService } from "../../../trips/trips.service";
 import {
 	IResolvedRouteData,
 	ResolverHelper,
@@ -44,7 +45,8 @@ export class FirebaseProfilePage implements OnInit {
 		private shared: SharedService,
 		private modalCtrl: ModalController,
 		private loadCtrl: LoadingController,
-		private countryService: CountryService
+		private countryService: CountryService,
+		private tripService: TripsService
 	) {}
 
 	ngOnInit() {
@@ -95,45 +97,48 @@ export class FirebaseProfilePage implements OnInit {
 						})
 						.then((loadEl) => {
 							loadEl.present();
+							let currentAuthState;
 							this.authService
 								.getAuthState()
-								.pipe(take(1))
-								.subscribe((authState) => {
-									authState
-										.delete()
-										.then(() => {
-											this.authService
-												.deleteProfile()
-												.pipe(take(1))
-												.subscribe(() => {
-													loadEl.dismiss();
-													this.router.navigate(
-														["/auth/login"],
-														{
-															replaceUrl: true,
-														}
-													);
-												});
-										})
-										.catch((err) => {
-											if (
-												err.code ==
-												"auth/requires-recent-login"
-											) {
-												this.signOutError();
-											} else {
-												this.shared.showAlert(
-													this.shared.translateText(
-														"error.ERROR"
-													),
-													this.shared.translateText(
-														"error.UNKNOWN"
-													)
-												);
-											}
-											loadEl.dismiss();
+								.pipe(
+									take(1),
+									switchMap((authState) => {
+										currentAuthState = authState;
+										return this.authService.deleteProfile();
+									}),
+									switchMap(() => {
+										return this.tripService.deleteAllTrips();
+									}),
+									switchMap(() => {
+										return of(currentAuthState.delete());
+									})
+								)
+								.subscribe(
+									() => {
+										loadEl.dismiss();
+										this.router.navigate(["/auth/login"], {
+											replaceUrl: true,
 										});
-								});
+									},
+									(err) => {
+										if (
+											err.code ==
+											"auth/requires-recent-login"
+										) {
+											this.signOutError();
+										} else {
+											this.shared.showAlert(
+												this.shared.translateText(
+													"error.ERROR"
+												),
+												this.shared.translateText(
+													"error.UNKNOWN"
+												)
+											);
+										}
+										loadEl.dismiss();
+									}
+								);
 						});
 				}
 			});

@@ -12,7 +12,7 @@
 				[cancelText]="'fields.CANCEL' | translate"
 				[okText]="'fields.DONE' | translate"
 				interface="action-sheet"
-				(ionChange)="parentForm.controls['city'].reset()"
+				(ionChange)="countrySelected()"
 			>
 				<ion-select-option
 					*ngFor="let country of countries"
@@ -45,7 +45,17 @@
 			<ion-label position="floating">{{
 				"fields.CITY" | translate
 			}}</ion-label>
-			<ion-select
+			<ionic-selectable
+				formControlName="city"
+				[items]="cities"
+				[canSearch]="true"
+				[hasVirtualScroll]="true"
+				[closeButtonText]="'fields.CANCEL' | translate"
+				[searchFailText]="'trips.NO_CITIES' | translate"
+				[searchPlaceholder]="'trips.SEARCH' | translate"
+			>
+			</ionic-selectable>
+			<!-- <ion-select
 				formControlName="city"
 				[cancelText]="'fields.CANCEL' | translate"
 				[okText]="'fields.DONE' | translate"
@@ -54,7 +64,7 @@
 				<ion-select-option *ngFor="let city of cities" [value]="city">{{
 					city
 				}}</ion-select-option>
-			</ion-select>
+			</ion-select> -->
 		</ion-item>
 		<div class="error-container">
 			<ng-container *ngFor="let validation of validation_messages.city">

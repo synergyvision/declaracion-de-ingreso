@@ -174,7 +174,8 @@
 		"CONNECTING_FLIGHT": "Connecting flight",
 		"ANY_ABOVE": "Any of the above",
 		"ANY": "Any",
-		"APPLY_FILTERS": "Apply filters"
+		"APPLY_FILTERS": "Apply filters",
+		"NO_CITIES": "No cities found."
 	},
 	"tax": {
 		"TAX": "Declaration",

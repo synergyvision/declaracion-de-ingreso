@@ -30,7 +30,7 @@ export class CountryService {
 	}
 
 	getCities(alpha3: string): string[] {
-		return cities[alpha3];
+		return [...new Set<string>(cities[alpha3])];
 	}
 
 	getCountryName(alpha3: string): string {
