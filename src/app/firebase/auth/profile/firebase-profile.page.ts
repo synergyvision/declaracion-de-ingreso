@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, HostBinding } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FirebaseProfileModel } from "./firebase-profile.model";
 import { FirebaseAuthService } from "../firebase-auth.service";
-import { Subscription, of } from "rxjs";
+import { Subscription, from, of } from "rxjs";
 import { SharedService } from "../../../shared/shared.service";
 import { TripsService } from "../../../trips/trips.service";
 import {
@@ -19,6 +19,7 @@ import { DeleteModalComponent } from "./delete-modal/delete-modal.component";
 import { PictureModalComponent } from "./picture-modal/picture-modal.component";
 import { switchMap, take, tap } from "rxjs/operators";
 import { CountryService } from "../../../country/country.service";
+import { User } from "firebase";
 
 @Component({
 	selector: "app-firebase-profile",
@@ -32,6 +33,7 @@ export class FirebaseProfilePage implements OnInit {
 	// Gather all component subscription in one place. Can be one Subscription or multiple (chained using the Subscription.add() method)
 	subscriptions: Subscription;
 	user: FirebaseProfileModel;
+	currentFirebaseUser: User;
 	profilePicUrl: string;
 
 	@HostBinding("class.is-shell") get isShell() {
@@ -75,6 +77,13 @@ export class FirebaseProfilePage implements OnInit {
 				)
 				.subscribe()
 		);
+		this.subscriptions.add(
+			(this.subscriptions = this.authService.currentUser.subscribe(
+				(user) => {
+					this.currentFirebaseUser = user;
+				}
+			))
+		);
 	}
 
 	deleteUser() {
@@ -99,8 +108,18 @@ export class FirebaseProfilePage implements OnInit {
 							loadEl.present();
 							let currentAuthState;
 							this.authService
-								.getAuthState()
+								.getUserCredential(resultData.data)
 								.pipe(
+									switchMap((credential) => {
+										return from(
+											this.currentFirebaseUser.reauthenticateWithCredential(
+												credential
+											)
+										);
+									}),
+									switchMap(() => {
+										return this.authService.getAuthState();
+									}),
 									take(1),
 									switchMap((authState) => {
 										currentAuthState = authState;
@@ -108,6 +127,9 @@ export class FirebaseProfilePage implements OnInit {
 									}),
 									switchMap(() => {
 										return this.tripService.deleteAllTrips();
+									}),
+									switchMap(() => {
+										return this.authService.deleteProfilePic();
 									}),
 									switchMap(() => {
 										return of(currentAuthState.delete());
@@ -121,11 +143,16 @@ export class FirebaseProfilePage implements OnInit {
 										});
 									},
 									(err) => {
-										if (
-											err.code ==
-											"auth/requires-recent-login"
-										) {
-											this.signOutError();
+										console.log(err);
+										if (err.code == "auth/wrong-password") {
+											this.shared.showAlert(
+												this.shared.translateText(
+													"error.ERROR"
+												),
+												this.shared.translateText(
+													"error.WRONG_PW"
+												)
+											);
 										} else {
 											this.shared.showAlert(
 												this.shared.translateText(
