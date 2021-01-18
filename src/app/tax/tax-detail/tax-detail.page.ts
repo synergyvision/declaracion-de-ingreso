@@ -87,7 +87,7 @@ export class TaxDetailPage implements OnInit {
 		if (total > 1000) {
 			tax = (total - 1000) * 0.1;
 		}
-		return tax;
+		return parseInt(tax.toFixed(2));
 	}
 
 	doEditTax(id: string) {
